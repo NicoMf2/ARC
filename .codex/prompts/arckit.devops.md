@@ -113,12 +113,16 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - NFR-A (Availability) → Deployment strategies (blue-green, canary)
 - FR (Functional) → Environment needs (dev, staging, prod)
 
+### Diagram Guidelines
+
+**IMPORTANT**: Do NOT use Mermaid `gitGraph` diagrams — they have limited renderer support and fail in many viewers (GitHub, VS Code, etc.) with "No diagram type detected" errors. Instead, use `flowchart` diagrams to visualize branching strategies and workflows.
+
 ### Phase 3: Generate DevOps Strategy
 
 **Read the template** (with user override support):
 - **First**, check if `.arckit/templates/devops-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
-- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/devops-template.md` (default)
+- **If not found**: Read `.arckit/templates/devops-template.md` (default)
 
 > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit:customize devops`

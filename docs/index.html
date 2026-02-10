@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="ArcKit - Enterprise Architecture Governance & Vendor Procurement Toolkit. 46 AI-assisted commands for systematic, compliant project delivery following UK Government standards.">
+    <meta name="description" content="ArcKit - Enterprise Architecture Governance & Vendor Procurement Toolkit. 48 AI-assisted commands for systematic, compliant project delivery following UK Government standards.">
     <meta name="keywords" content="enterprise architecture, UK government, GDS, architecture governance, vendor procurement, ArcKit, compliance, TCOP, secure by design">
     <meta name="author" content="ArcKit">
     <meta property="og:title" content="ArcKit - Enterprise Architecture Governance & Vendor Procurement">
-    <meta property="og:description" content="46 AI-assisted commands for systematic, compliant architecture governance following UK Government standards.">
+    <meta property="og:description" content="48 AI-assisted commands for systematic, compliant architecture governance following UK Government standards.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tractorjuice.github.io/arc-kit/">
     <title>ArcKit - Enterprise Architecture Governance & Vendor Procurement</title>
@@ -161,6 +161,7 @@
             border: 3px solid #1d70b8;
             padding: 1.5rem;
             background: white;
+            overflow-wrap: break-word;
         }
 
         .app-use-case-grid {
@@ -455,7 +456,7 @@
             <div class="govuk-width-container">
                 <h1 class="govuk-heading-xl">ArcKit</h1>
                 <p class="govuk-body-l">Transform architecture chaos into systematic, audit-ready governance.</p>
-                <p class="govuk-body">46 AI-assisted commands that generate complete governance documents. From stakeholder analysis and risk registers to design reviews and traceability matrices—each command produces template-driven, audit-ready artifacts. Navigate discovery to delivery with built-in UK Government compliance: GDS Service Manual, Technology Code of Practice, Secure by Design.</p>
+                <p class="govuk-body">48 AI-assisted commands that generate complete governance documents. From stakeholder analysis and risk registers to design reviews and traceability matrices—each command produces template-driven, audit-ready artifacts. Navigate discovery to delivery with built-in UK Government compliance: GDS Service Manual, Technology Code of Practice, Secure by Design.</p>
 
                 <div class="govuk-button-group govuk-!-margin-top-6">
                     <a href="https://github.com/tractorjuice/arc-kit" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
@@ -666,7 +667,7 @@ flowchart TD
 
     <!-- Commands Section -->
     <div class="govuk-width-container govuk-!-margin-top-9" id="commands">
-        <h2 class="govuk-heading-l">44 ArcKit Commands</h2>
+        <h2 class="govuk-heading-l">48 ArcKit Commands</h2>
         <p class="govuk-body">Complete command reference with descriptions, example outputs, and maturity status:</p>
 
         <!-- Status Legend -->
@@ -725,7 +726,7 @@ flowchart TD
                 <input type="text" id="search-filter" placeholder="Search commands...">
             </div>
             <div class="app-command-count">
-                Showing <span id="visible-count">46</span> of 46 commands
+                Showing <span id="visible-count">48</span> of 48 commands
             </div>
         </div>
 
@@ -743,6 +744,13 @@ flowchart TD
                 </thead>
                 <tbody>
                     <!-- Foundation -->
+                    <tr data-status="live" data-category="foundation">
+                        <td><code>/arckit.init</code></td>
+                        <td class="description">Initialize ArcKit project structure with numbered project directories and global artifacts</td>
+                        <td>Foundation</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-live">Live</span></td>
+                    </tr>
                     <tr data-status="live" data-category="foundation">
                         <td><code>/arckit.plan</code></td>
                         <td class="description">Create project plan with timeline, phases, gates, and Mermaid diagrams</td>
@@ -1019,10 +1027,10 @@ flowchart TD
                     </tr>
                     <tr data-status="experimental" data-category="cloud-mcp">
                         <td><code>/arckit.gcp-research</code></td>
-                        <td class="description">Research Google Cloud services and architecture patterns (pending GCP documentation MCP server)</td>
+                        <td class="description">Research Google Cloud services and architecture patterns using <a href="https://developerknowledge.googleapis.com/mcp">Google Developer Knowledge MCP</a></td>
                         <td>Cloud Research (MCP)</td>
                         <td class="examples">—</td>
-                        <td><span class="app-status-tag app-status-experimental">Planned</span></td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
                     </tr>
 
                     <!-- Data Source Discovery -->
@@ -1412,9 +1420,9 @@ flowchart TD
             <div class="app-ai-card">
                 <h3 class="govuk-heading-m">Gemini CLI</h3>
                 <strong class="govuk-tag govuk-tag--purple">Supported</strong>
-                <p class="govuk-body govuk-!-margin-top-3">Google Gemini CLI. Commands in <code>.gemini/commands/</code> directory (TOML format).</p>
+                <p class="govuk-body govuk-!-margin-top-3">Google Gemini CLI. Install as a native extension for zero-config access to all 48 commands, templates, and scripts.</p>
                 <p class="govuk-body"><strong>Best for:</strong> Multi-modal analysis, data processing, rapid prototyping.</p>
-                <p class="govuk-body"><strong>Installation:</strong> <code>pip install gemini-cli</code></p>
+                <p class="govuk-body"><strong>Extension:</strong> <code>gemini extensions install https://github.com/tractorjuice/arckit-gemini</code></p>
             </div>
         </div>
 
@@ -1547,7 +1555,7 @@ flowchart TD
                     <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/CHANGELOG.md" class="govuk-link">Changelog</a> - Release history and updates</li>
                     <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/CONTRIBUTING.md" class="govuk-link">Contributing</a> - How to contribute to ArcKit</li>
                     <li><a href="https://github.com/tractorjuice/arc-kit/releases" class="govuk-link">Release Notes</a> - Detailed version information</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/README.md#complete-command-reference" class="govuk-link">Command Reference</a> - All 46 commands documented</li>
+                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/README.md#complete-command-reference" class="govuk-link">Command Reference</a> - All 48 commands documented</li>
                 </ul>
             </div>
         </div>
@@ -1620,7 +1628,7 @@ claude</code></pre></div>
                 <div class="govuk-grid-column-two-thirds">
                     <h2 class="govuk-heading-m">ArcKit</h2>
                     <p class="govuk-body">Enterprise Architecture Governance & Vendor Procurement Toolkit</p>
-                    <p class="govuk-body">Version 2.2.0 - February 2026</p>
+                    <p class="govuk-body">Version 2.4.1 - February 2026</p>
                 </div>
 
                 <div class="govuk-grid-column-one-third">

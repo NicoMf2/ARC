@@ -190,6 +190,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | **Research** | | | |
 | | AWRS | `ARC-*-AWRS-*.md` | AWS Research |
 | | AZRS | `ARC-*-AZRS-*.md` | Azure Research |
+| | GCRS | `ARC-*-GCRS-*.md` | GCP Research |
 | | DSCT | `ARC-*-DSCT-*.md` | Data Source Discovery |
 | **Other** | | | |
 | | STORY | `ARC-*-STORY-*.md` | Project Story |
@@ -340,7 +341,7 @@ Create `docs/manifest.json` with the discovered structure:
 **Read the template** (with user override support):
 - **First**, check if `.arckit/templates/pages-template.html` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
-- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/pages-template.html` (default)
+- **If not found**: Read `.arckit/templates/pages-template.html` (default)
 
 > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit:customize pages`
@@ -466,4 +467,4 @@ The generated HTML should handle:
 
 ---
 
-**Remember**: You MUST read and use `${CLAUDE_PLUGIN_ROOT}/templates/pages-template.html` as the base for `docs/index.html`. The template is the source of truth for all HTML, CSS, and JavaScript. Only replace the `{{...}}` config placeholders with actual values.
+**Remember**: You MUST read and use `.arckit/templates/pages-template.html` as the base for `docs/index.html`. The template is the source of truth for all HTML, CSS, and JavaScript. Only replace the `{{...}}` config placeholders with actual values.

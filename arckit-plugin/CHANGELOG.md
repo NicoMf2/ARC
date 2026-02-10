@@ -5,7 +5,72 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.4.1] - 2026-02-10
+
+### Added
+
+- **Gemini CLI native extension** — ArcKit is now available as a Gemini CLI extension at [`tractorjuice/arckit-gemini`](https://github.com/tractorjuice/arckit-gemini), giving Gemini users the same zero-config experience as the Claude Code plugin
+  - Install: `gemini extensions install https://github.com/tractorjuice/arckit-gemini`
+  - Bundled MCP servers (AWS Knowledge, Microsoft Learn via mcp-remote), optional Google Developer Knowledge
+  - All 48 commands, templates, scripts, guides, and Wardley Mapping skill included
+  - Extension version tracks plugin version (v2.4.1)
+- `scripts/converter.py` now generates extension output alongside Codex format, with path rewriting (`${CLAUDE_PLUGIN_ROOT}` -> `~/.gemini/extensions/arckit`)
+
+### Fixed
+
+- **Gemini extension workspace sandbox fix**: Extension commands prepend a file access instruction block telling the model to use `run_shell_command` instead of `read_file` for extension paths (Gemini CLI sandboxes `read_file` to the project directory). `Read` instructions are also rewritten to `cat` commands in extension output.
+
+### Changed
+
+- **CLI is now Codex-only**: Gemini CLI removed from the CLI package — Gemini users should use the native extension instead. The converter now generates 2 output formats (Codex + Extension) instead of 3.
+
+---
+
+## [2.4.0] - 2026-02-09
+
+### Added
+
+- **Google Cloud Research** (`/arckit:gcp-research`) — new command + agent for GCP-specific technology research using the [Google Developer Knowledge MCP](https://developerknowledge.googleapis.com/mcp) server
+  - Mirrors the existing AWS and Azure research commands (thin wrapper + autonomous agent)
+  - Architecture Framework assessment (6 pillars: Operational Excellence, Security/Privacy/Compliance, Reliability, Cost Optimization, Performance Optimization, Sustainability)
+  - Security Command Center mapping (CIS Benchmark for GCP, vulnerability/misconfiguration/threat findings)
+  - UK Government: G-Cloud procurement, europe-west2 (London) data residency, NCSC alignment
+  - Cost optimization: Committed Use Discounts (CUDs), Sustained Use Discounts (SUDs), Spot VMs, E2 machine types
+  - IaC: Terraform (primary), Cloud Build CI/CD pipelines
+  - Doc type code: `GCRS`
+- Added `google-developer-knowledge` MCP server to plugin `.mcp.json` (requires `GOOGLE_API_KEY` env var)
+- Added GCP research template, guide, and dependency matrix entry
+
+---
+
+## [2.3.1] - 2026-02-09
+
+### Fixed
+
+- Pass directory argument to `--next-num` in multi-instance commands (wardley, diagram, data-mesh-contract) to prevent unbound variable crash with `set -u`
+- Added guard in `generate-document-id.sh` to give a clear error message when directory is missing
+- Replace Mermaid `gitGraph` with `flowchart` in devops template — gitGraph has limited renderer support and fails with "No diagram type detected" errors in GitHub/VS Code
+- Added diagram guidelines to devops command to prevent gitGraph usage in generated documents
+
+---
+
+## [2.3.0] - 2026-02-09
+
+### Added
+
+- **Mathematical models** for Wardley Mapping skill — new `references/mathematical-models.md` with evolution scoring formulas, decision metrics (differentiation pressure, commodity leverage, dependency risk), and weak signal detection framework
+- Quantitative analysis triggers in skill description (score evolution, calculate ubiquity, differentiation pressure, commodity leverage, weak signal detection, readiness score)
+- Optional **Step 6: Quantitative Analysis** in SKILL.md mapping workflow
+- Numeric scoring rubric (ubiquity/certainty scales) added to `references/evolution-stages.md`
+- Quantitative positioning worked example added to E-Commerce Platform in `references/mapping-examples.md`
+
+---
+
+## [2.2.1] - 2026-02-09
+
+### Fixed
+
+- Added explicit `list-projects.sh --json` step to 9 commands (stakeholders, requirements, adr, sow, roadmap, strategy, dpia, platform-design, data-mesh-contract) to prevent Claude from guessing wrong script paths in plugin-based repos that no longer have `.arckit/scripts/bash/`
 
 ---
 

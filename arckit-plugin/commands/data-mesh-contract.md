@@ -95,7 +95,13 @@ Data product name (kebab-case):
 
 ### Step 2: Find or Create Project
 
-Use the `create-project.sh` script to find or create the project directory:
+First, check for existing projects:
+
+```bash
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json
+```
+
+If the user specifies an existing project or the name matches, use that directory. Otherwise, create a new project:
 
 ```bash
 bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh \
@@ -140,7 +146,7 @@ The contract file will use the multi-instance naming pattern:
 
 Where `{NNN}` is the next sequential number for contracts in this project. Use the script with `--next-num` flag:
 ```bash
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --filename --next-num
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --filename --next-num "{project_path}/data-mesh-contracts"
 ```
 
 ### Step 4: Read the Template
@@ -345,10 +351,10 @@ Use the `generate-document-id.sh` script with `--next-num` to get the next seque
 
 ```bash
 # Generate document ID with next sequential number
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --next-num
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --next-num "{project_path}/data-mesh-contracts"
 
 # Generate filename with next sequential number
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --filename --next-num
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --filename --next-num "{project_path}/data-mesh-contracts"
 ```
 
 This will generate IDs like:

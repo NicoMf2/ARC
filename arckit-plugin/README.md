@@ -60,9 +60,9 @@ After installing the plugin:
 
 | Component | Count | Description |
 |-----------|-------|-------------|
-| Commands | 46 | Slash commands for architecture artifacts |
+| Commands | 48 | Slash commands for architecture artifacts |
 | Skills | 1 | Conversational Wardley Mapping with interactive guidance |
-| Agents | 4 | Autonomous research agents |
+| Agents | 5 | Autonomous research agents |
 | Templates | 45 | Document templates with UK Government compliance |
 | Scripts | 6 | Helper bash scripts |
 | Guides | 51 | Command usage documentation |
@@ -212,12 +212,10 @@ rm -rf .arckit/scripts/
 
 ## For Gemini/Codex Users
 
-This plugin is for Claude Code. For Gemini CLI or Codex CLI, continue using the Python CLI:
+This plugin is for Claude Code. For other AI assistants:
 
-```bash
-pip install arckit-cli
-arckit init --ai gemini
-```
+- **Gemini CLI**: Install the [ArcKit Gemini extension](https://github.com/tractorjuice/arckit-gemini) (`gemini extensions install https://github.com/tractorjuice/arckit-gemini`)
+- **Codex CLI**: Install the ArcKit CLI (`pip install arckit-cli && arckit init --ai codex`)
 
 ## Links
 

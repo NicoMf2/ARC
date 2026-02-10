@@ -30,9 +30,15 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 ```
 /plugin marketplace add tractorjuice/arc-kit
 ```
-Then install from the Discover tab. The plugin provides all 46 commands, autonomous agents, and bundled MCP servers (AWS Knowledge + Microsoft Learn). Updates are automatic via the marketplace.
+Then install from the Discover tab. The plugin provides all 48 commands, autonomous agents, and bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge). Updates are automatic via the marketplace.
 
-**Gemini CLI / Codex CLI** — install the ArcKit CLI:
+**Gemini CLI** — install the ArcKit extension (recommended):
+```bash
+gemini extensions install https://github.com/tractorjuice/arckit-gemini
+```
+Zero-config: all 48 commands, templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn). Updates via `gemini extensions update arckit`.
+
+**Codex CLI** — install the ArcKit CLI:
 ```bash
 # Install with pip
 pip install git+https://github.com/tractorjuice/arc-kit.git
@@ -44,36 +50,30 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
 
-**Latest Release**: [v2.2.0](https://github.com/tractorjuice/arc-kit/releases/tag/v2.2.0)
+**Latest Release**: [v2.4.1](https://github.com/tractorjuice/arc-kit/releases/tag/v2.4.1)
 
 ### Initialize a Project
 
 **Claude Code**: No initialization needed — the plugin provides everything.
 
-**Gemini CLI / Codex CLI**:
+**Codex CLI**:
 ```bash
 # Create a new architecture governance project
-arckit init payment-modernization --ai gemini
-
-# Or use OpenAI Codex CLI
 arckit init payment-modernization --ai codex
 
-# Install all CLI formats (Gemini + Codex)
-arckit init payment-modernization --all-ai
-
 # Minimal install (skip docs and guides)
-arckit init payment-modernization --ai gemini --minimal
+arckit init payment-modernization --ai codex --minimal
 
 # Or initialize in current directory
-arckit init . --ai gemini
+arckit init . --ai codex
 ```
 
 ### Start Using ArcKit
 
 ```bash
-# Gemini CLI / Codex CLI
+# Codex CLI
 cd payment-modernization
-gemini  # or codex
+codex
 
 # Inside your AI assistant, use ArcKit commands:
 /arckit.principles Create principles for a financial services company
@@ -85,7 +85,9 @@ gemini  # or codex
 
 **Claude Code plugin**: Updates are automatic via the marketplace — no action needed.
 
-**Gemini CLI / Codex CLI**:
+**Gemini CLI extension**: Updates via `gemini extensions update arckit`.
+
+**Codex CLI**:
 ```bash
 # Step 1: Upgrade the CLI tool
 pip install --upgrade git+https://github.com/tractorjuice/arc-kit.git
@@ -94,7 +96,7 @@ uv tool upgrade arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 
 # Step 2: Update your existing project (re-run init in place)
 cd /path/to/your-existing-project
-arckit init --here --ai gemini
+arckit init --here --ai codex
 ```
 
 This updates commands, templates, scripts, and agents while **preserving** your project data (`projects/`) and custom templates (`.arckit/templates-custom/`).
@@ -630,9 +632,9 @@ Publish all project documentation as an interactive website:
 |-------|---------|-------|
 | [Claude Code](https://www.anthropic.com/claude-code) | ✅ | Recommended. Install via **plugin** (`/plugin marketplace add tractorjuice/arc-kit`) |
 | [OpenAI Codex CLI](https://chatgpt.com/features/codex) | ✅ | Install via **CLI** (`arckit init --ai codex`). ChatGPT Plus/Pro/Enterprise ([Setup Guide](.codex/README.md)) |
-| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ | Install via **CLI** (`arckit init --ai gemini`) |
+| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ | Install via **extension** (`gemini extensions install https://github.com/tractorjuice/arckit-gemini`) |
 
-Claude Code uses the **ArcKit plugin** (not the CLI). The plugin provides slash commands, autonomous agents for research-heavy tasks, bundled MCP servers (AWS Knowledge + Microsoft Learn), and automatic updates via the marketplace. Codex CLI and Gemini CLI use the CLI package which copies commands and templates into the project directory.
+Claude Code uses the **ArcKit plugin** (not the CLI). The plugin provides slash commands, autonomous agents for research-heavy tasks, bundled MCP servers (AWS Knowledge + Microsoft Learn), and automatic updates via the marketplace. Gemini CLI uses the **ArcKit extension** for the same zero-config experience. Codex CLI uses the CLI package which copies commands and templates into the project directory.
 
 ### Why Commands, Not Skills
 
@@ -704,7 +706,7 @@ payment-modernization/
 │           ├── selected-vendor.md
 │           ├── approved-hld.md
 │           └── dld/
-└── .gemini/commands/                      # Gemini commands (or .codex/prompts/ for Codex)
+└── .codex/prompts/                        # Codex CLI prompts
 ```
 
 ---
@@ -735,7 +737,7 @@ Customize ArcKit templates without modifying defaults:
 
 ## Complete Command Reference
 
-All 46 ArcKit commands with maturity status and example outputs from public test repositories (20 test repos, v0–v19).
+All 48 ArcKit commands with maturity status and example outputs from public test repositories (20 test repos, v0–v19).
 
 ### Status Legend
 
@@ -769,6 +771,7 @@ All 46 ArcKit commands with maturity status and example outputs from public test
 
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|
+| `/arckit.init` | Initialize ArcKit project structure with numbered project directories and global artifacts | — | 🟢 Live |
 | `/arckit.plan` | Create project plan with timeline, phases, gates, and Mermaid diagrams | [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-PLAN-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-PLAN-v1.0.md) [v3/004](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/004-conference-facilities-modernization/ARC-004-PLAN-v1.0.md) [v3/005](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/005-cloud-pki/ARC-005-PLAN-v1.0.md) [v8](https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/001-ons-data-platform-modernisation/ARC-001-PLAN-v1.0.md) [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/001-cabinet-office-genai/ARC-001-PLAN-v1.0.md) [v10](https://tractorjuice.github.io/arckit-test-project-v10-training-marketplace/#projects/001-ai-training-marketplace/ARC-001-PLAN-v1.0.md) [v11](https://tractorjuice.github.io/arckit-test-project-v11-national-highways-data/#projects/001-national-highways-data-architecture-modernization/ARC-001-PLAN-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-PLAN-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/ARC-001-PLAN-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/ARC-001-PLAN-v1.0.md) | 🟢 Live |
 | `/arckit.principles` | Create or update enterprise architecture principles | [v1](https://tractorjuice.github.io/arckit-test-project-v1-m365/#projects/000-global/ARC-000-PRIN-v1.0.md) [v2](https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/#projects/000-global/ARC-000-PRIN-v1.0.md) [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/000-global/ARC-000-PRIN-v1.0.md) [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/#projects/000-global/ARC-000-PRIN-v1.0.md) [v8](https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/000-global/ARC-000-PRIN-v1.0.md) [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/000-global/ARC-000-PRIN-v1.0.md) [v10](https://tractorjuice.github.io/arckit-test-project-v10-training-marketplace/#projects/000-global/ARC-000-PRIN-v1.0.md) [v11](https://tractorjuice.github.io/arckit-test-project-v11-national-highways-data/#projects/000-global/ARC-000-PRIN-v1.0.md) [v7](https://tractorjuice.github.io/arckit-test-project-v7-nhs-appointment/#projects/000-global/ARC-000-PRIN-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/000-global/ARC-000-PRIN-v1.0.md) [v16](https://tractorjuice.github.io/arckit-test-project-v16-doctors-appointment/#projects/000-global/ARC-000-PRIN-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/000-global/ARC-000-PRIN-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/000-global/ARC-000-PRIN-v1.0.md) [v19](https://tractorjuice.github.io/arckit-test-project-v19-gov-api-aggregator/#projects/000-global/ARC-000-PRIN-v1.0.md) | 🟢 Live |
 
@@ -808,7 +811,7 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 |---------|-------------|----------|--------|
 | `/arckit.azure-research` | Research Azure services and architecture patterns using [Microsoft Learn MCP](https://www.npmjs.com/package/@anthropic/mcp-server-microsoft-docs) | [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/research/ARC-001-AZRS-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/research/ARC-002-AZRS-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/research/ARC-001-AZRS-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/research/ARC-001-AZRS-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/research/ARC-001-AZRS-v1.0.md) [v19](https://tractorjuice.github.io/arckit-test-project-v19-gov-api-aggregator/#projects/001-uk-government-api-aggregator/research/ARC-001-AZRS-v1.0.md) | 🟣 Experimental |
 | `/arckit.aws-research` | Research AWS services and architecture patterns using [AWS Knowledge MCP](https://awslabs.github.io/mcp/servers/aws-knowledge-mcp-server) | [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/research/ARC-001-AWRS-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/research/ARC-001-AWRS-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/research/ARC-001-AWRS-v1.0.md) [v19](https://tractorjuice.github.io/arckit-test-project-v19-gov-api-aggregator/#projects/001-uk-government-api-aggregator/research/ARC-001-AWRS-v1.0.md) | 🟣 Experimental |
-| `/arckit.gcp-research` | Research Google Cloud services and architecture patterns (pending GCP documentation MCP server) | — | 🔮 Planned |
+| `/arckit.gcp-research` | Research Google Cloud services and architecture patterns using [Google Developer Knowledge MCP](https://developerknowledge.googleapis.com/mcp) | — | 🟣 Experimental |
 
 ### Data Source Discovery
 
@@ -816,7 +819,7 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 |---------|-------------|----------|--------|
 | `/arckit.datascout` | Discover external data sources (APIs, datasets, open data portals) to fulfil project requirements | [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/ARC-001-DSCT-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/ARC-001-DSCT-v1.0.md) [v19](https://tractorjuice.github.io/arckit-test-project-v19-gov-api-aggregator/#projects/001-uk-government-api-aggregator/ARC-001-DSCT-v1.0.md) | 🟣 Experimental |
 
-> **Note**: Google Cloud currently offers MCP servers for [resource management](https://docs.cloud.google.com/mcp/overview) (BigQuery, GKE, Compute Engine) but not documentation search. `/arckit.gcp-research` will be implemented when Google releases a documentation-focused MCP server equivalent to Microsoft Learn or AWS Knowledge MCP.
+> **Note**: The Google Developer Knowledge MCP requires an API key (`GOOGLE_API_KEY` environment variable). See the [GCP Research guide](docs/guides/gcp-research.md) for setup instructions.
 
 ### Procurement
 
@@ -961,7 +964,7 @@ Key references live in `docs/` and top-level guides:
 
 - **Python 3.11+**
 - **Git** (optional but recommended)
-- **AI Coding Agent**: [Claude Code](https://www.anthropic.com/claude-code) (via plugin), [Gemini CLI](https://github.com/google-gemini/gemini-cli), or [OpenAI Codex CLI](https://chatgpt.com/features/codex) (via CLI)
+- **AI Coding Agent**: [Claude Code](https://www.anthropic.com/claude-code) (via plugin), [Gemini CLI](https://github.com/google-gemini/gemini-cli) (via extension), or [OpenAI Codex CLI](https://chatgpt.com/features/codex) (via CLI)
 - **uv** for package management: [Install uv](https://docs.astral.sh/uv/)
 
 ---
@@ -987,7 +990,7 @@ arckit init my-project
 Full guidance lives in `docs/` and the static site.
 - Quick tour: [docs/index.html](docs/index.html) (mirrors the public landing page).
 - Core guides: [docs/guides/principles.md](docs/guides/principles.md), [docs/guides/requirements.md](docs/guides/requirements.md), [docs/guides/procurement.md](docs/guides/procurement.md), [docs/guides/design-review.md](docs/guides/design-review.md).
-- Reference packs: [WORKFLOW-DIAGRAMS.md](WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 46×46 command matrix.
+- Reference packs: [WORKFLOW-DIAGRAMS.md](WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 48×48 command matrix.
 - Traceability: [docs/guides/traceability.md](docs/guides/traceability.md) documents end-to-end requirements coverage.
 
 ## Relationship to Spec Kit
@@ -1044,8 +1047,8 @@ If you see: `API Error: Claude's response exceeded the 32000 output token maximu
 
 **Which commands are affected?**
 - 🔴 HIGH RISK: `/arckit.sobc`, `/arckit.requirements`, `/arckit.data-model`, `/arckit.sow`
-- 🟢 MITIGATED (agent): `/arckit.research`, `/arckit.datascout`, `/arckit.aws-research`, `/arckit.azure-research` — run as autonomous agents in separate context windows
-- 🟡 MEDIUM RISK: `/arckit.risk`, `/arckit.evaluation`, `/arckit.principles`
+- 🟢 MITIGATED (agent): `/arckit.research`, `/arckit.datascout`, `/arckit.aws-research`, `/arckit.azure-research`, `/arckit.gcp-research` — run as autonomous agents in separate context windows
+- 🟡 MEDIUM RISK: `/arckit.risk`, `/arckit.evaluate`, `/arckit.principles`
 
 **See full guide**: [docs/TOKEN-LIMITS.md](docs/TOKEN-LIMITS.md)
 
@@ -1053,11 +1056,14 @@ If you see: `API Error: Claude's response exceeded the 32000 output token maximu
 
 **Command not found**: Ensure commands are available
 ```bash
-# For Gemini or Codex, check if commands directory exists
-ls .gemini/commands/ || ls .codex/prompts/
+# For Codex, check if commands directory exists
+ls .codex/prompts/
 
 # For Claude Code, install the ArcKit plugin:
 # /plugin marketplace add tractorjuice/arc-kit
+
+# For Gemini CLI, install the ArcKit extension:
+# gemini extensions install https://github.com/tractorjuice/arckit-gemini
 ```
 
 **Template not found**: Ensure you've run `/arckit.principles` first
@@ -1078,7 +1084,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v2.2.0](https://github.com/tractorjuice/arc-kit/releases/tag/v2.2.0)
+- **Latest Version**: [v2.4.1](https://github.com/tractorjuice/arc-kit/releases/tag/v2.4.1)
 
 ---
 

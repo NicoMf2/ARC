@@ -90,15 +90,19 @@ Apply the user's selections: the scope determines which data model entities and 
 
 ### Step 1: Identify or Create Project
 
-Use the `create-project.sh` script to find or create the project directory:
+First, check for existing projects:
 
 ```bash
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json
+bash .arckit/scripts/bash/list-projects.sh --json
 ```
 
-This will return JSON with the project path. Parse it to get `project_id` and `project_path`.
+If the user specifies an existing project or the name matches, use that directory. Otherwise, create a new project:
 
-If the user provided a project ID or name in their request, use that. Otherwise, ask the user for the project name.
+```bash
+bash .arckit/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json
+```
+
+Parse the JSON output to get `project_id` and `project_path`.
 
 ### Step 2: Read Source Artifacts
 
@@ -111,7 +115,7 @@ Read the DPIA template:
 **Read the template** (with user override support):
 - **First**, check if `.arckit/templates/dpia-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
-- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/dpia-template.md` (default)
+- **If not found**: Read `.arckit/templates/dpia-template.md` (default)
 
 > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit:customize dpia`
@@ -179,7 +183,7 @@ Generate the DPIA by:
 2. **Auto-populate Document Control**:
    ```bash
    # Generate document ID
-   DOC_ID=$(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh {project_id} DPIA v${VERSION})
+   DOC_ID=$(bash .arckit/scripts/bash/generate-document-id.sh {project_id} DPIA v${VERSION})
    ```
    - Document ID: `{DOC_ID}` (e.g., ARC-001-DPIA-v1.0)
    - Version: ${VERSION}
