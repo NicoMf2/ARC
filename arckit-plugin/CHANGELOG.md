@@ -5,6 +5,18 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Cross-session memory via MCP memory server** — new `@modelcontextprotocol/server-memory` integration stores project decisions, vendor insights, review outcomes, research findings, and session summaries across Claude Code sessions; entities persist in `.arckit/memory.jsonl` within the project directory
+- **Session learner hook** (`hooks/session-learner.sh`) — new Notification/Stop hook analyses recent git commits on session end, detects which artifact types were created or modified, classifies session type (governance, research, procurement, review, general), and writes a JSON manifest to `.arckit/memory/` for the next session to process
+- **Session start memory integration** — `arckit-session.sh` now reads pending memory manifests and surfaces them as context text, instructing Claude to store them via `mcp__memory__create_entities` and query prior context via `mcp__memory__search_nodes`
+- **Auto-allow memory MCP tools** — `allow-mcp-tools.sh` now auto-approves `mcp__memory__*` tool requests alongside existing documentation MCPs
+- New `docs/guides/cross-session-memory.md` — guide covering entity types, design principles, session classification, manual operations, and troubleshooting
+
+---
+
 ## [2.7.1] - 2026-02-20
 
 ### Added

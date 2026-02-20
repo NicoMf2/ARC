@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 # ArcKit PermissionRequest Hook — Auto-Allow Bundled MCP Tools
 #
-# Auto-approves permission requests for the read-only MCP documentation tools
-# bundled with ArcKit (AWS Knowledge, Microsoft Learn, Google Developer Knowledge,
-# DataCommons). Non-MCP tools fall through to the normal permission dialog.
+# Auto-approves permission requests for the MCP tools bundled with ArcKit:
+# - Read-only documentation tools (AWS Knowledge, Microsoft Learn, Google, DataCommons)
+# - Cross-session memory tools (create_entities, search_nodes, read_graph, etc.)
+#
+# Non-MCP tools fall through to the normal permission dialog.
 #
 # Input (stdin):  JSON { tool_name, ... }
 # Output (stdout): JSON with "decision": "allow" for matched tools
@@ -21,6 +23,10 @@ case "$TOOL_NAME" in
   mcp__google-developer-knowledge__*|\
   mcp__datacommons-mcp__*)
     echo '{"decision":"allow","reason":"ArcKit: auto-allowed bundled MCP documentation tool"}'
+    exit 0
+    ;;
+  mcp__memory__*)
+    echo '{"decision":"allow","reason":"ArcKit: auto-allowed bundled MCP memory tool"}'
     exit 0
     ;;
   *)

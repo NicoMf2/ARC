@@ -21,6 +21,14 @@
       "headers": {
         "X-API-Key": "${DATA_COMMONS_API_KEY}"
       }
+    },
+    "memory": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "env": {
+        "MEMORY_FILE_PATH": ".arckit/memory.jsonl"
+      }
     }
   }
 }
