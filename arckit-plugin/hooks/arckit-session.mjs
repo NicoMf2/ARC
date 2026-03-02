@@ -137,6 +137,36 @@ if (isDir(projectsDir)) {
   }
 }
 
+// Check for pending memory manifests from previous sessions
+const memoryDir = join(cwd, '.arckit', 'memory');
+if (isDir(memoryDir)) {
+  const pendingFiles = readdirSync(memoryDir)
+    .filter(f => f.startsWith('pending-') && f.endsWith('.json'))
+    .sort()
+    .reverse()
+    .slice(0, 5); // Process at most 5 pending manifests
+
+  if (pendingFiles.length > 0) {
+    context += '\n\n## Cross-Session Memory: Pending Manifests\n';
+    context += 'Previous sessions left the following summaries. Process them by calling `mcp__memory__create_entities` for each suggested entity, then delete the manifest files.\n';
+
+    for (const pf of pendingFiles) {
+      try {
+        const manifest = JSON.parse(readFileSync(join(memoryDir, pf), 'utf8'));
+        const se = manifest.suggestedEntity || {};
+        context += `\n### ${pf}\n`;
+        context += `- **Session type:** ${manifest.sessionType || 'general'}\n`;
+        context += `- **Commits:** ${manifest.commitCount || 0}, **Files changed:** ${manifest.filesChanged || 0}\n`;
+        context += `- **Artifacts:** ${(manifest.artifactTypes || []).join(', ') || 'none'}\n`;
+        context += `- **Suggested entity:** \`${se.name || 'unknown'}\` (type: \`${se.entityType || 'SessionSummary'}\`)\n`;
+        if (se.observations && se.observations.length > 0) {
+          context += `- **Observations:** ${se.observations.slice(0, 5).join('; ')}\n`;
+        }
+      } catch { /* skip malformed manifests */ }
+    }
+  }
+}
+
 // Output additionalContext
 const output = {
   hookSpecificOutput: {

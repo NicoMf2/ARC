@@ -1,5 +1,9 @@
 {
   "mcpServers": {
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/claude-code-mcp-memory"]
+    },
     "aws-knowledge": {
       "type": "http",
       "url": "https://knowledge-mcp.global.api.aws"

@@ -15,6 +15,7 @@
 import { readFileSync } from 'node:fs';
 
 const ALLOWED_PREFIXES = [
+  'mcp__memory__',
   'mcp__aws-knowledge__',
   'mcp__microsoft-learn__',
   'mcp__plugin_microsoft-docs_microsoft-learn__',
