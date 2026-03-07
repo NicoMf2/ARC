@@ -214,7 +214,7 @@ Four Model Context Protocol servers are configured in `config.toml` to provide c
 
 ## File Structure
 
-```
+```text
 arckit-codex/
 ├── README.md              # This file
 ├── VERSION                # Extension version (tracks plugin)
