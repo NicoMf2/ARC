@@ -437,6 +437,68 @@ def rewrite_codex_skills(skills_dir):
         print(f"  Rewrote {count} skill files for Codex skill invocation format")
 
 
+def generate_gemini_agents(agents_dir, output_dir):
+    """Generate Gemini CLI sub-agent markdown files from Claude Code agents.
+
+    Reads each arckit-{name}.md from agents_dir, converts the YAML frontmatter
+    (keeping name/description, dropping model, adding max_turns/timeout_mins),
+    rewrites paths and Read instructions for Gemini, prepends the extension
+    file access block, and writes to output_dir.
+    """
+    if not os.path.isdir(agents_dir):
+        print(f"  Skipped: {agents_dir} not found")
+        return
+
+    os.makedirs(output_dir, exist_ok=True)
+    gemini_path_prefix = "~/.gemini/extensions/arckit"
+    count = 0
+
+    for filename in sorted(os.listdir(agents_dir)):
+        if not (filename.startswith("arckit-") and filename.endswith(".md")):
+            continue
+
+        agent_path = os.path.join(agents_dir, filename)
+        with open(agent_path, "r") as f:
+            content = f.read()
+
+        frontmatter, prompt = extract_frontmatter_and_prompt(content)
+
+        # Build Gemini frontmatter: keep name/description, drop model,
+        # add Gemini-specific fields
+        gemini_fm = {}
+        if "name" in frontmatter:
+            gemini_fm["name"] = frontmatter["name"]
+        if "description" in frontmatter:
+            gemini_fm["description"] = frontmatter["description"]
+        gemini_fm["max_turns"] = 25
+        gemini_fm["timeout_mins"] = 10
+
+        # Rewrite paths: ${CLAUDE_PLUGIN_ROOT} -> ~/.gemini/extensions/arckit
+        prompt = prompt.replace("${CLAUDE_PLUGIN_ROOT}", gemini_path_prefix)
+
+        # Rewrite Read instructions to shell commands
+        prompt = re.sub(
+            r"Read `(" + re.escape(gemini_path_prefix) + r"/[^`]+)`",
+            r"Run `cat \1` to read the file",
+            prompt,
+        )
+
+        # Prepend extension file access block
+        prompt = EXTENSION_FILE_ACCESS_BLOCK + prompt
+
+        # Serialize frontmatter with yaml for correct multi-line handling
+        fm_str = yaml.dump(gemini_fm, default_flow_style=False, sort_keys=False).rstrip()
+        output_content = f"---\n{fm_str}\n---\n\n{prompt}\n"
+
+        out_path = os.path.join(output_dir, filename)
+        with open(out_path, "w") as f:
+            f.write(output_content)
+        print(f"  {filename}")
+        count += 1
+
+    print(f"  Generated {count} Gemini sub-agent files in {output_dir}")
+
+
 if __name__ == "__main__":
     commands_dir = "arckit-claude/commands/"
     agents_dir = "arckit-claude/agents/"
@@ -523,6 +585,10 @@ if __name__ == "__main__":
     print()
     print("Rewriting Codex extension skills for Codex command format...")
     rewrite_codex_skills("arckit-codex/skills")
+
+    print()
+    print("Generating Gemini CLI sub-agents...")
+    generate_gemini_agents(agents_dir, "arckit-gemini/agents")
 
     print()
     total = sum(counts.values())
