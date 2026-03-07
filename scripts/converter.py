@@ -111,6 +111,12 @@ AGENT_CONFIG = {
         "copy_commands_to_extension": True,
         "copy_agents_to_extension": True,
     },
+    "codex_skills": {
+        "name": "Codex Skills",
+        "output_dir": "arckit-codex/skills",
+        "format": "skill",
+        "path_prefix": ".arckit",
+    },
     "opencode": {
         "name": "OpenCode CLI",
         "output_dir": ".opencode/commands",
@@ -156,7 +162,7 @@ def rewrite_paths(prompt, config):
 
 
 def format_output(description, prompt, fmt):
-    """Format into target format: 'markdown' or 'toml'."""
+    """Format into target format: 'markdown', 'toml', or 'skill'."""
     if fmt == "toml":
         prompt_escaped = prompt.replace("\\", "\\\\").replace('"', '\\"')
         prompt_formatted = '"""\n' + prompt_escaped + '\n"""'
@@ -212,13 +218,32 @@ def convert(commands_dir, agents_dir):
 
         for agent_id, config in AGENT_CONFIG.items():
             rewritten = rewrite_paths(prompt, config)
-            content = format_output(description, rewritten, config["format"])
-            out_filename = config["filename_pattern"].format(name=base_name)
-            out_path = os.path.join(config["output_dir"], out_filename)
-            with open(out_path, "w") as f:
-                f.write(content)
-            print(f"  {config['name'] + ':':14s}{source_label} -> {out_path}")
-            counts[agent_id] += 1
+
+            if config["format"] == "skill":
+                skill_name = f"arckit-{base_name}"
+                skill_dir = os.path.join(config["output_dir"], skill_name)
+                os.makedirs(skill_dir, exist_ok=True)
+                os.makedirs(os.path.join(skill_dir, "agents"), exist_ok=True)
+
+                escaped_desc = description.replace('"', '\\"')
+                skill_md = f'---\nname: {skill_name}\ndescription: "{escaped_desc}"\n---\n\n{rewritten}\n'
+                openai_yaml = "policy:\n  allow_implicit_invocation: false\n"
+
+                with open(os.path.join(skill_dir, "SKILL.md"), "w") as f:
+                    f.write(skill_md)
+                with open(os.path.join(skill_dir, "agents", "openai.yaml"), "w") as f:
+                    f.write(openai_yaml)
+
+                print(f"  {config['name'] + ':':14s}{source_label} -> {skill_dir}/")
+                counts[agent_id] += 1
+            else:
+                content = format_output(description, rewritten, config["format"])
+                out_filename = config["filename_pattern"].format(name=base_name)
+                out_path = os.path.join(config["output_dir"], out_filename)
+                with open(out_path, "w") as f:
+                    f.write(content)
+                print(f"  {config['name'] + ':':14s}{source_label} -> {out_path}")
+                counts[agent_id] += 1
 
     return counts
 
@@ -427,6 +452,12 @@ if __name__ == "__main__":
             print(f"{config['name'] + ' Ext:':14s}{ext_dir}/")
     print()
 
+    # Copy extension supporting files BEFORE convert so reference skills
+    # are in place before command skills are generated on top
+    print("Copying extension supporting files...")
+    copy_extension_files(plugin_dir)
+
+    print()
     counts = convert(commands_dir, agents_dir)
 
     # Post-processing: copy commands and agents to extension directories
@@ -473,10 +504,6 @@ if __name__ == "__main__":
                 print(
                     f"  Copied agents to {local_agents_dir} and {ext_agents_dir}"
                 )
-
-    print()
-    print("Copying extension supporting files...")
-    copy_extension_files(plugin_dir)
 
     print()
     print("Generating Codex extension config...")
