@@ -11,7 +11,7 @@ $ARGUMENTS
 
 ## Goal
 
-Generate a systematic **Architecture Conformance Assessment** that checks whether the *decided* architecture (ADRs, principles, approved designs) matches the *designed/implemented* architecture (HLD, DLD, DevOps artifacts). This command fills the gap between `/prompts:arckit.health` (quick metadata scan) and `/prompts:arckit.analyze` (deep governance across all dimensions) by focusing specifically on **decided-vs-designed conformance**, architecture drift, and architecture technical debt (ATD).
+Generate a systematic **Architecture Conformance Assessment** that checks whether the *decided* architecture (ADRs, principles, approved designs) matches the *designed/implemented* architecture (HLD, DLD, DevOps artifacts). This command fills the gap between `$arckit-health` (quick metadata scan) and `$arckit-analyze` (deep governance across all dimensions) by focusing specifically on **decided-vs-designed conformance**, architecture drift, and architecture technical debt (ATD).
 
 **This is a point-in-time assessment** — run at key project gates or after major design changes to track conformance over time.
 
@@ -21,13 +21,13 @@ Generate a systematic **Architecture Conformance Assessment** that checks whethe
 
 a. **PRIN** (Architecture Principles, in `projects/000-global/`) (MUST exist):
 
-- If NOT found: ERROR "Run /prompts:arckit.principles first to define governance standards for your organization"
+- If NOT found: ERROR "Run $arckit-principles first to define governance standards for your organization"
 
 ### Architecture Decision Records (MANDATORY)
 
 b. **ADR** (Architecture Decision Records, in `projects/{project-dir}/decisions/`) (MUST exist):
 
-- If NOT found: ERROR "Run /prompts:arckit.adr first — conformance assessment requires at least one accepted ADR"
+- If NOT found: ERROR "Run $arckit-adr first — conformance assessment requires at least one accepted ADR"
 
 ### Project Artifacts (RECOMMENDED)
 
@@ -78,19 +78,19 @@ c. `.arckit/conformance-rules.md` in the project root (if exists):
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `.arckit/templates/conformance-assessment-template.md` (default)
 
-> **Tip**: Users can customize templates with `/prompts:arckit.customize conformance`
+> **Tip**: Users can customize templates with `$arckit-customize conformance`
 
 ### 1. Validate Prerequisites
 
 **Check Architecture Principles**:
 
 - Look for `ARC-000-PRIN-*.md` in `projects/000-global/`
-- If NOT found: ERROR "Architecture principles not found. Run /prompts:arckit.principles first."
+- If NOT found: ERROR "Architecture principles not found. Run $arckit-principles first."
 
 **Check ADRs**:
 
 - Look for `ARC-*-ADR-*.md` files in `projects/{project-dir}/decisions/`
-- If NONE found: ERROR "No ADRs found. Run /prompts:arckit.adr first — conformance assessment requires at least one accepted ADR."
+- If NONE found: ERROR "No ADRs found. Run $arckit-adr first — conformance assessment requires at least one accepted ADR."
 
 ### 1b. Read external documents and policies
 
@@ -202,7 +202,7 @@ For EACH architecture principle:
    - Insufficient evidence to determine? → NOT ASSESSED
 4. This is a **hard constraint check**, not a maturity assessment
 
-**Note**: This differs from `/prompts:arckit.principles-compliance` which provides RAG scoring with remediation plans. This check is a binary gate: does the design conform or not?
+**Note**: This differs from `$arckit-principles-compliance` which provides RAG scoring with remediation plans. This check is a binary gate: does the design conform or not?
 
 **Evidence format**: `Principle "Name" — HLD Section X (file:line) [SATISFIES/VIOLATES] — [description]`
 
@@ -420,10 +420,10 @@ After generating the assessment document:
 
    ```text
    📋 **Related Commands**:
-   - /prompts:arckit.principles-compliance - Detailed RAG scoring of principle compliance
-   - /prompts:arckit.analyze - Comprehensive governance gap analysis
-   - /prompts:arckit.traceability - Requirements traceability matrix
-   - /prompts:arckit.health - Quick metadata health check
+   - $arckit-principles-compliance - Detailed RAG scoring of principle compliance
+   - $arckit-analyze - Comprehensive governance gap analysis
+   - $arckit-traceability - Requirements traceability matrix
+   - $arckit-health - Quick metadata health check
    ```
 
 2. **Track in Project**:

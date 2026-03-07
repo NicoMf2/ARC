@@ -32,7 +32,7 @@ arckit check
 arckit init test-project --ai codex --no-git
 arckit init test-project --ai opencode --no-git
 arckit init test-project --ai codex --minimal  # Skip docs/guides
-cd test-project && ls -la .codex/prompts/
+cd test-project && ls -la .agents/skills/
 
 # Build distribution
 python -m build

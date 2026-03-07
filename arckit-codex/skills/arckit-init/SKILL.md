@@ -31,9 +31,9 @@ projects/
 │   └── external/   (external reference documents)
 
 Next steps:
-1. Run /prompts:arckit.principles to create architecture principles
-2. Run /prompts:arckit.stakeholders to analyze stakeholders for a project
-3. Run /prompts:arckit.requirements to create requirements
+1. Run $arckit-principles to create architecture principles
+2. Run $arckit-stakeholders to analyze stakeholders for a project
+3. Run $arckit-requirements to create requirements
 
 Individual projects will be created automatically in numbered directories (001-*, 002-*).
 ```

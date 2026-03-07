@@ -26,14 +26,14 @@ Generate a comprehensive platform strategy design document using PDT v2.2.1 meth
 **MANDATORY** (warn if missing):
 
 - **PRIN** (Architecture Principles, in 000-global) — Extract: Platform governance principles, ecosystem orchestration standards, technology choices
-  - If missing: STOP — platform designs require architecture principles. Run `/prompts:arckit.principles` first.
+  - If missing: STOP — platform designs require architecture principles. Run `$arckit-principles` first.
 - **REQ** (Requirements) — Extract: Platform capabilities from FR/NFR requirements, scalability, availability, security
-  - If missing: warn user to run `/prompts:arckit.requirements` first
+  - If missing: warn user to run `$arckit-requirements` first
 
 **RECOMMENDED** (read if available, note if missing):
 
 - **STKE** (Stakeholder Analysis) — Extract: Ecosystem entities from stakeholder drivers, user personas, goals
-  - If missing: recommend running `/prompts:arckit.stakeholders` for better entity portraits
+  - If missing: recommend running `$arckit-stakeholders` for better entity portraits
 - **WARD** (Wardley Maps, in wardley-maps/) — Extract: Evolution analysis for build vs buy decisions, component positioning
 
 **OPTIONAL** (read if available, skip silently if missing):
@@ -75,7 +75,7 @@ Read the platform design template:
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `.arckit/templates/platform-design-template.md` (default)
 
-> **Tip**: Users can customize templates with `/prompts:arckit.customize platform-design`
+> **Tip**: Users can customize templates with `$arckit-customize platform-design`
 
 This template contains the structure for all 8 PDT canvases.
 
@@ -492,15 +492,15 @@ After writing the file, provide a **concise summary** (NOT the full document):
 ## Related Commands
 
 **Prerequisites** (should run before platform design):
-- `/prompts:arckit.principles` - Architecture principles
-- `/prompts:arckit.stakeholders` - Stakeholder analysis (highly recommended)
-- `/prompts:arckit.requirements` - Platform requirements (recommended)
-- `/prompts:arckit.wardley` - Value chain analysis (recommended)
+- `$arckit-principles` - Architecture principles
+- `$arckit-stakeholders` - Stakeholder analysis (highly recommended)
+- `$arckit-requirements` - Platform requirements (recommended)
+- `$arckit-wardley` - Value chain analysis (recommended)
 
 **Next Steps** (run after platform design):
-- `/prompts:arckit.sow` - RFP for platform development vendors
-- `/prompts:arckit.hld-review` - Review high-level platform architecture
-- `/prompts:arckit.backlog` - Generate sprint backlog from platform features
+- `$arckit-sow` - RFP for platform development vendors
+- `$arckit-hld-review` - Review high-level platform architecture
+- `$arckit-backlog` - Generate sprint backlog from platform features
 
 ## Methodology Reference
 
@@ -565,8 +565,8 @@ The Platform Design Canvas (Section 8) provides a single-page synthesis perfect 
 
 **Not Suitable for Platform Design**:
 
-- Single-product SaaS applications (use /prompts:arckit.requirements and /prompts:arckit.hld-review instead)
-- Internal enterprise systems without multi-sided ecosystem (use /prompts:arckit.requirements)
-- Point-to-point integrations (use /prompts:arckit.diagram for architecture)
+- Single-product SaaS applications (use $arckit-requirements and $arckit-hld-review instead)
+- Internal enterprise systems without multi-sided ecosystem (use $arckit-requirements)
+- Point-to-point integrations (use $arckit-diagram for architecture)
 
 If user's project doesn't fit platform pattern, recommend appropriate alternative command.

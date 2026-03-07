@@ -28,7 +28,7 @@ $ARGUMENTS
 
 - **PRIN** (Architecture Principles, in `projects/000-global/`)
   - Extract: Governance standards, technology constraints, compliance framework
-  - If missing: warn user to run `/prompts:arckit.principles` first — principles are the foundation of the ArcKit governance framework
+  - If missing: warn user to run `$arckit-principles` first — principles are the foundation of the ArcKit governance framework
 
 **RECOMMENDED** (read if available, note if missing):
 
@@ -174,7 +174,7 @@ git log --follow --format="%ai | %s" --name-only -- . | grep -E "(\.md|^[0-9]{4}
 This will show:
 
 - Timestamps (YYYY-MM-DD HH:MM:SS)
-- Commit messages (which often contain ArcKit command names like "/prompts:arckit.requirements")
+- Commit messages (which often contain ArcKit command names like "$arckit-requirements")
 - Files changed
 
 **Parse this data to create timeline events**:
@@ -219,7 +219,7 @@ Timeline Events:
     date: "2024-01-15",
     days_from_start: 0,
     event_type: "Foundation",
-    command: "/prompts:arckit.principles",
+    command: "$arckit-principles",
     artifact: "ARC-000-PRIN-v1.0.md",
     description: "Established enterprise architecture principles"
   },
@@ -227,7 +227,7 @@ Timeline Events:
     date: "2024-01-18",
     days_from_start: 3,
     event_type: "Foundation",
-    command: "/prompts:arckit.stakeholders",
+    command: "$arckit-stakeholders",
     artifact: "ARC-{PROJECT_ID}-STKE-v1.0.md",
     description: "Analyzed 8 stakeholders, 12 goals, 15 outcomes"
   },
@@ -486,8 +486,8 @@ Create a detailed table with all events:
 
 | # | Date | Days from Start | Event Type | Command | Artifact | Description |
 |---|------|-----------------|------------|---------|----------|-------------|
-| 1 | [DATE] | 0 | Foundation | `/prompts:arckit.principles` | ARC-000-PRIN-v1.0.md | Established enterprise architecture principles |
-| 2 | [DATE] | [DAYS] | Foundation | `/prompts:arckit.stakeholders` | ARC-{PROJECT_ID}-STKE-v1.0.md | Analyzed [N] stakeholders, [M] goals, [P] outcomes |
+| 1 | [DATE] | 0 | Foundation | `$arckit-principles` | ARC-000-PRIN-v1.0.md | Established enterprise architecture principles |
+| 2 | [DATE] | [DAYS] | Foundation | `$arckit-stakeholders` | ARC-{PROJECT_ID}-STKE-v1.0.md | Analyzed [N] stakeholders, [M] goals, [P] outcomes |
 | ... | ... | ... | ... | ... | ... | ... |
 
 **Visualization 4: Phase Duration Pie Chart**
@@ -682,7 +682,7 @@ Read the story template:
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `.arckit/templates/story-template.md` (default)
 
-> **Tip**: Users can customize templates with `/prompts:arckit.customize story`
+> **Tip**: Users can customize templates with `$arckit-customize story`
 
 **Populate ALL placeholders** in the template with real data:
 
@@ -838,7 +838,7 @@ The story demonstrates systematic architecture governance from stakeholder needs
 
 ## Important Notes
 
-1. **Prerequisites first**: Always check that architecture principles exist before generating a story. The principles command (`/prompts:arckit.principles`) is the foundation of the ArcKit governance framework and should be the FIRST command run in any project.
+1. **Prerequisites first**: Always check that architecture principles exist before generating a story. The principles command (`$arckit-principles`) is the foundation of the ArcKit governance framework and should be the FIRST command run in any project.
 
 2. **Use Write tool**: The ARC-{PROJECT_ID}-STORY-v1.0.md will be 2000-3000 lines. You MUST use the Write tool to avoid exceeding token limits.
 
@@ -866,17 +866,17 @@ The story demonstrates systematic architecture governance from stakeholder needs
 
 ```bash
 # Generate story for a specific project
-/prompts:arckit.story Cabinet Office GenAI
+$arckit-story Cabinet Office GenAI
 
 # Generate story for project by number
-/prompts:arckit.story 009
+$arckit-story 009
 
 # Let user choose from list
-/prompts:arckit.story
+$arckit-story
 
 # Generate story for current directory
 cd projects/009-cabinet-office-genai
-/prompts:arckit.story .
+$arckit-story .
 ```
 
 ## Success Criteria

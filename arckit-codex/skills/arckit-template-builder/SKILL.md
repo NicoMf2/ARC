@@ -3,7 +3,7 @@ name: arckit-template-builder
 description: "Create new document templates by interviewing the user about their organization's requirements"
 ---
 
-You are helping an enterprise architect create a brand-new document template tailored to their organization's specific needs. Unlike `/prompts:arckit.customize` (which copies existing templates for editing), this command creates entirely new templates from scratch through an interactive interview process.
+You are helping an enterprise architect create a brand-new document template tailored to their organization's specific needs. Unlike `$arckit-customize` (which copies existing templates for editing), this command creates entirely new templates from scratch through an interactive interview process.
 
 ## User Input
 
@@ -27,7 +27,7 @@ All community-generated content is clearly marked with origin banners to disting
 ArcKit uses three origin tiers for all templates and guides:
 
 - **Official** — Shipped with ArcKit (e.g., `Template Origin: Official`)
-- **Custom** — User-modified copies of official templates via `/prompts:arckit.customize` (e.g., `Template Origin: Custom`)
+- **Custom** — User-modified copies of official templates via `$arckit-customize` (e.g., `Template Origin: Custom`)
 - **Community** — Entirely new templates created via this command (e.g., `Template Origin: Community`)
 
 ## Instructions
@@ -177,7 +177,7 @@ Create a usage guide at `.arckit/guides-custom/{name}.md` using the Write tool.
 ## Usage
 
 ```text
-/prompts:arckit.community.{name} {example arguments}
+$arckit-community.{name} {example arguments}
 ```
 
 Output: `.arckit/templates-custom/{name}-template.md`
@@ -315,7 +315,7 @@ After writing all files, show ONLY this summary:
 ### How to Use
 
 1. Run `/arckit.community.{name} <project>` to generate a document from this template
-2. Or use `/prompts:arckit.customize` to copy any official template for lighter customization
+2. Or use `$arckit-customize` to copy any official template for lighter customization
 
 ### How to Share
 
@@ -327,8 +327,8 @@ After writing all files, show ONLY this summary:
 | Tier | Description |
 |------|-------------|
 | **Official** | Shipped with ArcKit — 50+ templates |
-| **Custom** | Your modifications of official templates (`/prompts:arckit.customize`) |
-| **Community** | New templates you create (`/prompts:arckit.template-builder`) |
+| **Custom** | Your modifications of official templates (`$arckit-customize`) |
+| **Community** | New templates you create (`$arckit-template-builder`) |
 ```
 
 ## Important Notes
@@ -344,5 +344,5 @@ After writing all files, show ONLY this summary:
 
 After completing this command, consider running:
 
-- `/prompts:arckit.customize` -- Copy and modify existing official templates instead of creating new ones *(when User wants to customize an existing template rather than build a new one)*
+- `$arckit-customize` -- Copy and modify existing official templates instead of creating new ones *(when User wants to customize an existing template rather than build a new one)*
 

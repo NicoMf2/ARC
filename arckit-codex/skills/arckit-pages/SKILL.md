@@ -449,8 +449,8 @@ Features:
 - Uses relative paths — works on any static hosting provider
 
 Health Integration:
-- Run `/prompts:arckit.health JSON=true` to generate docs/health.json
-- Re-run `/prompts:arckit.pages` to display health data on the dashboard
+- Run `$arckit-health JSON=true` to generate docs/health.json
+- Re-run `$arckit-pages` to display health data on the dashboard
 
 Deployment:
 The site uses relative paths and can be deployed to any static hosting provider:

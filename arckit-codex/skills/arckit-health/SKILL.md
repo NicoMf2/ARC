@@ -36,7 +36,7 @@ $ARGUMENTS
 
 ## What This Command Does
 
-Scans the `projects/` directory for all `ARC-*` artifacts and applies seven detection rules to identify governance health issues. Each finding is assigned a severity (HIGH, MEDIUM, or LOW) with a suggested remediation action. The hook also writes `docs/health.json` on every run for dashboard integration (consumed by `/prompts:arckit.pages`).
+Scans the `projects/` directory for all `ARC-*` artifacts and applies seven detection rules to identify governance health issues. Each finding is assigned a severity (HIGH, MEDIUM, or LOW) with a suggested remediation action. The hook also writes `docs/health.json` on every run for dashboard integration (consumed by `$arckit-pages`).
 
 **This command does NOT modify any project files.** It is a diagnostic tool. The only file written is `docs/health.json`.
 
@@ -85,7 +85,7 @@ Scans the `projects/` directory for all `ARC-*` artifacts and applies seven dete
 ```text
 [HIGH] STALE-RSCH: {filepath}
   Last modified: {date} ({N} days ago)
-  Action: Re-run /prompts:arckit.research to refresh pricing and vendor data
+  Action: Re-run $arckit-research to refresh pricing and vendor data
 ```
 
 #### Rule 2: FORGOTTEN-ADR — Forgotten ADR
@@ -226,16 +226,16 @@ Scans the `projects/` directory for all `ARC-*` artifacts and applies seven dete
 
 | Pattern | Recommended Commands |
 |---------|---------------------|
-| `*api*`, `*swagger*`, `*openapi*` | `/prompts:arckit.requirements`, `/prompts:arckit.data-model`, `/prompts:arckit.diagram` |
-| `*schema*`, `*erd*`, `*.sql` | `/prompts:arckit.data-model`, `/prompts:arckit.data-mesh-contract` |
-| `*security*`, `*pentest*`, `*vuln*` | `/prompts:arckit.secure`, `/prompts:arckit.dpia` |
-| `*compliance*`, `*audit*` | `/prompts:arckit.tcop`, `/prompts:arckit.conformance` |
-| `*cost*`, `*pricing*`, `*budget*` | `/prompts:arckit.sobc`, `/prompts:arckit.finops` |
-| `*pipeline*`, `*ci*`, `*deploy*` | `/prompts:arckit.devops` |
-| `*rfp*`, `*itt*`, `*tender*` | `/prompts:arckit.sow`, `/prompts:arckit.evaluate` |
-| `*risk*`, `*threat*` | `/prompts:arckit.risk`, `/prompts:arckit.secure` |
-| `*policy*`, `*standard*` | `/prompts:arckit.principles`, `/prompts:arckit.tcop` |
-| (default) | `/prompts:arckit.requirements`, `/prompts:arckit.analyze` |
+| `*api*`, `*swagger*`, `*openapi*` | `$arckit-requirements`, `$arckit-data-model`, `$arckit-diagram` |
+| `*schema*`, `*erd*`, `*.sql` | `$arckit-data-model`, `$arckit-data-mesh-contract` |
+| `*security*`, `*pentest*`, `*vuln*` | `$arckit-secure`, `$arckit-dpia` |
+| `*compliance*`, `*audit*` | `$arckit-tcop`, `$arckit-conformance` |
+| `*cost*`, `*pricing*`, `*budget*` | `$arckit-sobc`, `$arckit-finops` |
+| `*pipeline*`, `*ci*`, `*deploy*` | `$arckit-devops` |
+| `*rfp*`, `*itt*`, `*tender*` | `$arckit-sow`, `$arckit-evaluate` |
+| `*risk*`, `*threat*` | `$arckit-risk`, `$arckit-secure` |
+| `*policy*`, `*standard*` | `$arckit-principles`, `$arckit-tcop` |
+| (default) | `$arckit-requirements`, `$arckit-analyze` |
 
 **Rationale**: External files (PoC results, API specs, compliance reports, vendor documents) are placed in `external/` to inform architecture decisions. If these files are newer than all existing artifacts, the architecture may not yet reflect their content — creating a governance gap.
 
@@ -294,7 +294,7 @@ PROJECT: {project-dir}
 
   [HIGH] STALE-RSCH: research/ARC-001-RSCH-001-v1.0.md
     Last modified: 2025-06-15 (250 days ago)
-    Action: Re-run /prompts:arckit.research to refresh pricing and vendor data
+    Action: Re-run $arckit-research to refresh pricing and vendor data
 
   [HIGH] FORGOTTEN-ADR: decisions/ARC-001-ADR-003-v1.0.md
     Status: Proposed since 2025-12-01 (81 days without review)
@@ -326,7 +326,7 @@ RECOMMENDED ACTIONS (prioritised)
 ----------------------------------
 
 1. [HIGH] Address {count} stale research documents
-   Run: /prompts:arckit.research for affected projects
+   Run: $arckit-research for affected projects
    Why: Pricing data older than 6 months is unreliable for procurement decisions
 
 2. [HIGH] Review {count} forgotten ADRs
@@ -342,12 +342,12 @@ RECOMMENDED ACTIONS (prioritised)
    Why: External files (API specs, compliance reports, PoC results) contain information not yet reflected in governance artifacts
 
 5. [MEDIUM] Check {count} orphaned requirements
-   Run: /prompts:arckit.adr for requirements needing architectural decisions
+   Run: $arckit-adr for requirements needing architectural decisions
    Why: Requirements without ADR coverage may lack governance
 
 6. [MEDIUM] Add traceability to {count} ADRs
    Update ADRs with requirement references
-   Run: /prompts:arckit.traceability to generate full traceability matrix
+   Run: $arckit-traceability to generate full traceability matrix
    Why: Untraceable decisions reduce audit confidence
 
 7. [LOW] Review {count} artifacts with version drift
@@ -374,7 +374,7 @@ All clear. No stale artifacts, forgotten decisions, or traceability gaps detecte
 
 The hook automatically writes `docs/health.json` on every run. No action is needed from the command for JSON output.
 
-**Dashboard integration**: Run `/prompts:arckit.pages` after the health check to see health data on the governance dashboard.
+**Dashboard integration**: Run `$arckit-pages` after the health check to see health data on the governance dashboard.
 
 **JSON schema** (written by hook to `docs/health.json`):
 
@@ -410,7 +410,7 @@ The hook automatically writes `docs/health.json` on every run. No action is need
           "rule": "STALE-RSCH",
           "file": "research/ARC-001-RSCH-001-v1.0.md",
           "message": "Last modified: 2025-06-15 (250 days ago)",
-          "action": "Re-run /prompts:arckit.research to refresh pricing and vendor data"
+          "action": "Re-run $arckit-research to refresh pricing and vendor data"
         }
       ]
     }
@@ -435,7 +435,7 @@ The hook automatically writes `docs/health.json` on every run. No action is need
 **No projects directory**:
 
 ```text
-No projects/ directory found. Run /prompts:arckit.init to create your first project.
+No projects/ directory found. Run $arckit-init to create your first project.
 ```
 
 **No artifacts found**:
@@ -460,7 +460,7 @@ Available projects:
 ### Example 1: Scan All Projects
 
 ```bash
-/prompts:arckit.health
+$arckit-health
 ```
 
 Scans every project under `projects/` and reports all findings.
@@ -468,7 +468,7 @@ Scans every project under `projects/` and reports all findings.
 ### Example 2: Scan a Specific Project
 
 ```bash
-/prompts:arckit.health PROJECT=001-payment-gateway
+$arckit-health PROJECT=001-payment-gateway
 ```
 
 Scans only the specified project.
@@ -476,7 +476,7 @@ Scans only the specified project.
 ### Example 3: Show Only High-Severity Issues
 
 ```bash
-/prompts:arckit.health SEVERITY=HIGH
+$arckit-health SEVERITY=HIGH
 ```
 
 Filters output to show only HIGH severity findings.
@@ -484,7 +484,7 @@ Filters output to show only HIGH severity findings.
 ### Example 4: Check Staleness as of a Future Date
 
 ```bash
-/prompts:arckit.health SINCE=2026-06-01
+$arckit-health SINCE=2026-06-01
 ```
 
 Useful for planning — "what will be stale by June?"
@@ -492,7 +492,7 @@ Useful for planning — "what will be stale by June?"
 ### Example 5: Continuous Monitoring with `/loop`
 
 ```bash
-/loop 30m /prompts:arckit.health SEVERITY=HIGH
+/loop 30m $arckit-health SEVERITY=HIGH
 ```
 
 Runs the health check every 30 minutes during your session, surfacing HIGH severity findings as they appear. Useful during long architecture sessions where multiple artifacts are being created or updated. Requires Claude Code v2.1.71+.
@@ -503,15 +503,15 @@ Runs the health check every 30 minutes during your session, surfacing HIGH sever
 
 ### Run After
 
-- `/prompts:arckit.analyze` — health check complements the deeper governance analysis
+- `$arckit-analyze` — health check complements the deeper governance analysis
 - Any artifact creation — verify new artifacts don't introduce drift
 
 ### Triggers For
 
-- `/prompts:arckit.research` — refresh stale RSCH documents
-- `/prompts:arckit.adr` — create ADRs for orphaned requirements
-- `/prompts:arckit.traceability` — fix missing traceability links
-- `/prompts:arckit.hld-review` or `/prompts:arckit.dld-review` — follow up on unresolved conditions
+- `$arckit-research` — refresh stale RSCH documents
+- `$arckit-adr` — create ADRs for orphaned requirements
+- `$arckit-traceability` — fix missing traceability links
+- `$arckit-hld-review` or `$arckit-dld-review` — follow up on unresolved conditions
 - Various commands per STALE-EXT findings — incorporate new external files (see filename-to-command mapping)
 
 ---
@@ -520,14 +520,14 @@ Runs the health check every 30 minutes during your session, surfacing HIGH sever
 
 ### Why Console Output as Primary?
 
-The health check is a **diagnostic tool**, not a governance artifact. Unlike `/prompts:arckit.analyze` which produces a formal analysis report (saved as `ARC-*-ANAL-*.md`), the health check is:
+The health check is a **diagnostic tool**, not a governance artifact. Unlike `$arckit-analyze` which produces a formal analysis report (saved as `ARC-*-ANAL-*.md`), the health check is:
 
 - **Ephemeral**: Results change every time you run it
 - **Actionable**: Designed to trigger other commands, not to be filed
 - **Lightweight**: Quick scan, not a deep analysis
 - **Repeatable**: Run it daily, weekly, or before any governance gate
 
-Console output is the primary user-facing output. `docs/health.json` is always written as a side effect for dashboard integration (`/prompts:arckit.pages`).
+Console output is the primary user-facing output. `docs/health.json` is always written as a side effect for dashboard integration (`$arckit-pages`).
 
 ### Threshold Rationale
 

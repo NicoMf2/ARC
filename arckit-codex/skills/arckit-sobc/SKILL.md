@@ -29,8 +29,8 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
 
 **When to use this:**
 
-- **After**: `/prompts:arckit.stakeholders` (MANDATORY - SOBC must link to stakeholder goals)
-- **Before**: `/prompts:arckit.requirements` (SOBC justifies whether to proceed with detailed requirements)
+- **After**: `$arckit-stakeholders` (MANDATORY - SOBC must link to stakeholder goals)
+- **Before**: `$arckit-requirements` (SOBC justifies whether to proceed with detailed requirements)
 - **Purpose**: Secure executive approval and funding to proceed to next stage
 
 **Note**: Later stages will create OBC (Outline Business Case) and FBC (Full Business Case) with more accurate costs. This SOBC uses strategic estimates and options analysis.
@@ -40,7 +40,7 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
    **MANDATORY** (warn if missing):
    - **STKE** (Stakeholder Analysis) in `projects/{project}/`
      - Extract: ALL stakeholder goals (become benefits), drivers (explain WHY needed), conflicts (become risks/mitigations), outcomes (become success criteria)
-     - If missing: STOP and warn user to run `/prompts:arckit.stakeholders` first — every SOBC benefit MUST trace to a stakeholder goal
+     - If missing: STOP and warn user to run `$arckit-stakeholders` first — every SOBC benefit MUST trace to a stakeholder goal
 
    **RECOMMENDED** (read if available, note if missing):
    - **PRIN** (Architecture Principles, in `projects/000-global/`)
@@ -108,7 +108,7 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `.arckit/templates/sobc-template.md` (default)
 
-   > **Tip**: Users can customize templates with `/prompts:arckit.customize sobc`
+   > **Tip**: Users can customize templates with `$arckit-customize sobc`
 
    **Five Cases (HM Treasury Green Book Model)**:
 
@@ -213,8 +213,8 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
    - **Rationale**: Why this option? (reference stakeholder goals met)
    - **Go/No-Go Criteria**: Under what conditions do we proceed?
    - **Next Steps**: If approved, what happens next?
-     - Typically: `/prompts:arckit.requirements` to define detailed requirements
-     - Then: `/prompts:arckit.business-case-detailed` with accurate costs
+     - Typically: `$arckit-requirements` to define detailed requirements
+     - Then: `$arckit-business-case-detailed` with accurate costs
 
 **CRITICAL - Auto-Populate Document Control Fields**:
 
@@ -289,7 +289,7 @@ Provide:
    - "Business case lifecycle stage: SOBC (strategic outline)"
 3. **Next steps**:
    - "Present to [approval body] for go/no-go decision"
-   - "If approved: Run `/prompts:arckit.requirements` to define detailed requirements"
+   - "If approved: Run `$arckit-requirements` to define detailed requirements"
    - "After requirements: Create OBC (Outline Business Case) with refined costs"
    - "After design: Create FBC (Full Business Case) for final approval"
 4. **Traceability note**:
@@ -364,11 +364,11 @@ For UK Government/public sector projects, ensure:
 If stakeholder analysis doesn't exist:
 
 - **DO NOT proceed** with SOBC
-- Tell user: "SOBC requires stakeholder analysis to link benefits to stakeholder goals. Please run `/prompts:arckit.stakeholders` first."
+- Tell user: "SOBC requires stakeholder analysis to link benefits to stakeholder goals. Please run `$arckit-stakeholders` first."
 
 If user wants detailed business case:
 
-- Tell user: "This command creates SOBC (Strategic Outline Business Case) - the first stage with high-level estimates. After `/prompts:arckit.requirements`, create OBC (Outline Business Case) with refined costs. After design, create FBC (Full Business Case) for final approval."
+- Tell user: "This command creates SOBC (Strategic Outline Business Case) - the first stage with high-level estimates. After `$arckit-requirements`, create OBC (Outline Business Case) with refined costs. After design, create FBC (Full Business Case) for final approval."
 
 If project seems too small for full 5-case:
 
@@ -467,7 +467,7 @@ After writing the file, show ONLY a concise summary:
 
 - Review `ARC-{PROJECT_ID}-SOBC-v1.0.md` for full SOBC document
 - Present to Senior Responsible Owner (SRO) for approval
-- If approved, run `/prompts:arckit.requirements` to define detailed requirements
+- If approved, run `$arckit-requirements` to define detailed requirements
 - After requirements, refine to Outline Business Case (OBC) with firmer costs
 ```
 
@@ -491,6 +491,6 @@ Generate the SOBC now, write to file using Write tool, and show only the summary
 
 After completing this command, consider running:
 
-- `/prompts:arckit.requirements` -- Define detailed requirements after SOBC approval
-- `/prompts:arckit.roadmap` -- Create strategic roadmap from SOBC investment plan
+- `$arckit-requirements` -- Define detailed requirements after SOBC approval
+- `$arckit-roadmap` -- Create strategic roadmap from SOBC investment plan
 

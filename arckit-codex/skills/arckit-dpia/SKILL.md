@@ -22,7 +22,7 @@ $ARGUMENTS
 **MANDATORY** (warn if missing):
 
 - **DATA** (Data Model) — Extract: all entities with PII/special category data, data subjects, GDPR Article 6 lawful basis, Article 9 conditions, retention periods, data flows, data classifications
-  - If missing: STOP and warn user to run `/prompts:arckit.data-model` first — a DPIA requires a data model to identify personal data processing
+  - If missing: STOP and warn user to run `$arckit-data-model` first — a DPIA requires a data model to identify personal data processing
 
 **RECOMMENDED** (read if available, note if missing):
 
@@ -95,7 +95,7 @@ Read the DPIA template:
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `.arckit/templates/dpia-template.md` (default)
 
-> **Tip**: Users can customize templates with `/prompts:arckit.customize dpia`
+> **Tip**: Users can customize templates with `$arckit-customize dpia`
 
 This template has 16 major sections and uses the ICO's 9-criteria screening checklist.
 
@@ -393,7 +393,7 @@ If YES:
 
 10. **Children's Data**: If processing children's data, the DPIA must include additional assessment of age verification, parental consent, best interests, and child-friendly privacy notices.
 
-11. **AI/ML Systems**: If the system uses AI/ML for profiling, automated decision-making, or algorithmic processing, integrate with `/prompts:arckit.ai-playbook` assessment and link to ATRS record.
+11. **AI/ML Systems**: If the system uses AI/ML for profiling, automated decision-making, or algorithmic processing, integrate with `$arckit-ai-playbook` assessment and link to ATRS record.
 
 12. **Classification**: DPIAs contain sensitive information about data protection risks and vulnerabilities. Always classify as **OFFICIAL-SENSITIVE** at minimum.
 
@@ -427,9 +427,9 @@ If YES:
 ## Example Usage
 
 ```text
-/prompts:arckit.dpia Generate DPIA for NHS appointment booking system
+$arckit-dpia Generate DPIA for NHS appointment booking system
 
-/prompts:arckit.dpia Create data protection impact assessment for HMRC chatbot handling taxpayer queries
+$arckit-dpia Create data protection impact assessment for HMRC chatbot handling taxpayer queries
 
-/prompts:arckit.dpia Assess DPIA necessity for Windows 11 deployment (employee data only)
+$arckit-dpia Assess DPIA necessity for Windows 11 deployment (employee data only)
 ```

@@ -233,7 +233,6 @@ def create_project_structure(
         # Create directories for all AI assistants (Codex and OpenCode)
         directories.extend(
             [
-                ".codex/prompts",
                 ".codex/agents",
                 ".agents/skills",
                 ".opencode/commands",

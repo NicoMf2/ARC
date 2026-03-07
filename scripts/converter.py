@@ -386,7 +386,9 @@ def generate_agent_toml_files(agents_dir, output_dir, path_prefix=".arckit"):
 def rewrite_codex_skills(skills_dir):
     """Rewrite Claude Code-specific references in skills for Codex extension.
 
-    - /arckit:X -> /prompts:arckit.X
+    - /arckit:X -> $arckit-X (skill invocation syntax)
+    - /arckit.X -> $arckit-X
+    - /prompts:arckit.X -> $arckit-X
     - Remove SessionStart hook references
     - ${CLAUDE_PLUGIN_ROOT} -> .arckit
     """
@@ -404,14 +406,21 @@ def rewrite_codex_skills(skills_dir):
 
             original = content
 
-            # Rewrite /arckit:X -> /prompts:arckit.X (colon-prefixed plugin format)
-            content = re.sub(r"/arckit:(\w[\w-]*)", r"/prompts:arckit.\1", content)
+            # Rewrite /arckit:X -> $arckit-X (colon-prefixed plugin format)
+            content = re.sub(r"/arckit:(\w[\w-]*)", r"$arckit-\1", content)
 
-            # Rewrite /arckit.X (dot-prefixed format used in some references)
+            # Rewrite /arckit.X -> $arckit-X (dot-prefixed format)
             # Only match when preceded by a space or start-of-line to avoid false matches
             content = re.sub(
                 r"(?<=\s)/arckit\.(\w[\w-]*)",
-                r"/prompts:arckit.\1",
+                r"$arckit-\1",
+                content,
+            )
+
+            # Rewrite /prompts:arckit.X -> $arckit-X (old Codex prompt format)
+            content = re.sub(
+                r"/prompts:arckit\.(\w[\w-]*)",
+                r"$arckit-\1",
                 content,
             )
 
@@ -432,7 +441,7 @@ def rewrite_codex_skills(skills_dir):
                 count += 1
 
     if count:
-        print(f"  Rewrote {count} skill files for Codex command format")
+        print(f"  Rewrote {count} skill files for Codex skill invocation format")
 
 
 if __name__ == "__main__":
