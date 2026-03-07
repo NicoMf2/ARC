@@ -100,6 +100,16 @@ AGENT_CONFIG = {
         "format": "markdown",
         "path_prefix": ".arckit",
     },
+    "codex_extension": {
+        "name": "Codex Extension",
+        "output_dir": "arckit-codex/prompts",
+        "filename_pattern": "arckit.{name}.md",
+        "format": "markdown",
+        "path_prefix": ".arckit",
+        "extension_dir": "arckit-codex",
+        "copy_commands_to_extension": True,
+        "copy_agents_to_extension": True,
+    },
     "opencode": {
         "name": "OpenCode CLI",
         "output_dir": ".opencode/commands",
