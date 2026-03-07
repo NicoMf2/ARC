@@ -361,10 +361,19 @@ def init(
         raise typer.Exit(1)
 
     if here:
-        project_name = Path.cwd().name
-        project_path = Path.cwd()
+        try:
+            project_name = Path.cwd().name
+            project_path = Path.cwd()
+        except (FileNotFoundError, OSError):
+            console.print(
+                "[red]Error:[/red] Current directory does not exist. Please cd to a valid directory first."
+            )
+            raise typer.Exit(1)
     else:
-        project_path = Path(project_name).resolve()
+        try:
+            project_path = Path(project_name).resolve()
+        except (FileNotFoundError, OSError):
+            project_path = Path.home() / project_name
         if project_path.exists():
             console.print(
                 f"[red]Error:[/red] Directory '{project_name}' already exists"
