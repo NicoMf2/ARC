@@ -358,6 +358,58 @@ def generate_agent_toml_files(agents_dir, output_dir, path_prefix=".arckit"):
     print(f"  Generated {count} agent .toml files in {output_dir}")
 
 
+def rewrite_codex_skills(skills_dir):
+    """Rewrite Claude Code-specific references in skills for Codex extension.
+
+    - /arckit:X -> /prompts:arckit.X
+    - Remove SessionStart hook references
+    - ${CLAUDE_PLUGIN_ROOT} -> .arckit
+    """
+    if not os.path.isdir(skills_dir):
+        return
+
+    count = 0
+    for root, dirs, files in os.walk(skills_dir):
+        for filename in files:
+            if not filename.endswith(".md"):
+                continue
+            filepath = os.path.join(root, filename)
+            with open(filepath, "r") as f:
+                content = f.read()
+
+            original = content
+
+            # Rewrite /arckit:X -> /prompts:arckit.X (colon-prefixed plugin format)
+            content = re.sub(r"/arckit:(\w[\w-]*)", r"/prompts:arckit.\1", content)
+
+            # Rewrite /arckit.X (dot-prefixed format used in some references)
+            # Only match when preceded by a space or start-of-line to avoid false matches
+            content = re.sub(
+                r"(?<=\s)/arckit\.(\w[\w-]*)",
+                r"/prompts:arckit.\1",
+                content,
+            )
+
+            # Remove SessionStart hook reference
+            content = content.replace(
+                "- Use ArcKit Project Context from the SessionStart hook if available\n",
+                "",
+            )
+
+            # Rewrite plugin root paths
+            content = content.replace("${CLAUDE_PLUGIN_ROOT}", ".arckit")
+
+            if content != original:
+                with open(filepath, "w") as f:
+                    f.write(content)
+                rel_path = os.path.relpath(filepath, skills_dir)
+                print(f"  Rewrote: {skills_dir}/{rel_path}")
+                count += 1
+
+    if count:
+        print(f"  Rewrote {count} skill files for Codex command format")
+
+
 if __name__ == "__main__":
     commands_dir = "arckit-plugin/commands/"
     agents_dir = "arckit-plugin/agents/"
@@ -438,6 +490,10 @@ if __name__ == "__main__":
         "arckit-codex/agents",
         path_prefix=".arckit",
     )
+
+    print()
+    print("Rewriting Codex extension skills for Codex command format...")
+    rewrite_codex_skills("arckit-codex/skills")
 
     print()
     total = sum(counts.values())
