@@ -335,17 +335,38 @@ Every template must start with a **Document Control** table followed by **Revisi
 - `scripts/generate-release-notes.sh [prev-tag]` parses git log into Keep a Changelog markdown (auto-detects previous tag if omitted)
 - `.github/workflows/release.yml` creates a GitHub Release automatically on `v*` tag push (tag-push triggered, does NOT commit back to main)
 
-**Local release flow**:
+**Development workflow**:
+
+All changes must go through a feature branch and be merged to `main` via PR. Never push directly to `main`.
 
 ```bash
-# 1. Edit CHANGELOGs manually
-# 2. Preview release notes (optional)
+# 1. Create a feature branch
+git checkout -b feat/my-feature
+
+# 2. Make changes, commit
+git add <files> && git commit -m "feat: description"
+
+# 3. Push branch and create PR
+git push -u origin feat/my-feature
+gh pr create --title "feat: description" --body "Summary of changes"
+
+# 4. Merge PR (squash or merge commit)
+gh pr merge --squash
+```
+
+**Local release flow** (after PR is merged to `main`):
+
+```bash
+# 1. Ensure you're on main with latest changes
+git checkout main && git pull
+# 2. Edit CHANGELOGs manually
+# 3. Preview release notes (optional)
 ./scripts/generate-release-notes.sh
-# 3. Bump all version files
+# 4. Bump all version files
 ./scripts/bump-version.sh X.Y.Z
-# 4. Regenerate Codex/OpenCode/Gemini formats
+# 5. Regenerate Codex/OpenCode/Gemini formats
 python scripts/converter.py
-# 5. Commit, tag, push — GitHub Release created automatically
+# 6. Commit, tag, push — GitHub Release created automatically
 git add -A && git commit -m "chore: bump version to X.Y.Z"
 git tag -a vX.Y.Z -m "vX.Y.Z"
 git push && git push --tags
