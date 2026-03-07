@@ -155,6 +155,7 @@ def get_data_paths():
             "workflow_diagrams": base_path / "docs" / "WORKFLOW-DIAGRAMS.md",
             "version": base_path / "VERSION",
             "changelog": base_path / "CHANGELOG.md",
+            "codex_references": base_path / "arckit-codex" / "references",
             "codex_skills": base_path / "arckit-codex" / "skills",
             "codex_agents": base_path / "arckit-codex" / "agents",
             "codex_config": base_path / "arckit-codex" / "config.toml",
@@ -489,6 +490,14 @@ def init(
         console.print(f"[green]✓[/green] Scripts copied")
     else:
         console.print(f"[yellow]Warning: Scripts not found at {scripts_src}[/yellow]")
+
+    # Copy references if they exist
+    references_src = data_paths.get("codex_references")
+    if references_src and references_src.exists():
+        references_dst = project_path / ".arckit" / "references"
+        references_dst.mkdir(parents=True, exist_ok=True)
+        shutil.copytree(references_src, references_dst, dirs_exist_ok=True)
+        console.print(f"[green]✓[/green] References copied")
 
     # Copy slash commands
     # Copy Codex prompts (all_ai and single-AI both install codex)

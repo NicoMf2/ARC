@@ -252,6 +252,7 @@ def copy_extension_files(plugin_dir):
         ("scripts/python", "scripts/python"),
         ("docs/guides", "docs/guides"),
         ("skills", "skills"),
+        ("references", "references"),
     ]
 
     for config in AGENT_CONFIG.values():
