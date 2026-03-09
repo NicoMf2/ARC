@@ -22,7 +22,7 @@ The document quality gate is an advisory hook that validates ARC document conten
 
 ### Placeholder Text
 
-```
+```text
 **Placeholder text detected** in document control:
   - Owner: "[Author]"
   - Project: "TBD"
@@ -32,7 +32,7 @@ The document control table still has template placeholders. Replace them with re
 
 ### Malformed Requirement IDs
 
-```
+```text
 **Malformed requirement IDs** (should be 3 digits, e.g. BR-001):
   - BR-1
   - FR-12
@@ -42,7 +42,7 @@ Requirement IDs must use 3-digit numbering: `BR-001`, `FR-012`, `NFR-100`.
 
 ### Empty Sections
 
-```
+```text
 **Empty sections** (heading with no content below):
   - ## Risk Assessment
   - ## Alternatives Considered
@@ -52,7 +52,7 @@ These sections exist but have no content. Either populate them or remove them if
 
 ### Missing Cross-References
 
-```
+```text
 **Cross-references to non-existent documents**:
   - ARC-001-ADR-005
   - ARC-001-HLDR
