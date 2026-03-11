@@ -1642,6 +1642,31 @@
             color: var(--text-secondary);
             font-size: 16px;
         }
+        .app-depmap-layout-toggle {
+            display: inline-flex;
+            border: 1px solid var(--border-main);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .app-depmap-layout-toggle button {
+            border: none;
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 12px;
+            cursor: pointer;
+        }
+        .app-depmap-layout-toggle button:not(:last-child) {
+            border-right: 1px solid var(--border-main);
+        }
+        .app-depmap-layout-toggle button.active {
+            background: var(--text-primary);
+            color: var(--bg-surface);
+        }
+        .app-depmap-layout-toggle button:hover:not(.active) {
+            background: var(--bg-surface-alt);
+        }
     </style>
 </head>
 <body class="govuk-template__body">
