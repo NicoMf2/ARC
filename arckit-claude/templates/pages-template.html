@@ -2905,6 +2905,18 @@
                 'Compliance', 'Operations', 'Procurement', 'Integrations', 'Reporting', 'Other'
             ];
 
+            // Check if any nodes have valid dates (for timeline toggle)
+            const hasValidDates = nodeIds.some(id => {
+                const d = nodes[id].createdDate;
+                return d && !isNaN(new Date(d).getTime());
+            });
+
+            let currentLayout = 'category';
+            if (hasValidDates) {
+                const stored = localStorage.getItem('arckit-depmap-layout');
+                if (stored === 'timeline') currentLayout = 'timeline';
+            }
+
             // Build controls DOM
             content.textContent = '';
             const h1 = document.createElement('h1');
@@ -2916,6 +2928,45 @@
 
             const controls = document.createElement('div');
             controls.className = 'app-depmap-controls';
+
+            const layoutLabel = document.createElement('label');
+            layoutLabel.textContent = 'Layout:';
+            layoutLabel.style.cssText = 'font-size:14px;font-weight:700;color:var(--text-primary)';
+            controls.appendChild(layoutLabel);
+
+            const toggleWrap = document.createElement('div');
+            toggleWrap.className = 'app-depmap-layout-toggle';
+
+            const btnCategory = document.createElement('button');
+            btnCategory.textContent = 'Category';
+            btnCategory.className = currentLayout === 'category' ? 'active' : '';
+            toggleWrap.appendChild(btnCategory);
+
+            if (hasValidDates) {
+                const btnTimeline = document.createElement('button');
+                btnTimeline.textContent = 'Timeline';
+                btnTimeline.className = currentLayout === 'timeline' ? 'active' : '';
+                toggleWrap.appendChild(btnTimeline);
+
+                btnTimeline.addEventListener('click', () => {
+                    currentLayout = 'timeline';
+                    localStorage.setItem('arckit-depmap-layout', 'timeline');
+                    btnCategory.className = '';
+                    btnTimeline.className = 'active';
+                    renderGraph(select.value);
+                });
+            }
+
+            btnCategory.addEventListener('click', () => {
+                currentLayout = 'category';
+                localStorage.setItem('arckit-depmap-layout', 'category');
+                btnCategory.className = 'active';
+                const btnT = toggleWrap.querySelector('button:nth-child(2)');
+                if (btnT) btnT.className = '';
+                renderGraph(select.value);
+            });
+
+            controls.appendChild(toggleWrap);
 
             const label = document.createElement('label');
             label.setAttribute('for', 'depmap-project-filter');
