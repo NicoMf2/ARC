@@ -13,7 +13,7 @@ hooks:
   Stop:
     - hooks:
         - type: command
-          command: "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/validate-wardley-math.py"
+          command: "node ${CLAUDE_PLUGIN_ROOT}/hooks/validate-wardley-math.mjs"
           timeout: 10
 ---
 
