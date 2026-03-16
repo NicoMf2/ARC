@@ -86,6 +86,7 @@ Six existing files in `arckit-claude/skills/wardley-mapping/references/`, all ex
 **Current**: 15 principles, checklist format, 5 categories, 1-5 scoring.
 
 **Enhanced**:
+
 - 40+ principles from Doctrine book
 - 4 phases: Stop Self-Harm → Context Aware → Better for Less → Continuously Evolving
 - 6 categories: Communication, Development, Operation, Learning, Leading, Structure
@@ -100,6 +101,7 @@ Six existing files in `arckit-claude/skills/wardley-mapping/references/`, all ex
 **Current**: 8 patterns (5 offensive, 3 defensive), basic build/buy/outsource.
 
 **Enhanced**:
+
 - 60+ patterns from Gameplays book
 - 11 categories: User Perception, Accelerators, De-accelerators, Dealing with Toxicity, Market, Defensive, Attacking, Ecosystem, Competitor, Positional, Poison
 - D&D alignment classification per gameplay (Lawful Good → Chaotic Evil)
@@ -115,6 +117,7 @@ Six existing files in `arckit-claude/skills/wardley-mapping/references/`, all ex
 **Current**: 9 patterns across 5 categories.
 
 **Enhanced to 32 patterns across 6 categories**:
+
 - **Component patterns** (8): Everything evolves, rates vary by ecosystem, characteristics change, Red Queen effect, no single method, co-evolution, multiple waves of diffusion, commoditization ≠ centralization
 - **Financial patterns** (6): Higher-order systems create value, Jevons Paradox, capital flows to new areas, creative destruction (Schumpeter), inverse value/certainty, increasing local order and energy
 - **Speed patterns** (5): Componentization effect (efficiency enables innovation), communication evolution accelerates overall evolution, stability increases agility, non-linear/discontinuous change, punctuated equilibrium
@@ -127,6 +130,7 @@ Six existing files in `arckit-claude/skills/wardley-mapping/references/`, all ex
 ### evolution-stages.md (101 → ~180 lines)
 
 **Enhanced**:
+
 - Detailed characteristics per stage from all 3 books
 - Enhanced indicator checklists (from melodic-software evolution-analysis skill)
 - Transition timing heuristics and weak signals
@@ -137,6 +141,7 @@ Six existing files in `arckit-claude/skills/wardley-mapping/references/`, all ex
 ### mapping-examples.md (307 → ~450 lines)
 
 **Enhanced**:
+
 - 2-3 additional worked examples from books (TechnoGadget smart home, streaming service)
 - Cross-references to gameplay case studies (AWS ILC pattern, Netflix transition)
 - Worked value chain decomposition example (e-commerce and SaaS patterns from melodic-software)
@@ -146,6 +151,7 @@ Six existing files in `arckit-claude/skills/wardley-mapping/references/`, all ex
 ### mathematical-models.md (254 → ~300 lines)
 
 **Enhanced**:
+
 - Play-position scoring from melodic-software strategic-analysis
 - Pattern impact weighting per component for climate assessment
 - Modest growth — this file is already strong
@@ -168,6 +174,7 @@ Register in `arckit-claude/config/doc-types.mjs`:
 | `WVCH` | Wardley Value Chain | Architecture | Yes | `wardley-maps/` |
 
 Register in `scripts/bash/generate-document-id.sh`:
+
 - Add `WGAM WCLM WVCH` to `MULTI_INSTANCE_TYPES`
 
 ### New Templates
@@ -175,6 +182,7 @@ Register in `scripts/bash/generate-document-id.sh`:
 4 new templates in `arckit-claude/templates/` (mirrored to `.arckit/templates/`):
 
 **`wardley-doctrine-template.md`**:
+
 - Document Control, Executive Summary, Strategy Cycle Context
 - Doctrine Assessment Matrix (4 phases × 6 categories, 1-5 scoring per principle)
 - Phase-by-Phase Analysis (I–IV) with evidence and scores
@@ -183,6 +191,7 @@ Register in `scripts/bash/generate-document-id.sh`:
 - Recommendations, Traceability, Generation Footer
 
 **`wardley-gameplay-template.md`**:
+
 - Document Control, Executive Summary
 - Map Reference (link to WARD artifact)
 - Situational Assessment (position, capabilities, market context)
@@ -194,6 +203,7 @@ Register in `scripts/bash/generate-document-id.sh`:
 - Case Study References, Traceability, Generation Footer
 
 **`wardley-climate-template.md`**:
+
 - Document Control, Executive Summary
 - Map Reference (link to WARD artifact)
 - Component Inventory (from WARD)
@@ -205,6 +215,7 @@ Register in `scripts/bash/generate-document-id.sh`:
 - Strategic Implications, Traceability, Generation Footer
 
 **`wardley-value-chain-template.md`**:
+
 - Document Control, Executive Summary
 - User Need / Anchor definition
 - Users and Personas
@@ -219,6 +230,7 @@ Register in `scripts/bash/generate-document-id.sh`:
 ### Registration Checklist
 
 1. `arckit-claude/config/doc-types.mjs` — add 4 types to `DOC_TYPES`, add `WGAM WCLM WVCH` to `MULTI_INSTANCE_TYPES` set, add all 4 to `SUBDIR_MAP`:
+
    ```javascript
    'WDOC': { name: 'Wardley Doctrine Assessment',  category: 'Architecture' },
    'WGAM': { name: 'Wardley Gameplay Analysis',     category: 'Architecture' },
@@ -231,6 +243,7 @@ Register in `scripts/bash/generate-document-id.sh`:
    'WCLM': 'wardley-maps',
    'WVCH': 'wardley-maps',
    ```
+
 2. `scripts/bash/generate-document-id.sh` — add `WGAM WCLM WVCH` to `MULTI_INSTANCE_TYPES`
 3. `arckit-claude/hooks/validate-wardley-math.mjs` — extend file filter to scan `-WVCH-` in addition to existing `-WARD-` pattern (only WVCH produces OWM syntax; WDOC/WGAM/WCLM do not need validation)
 4. Templates copied to both `arckit-claude/templates/` and `.arckit/templates/`
@@ -276,6 +289,7 @@ Register in `scripts/bash/generate-document-id.sh`:
 ### Handoff Declarations
 
 **`wardley.value-chain.md`** frontmatter:
+
 ```yaml
 handoffs:
   - command: wardley
@@ -292,6 +306,7 @@ hooks:
 ```
 
 **`wardley.md`** (add new handoffs + fix pre-existing bug: hook references `python3 validate-wardley-math.py` but actual file is `validate-wardley-math.mjs` — change to `node validate-wardley-math.mjs`):
+
 ```yaml
 handoffs:
   - command: roadmap
@@ -310,6 +325,7 @@ handoffs:
 ```
 
 **`wardley.doctrine.md`** frontmatter:
+
 ```yaml
 handoffs:
   - command: wardley
@@ -320,6 +336,7 @@ handoffs:
 ```
 
 **`wardley.gameplay.md`** frontmatter:
+
 ```yaml
 handoffs:
   - command: roadmap
@@ -332,6 +349,7 @@ handoffs:
 ```
 
 **`wardley.climate.md`** frontmatter:
+
 ```yaml
 handoffs:
   - command: wardley.gameplay

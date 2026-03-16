@@ -11,6 +11,7 @@
 **Spec:** `docs/superpowers/specs/2026-03-16-wardley-suite-enhancement-design.md`
 
 **Content Sources:**
+
 - `research/Introduction to Wardley Mapping Doctrine.md` (~283K)
 - `research/Introduction to Wardley Mapping Gameplays.md` (~484K)
 - `research/Introduction to Wardley Mapping Climatic Patterns - Kindle - v1.0.1.md` (~357K)
@@ -23,6 +24,7 @@
 ### Task 1: Register new document types in doc-types.mjs
 
 **Files:**
+
 - Modify: `arckit-claude/config/doc-types.mjs:29` (after WARD entry)
 - Modify: `arckit-claude/config/doc-types.mjs:74-77` (MULTI_INSTANCE_TYPES)
 - Modify: `arckit-claude/config/doc-types.mjs:82-93` (SUBDIR_MAP)
@@ -79,6 +81,7 @@ git commit -m "feat: register WDOC, WGAM, WCLM, WVCH document types"
 ### Task 2: Update generate-document-id.sh
 
 **Files:**
+
 - Modify: `scripts/bash/generate-document-id.sh:18-19` (comment)
 - Modify: `scripts/bash/generate-document-id.sh:85` (MULTI_INSTANCE_TYPES)
 
@@ -106,6 +109,7 @@ Update the comment on lines 18-19 to include the new types:
 - [ ] **Step 2: Test document ID generation**
 
 Run:
+
 ```bash
 bash scripts/bash/generate-document-id.sh 001 WDOC 1.0
 bash scripts/bash/generate-document-id.sh 001 WGAM 1.0 --filename --next-num /tmp
@@ -114,7 +118,8 @@ bash scripts/bash/generate-document-id.sh 001 WCLM 1.0 --filename --next-num /tm
 ```
 
 Expected:
-```
+
+```text
 ARC-001-WDOC-v1.0
 ARC-001-WGAM-001-v1.0.md
 ARC-001-WVCH-001-v1.0.md
@@ -133,6 +138,7 @@ git commit -m "feat: add WGAM, WCLM, WVCH to multi-instance types"
 ### Task 3: Extend validate-wardley-math.mjs hook
 
 **Files:**
+
 - Modify: `arckit-claude/hooks/validate-wardley-math.mjs:68` (file filter)
 
 - [ ] **Step 1: Read the current hook to find the file filter**
@@ -159,6 +165,7 @@ git commit -m "feat: extend wardley math hook to validate WVCH documents"
 ### Task 4: Fix pre-existing wardley.md hook bug
 
 **Files:**
+
 - Modify: `arckit-claude/commands/wardley.md:16` (hooks frontmatter)
 
 - [ ] **Step 1: Fix the hook command**
@@ -187,6 +194,7 @@ git commit -m "fix: correct wardley.md hook from python3 .py to node .mjs"
 ### Task 5: Fix converter regexes for dot-namespaced commands
 
 **Files:**
+
 - Modify: `scripts/converter.py:537` (colon-format regex)
 - Modify: `scripts/converter.py:542` (dot-format regex)
 - Modify: `scripts/converter.py:549` (prompts-format regex)
@@ -225,6 +233,7 @@ Each reference file is an independent task that can be parallelized. All files a
 ### Task 6: Enhance doctrine.md (120 → ~400 lines)
 
 **Files:**
+
 - Modify: `arckit-claude/skills/wardley-mapping/references/doctrine.md`
 
 **Source material**: Read `research/Introduction to Wardley Mapping Doctrine.md`
@@ -267,6 +276,7 @@ git commit -m "feat: expand doctrine reference to 40+ principles across 4 phases
 ### Task 7: Enhance gameplay-patterns.md (171 → ~600 lines)
 
 **Files:**
+
 - Modify: `arckit-claude/skills/wardley-mapping/references/gameplay-patterns.md`
 
 **Source material**: Read `research/Introduction to Wardley Mapping Gameplays.md`
@@ -295,6 +305,7 @@ Preserve the existing build/buy/outsource decision framework. Restructure to 11 
 Each play needs: name, D&D alignment (LG/N/LE/CE), 1-2 sentence description, when to use, evolution stage applicability.
 
 Also add:
+
 - **D&D Alignment Key** — Lawful Good, Neutral, Lawful Evil, Chaotic Evil definitions
 - **Play-Position Matrix** — Table mapping (your position × market position → recommended plays)
 - **Play Compatibility** — Which plays work together vs conflict
@@ -322,6 +333,7 @@ git commit -m "feat: expand gameplay patterns to 60+ plays across 11 categories"
 ### Task 8: Enhance climatic-patterns.md (273 → ~500 lines)
 
 **Files:**
+
 - Modify: `arckit-claude/skills/wardley-mapping/references/climatic-patterns.md`
 
 **Source material**: Read `research/Introduction to Wardley Mapping Climatic Patterns - Kindle - v1.0.1.md`
@@ -345,6 +357,7 @@ Restructure into 6 categories with all 32 patterns:
 Each pattern: name, 2-3 sentence description, strategic implication, assessment question.
 
 Preserve existing assessment questions and pattern recognition template sections. Add:
+
 - **Peace/War/Wonder Cycle** — Detailed explanation with phase characteristics
 - **Pattern Interaction Map** — Which patterns reinforce or counteract each other
 - **Per-Component Assessment Template** — How to score pattern impact per component
@@ -369,6 +382,7 @@ git commit -m "feat: expand climatic patterns to 32 patterns across 6 categories
 ### Task 9: Enhance evolution-stages.md (101 → ~180 lines)
 
 **Files:**
+
 - Modify: `arckit-claude/skills/wardley-mapping/references/evolution-stages.md`
 
 **Source material**: Fundamentals chapters from all 3 books + melodic-software evolution-analysis skill patterns (documented in spec conversation).
@@ -401,6 +415,7 @@ git commit -m "feat: enhance evolution stages with transition heuristics and tal
 ### Task 10: Enhance mapping-examples.md (307 → ~450 lines)
 
 **Files:**
+
 - Modify: `arckit-claude/skills/wardley-mapping/references/mapping-examples.md`
 
 **Source material**: Gameplays book Chapter 4 (case studies), Climatic Patterns book (TechnoGadget), melodic-software value-chain skill (e-commerce/SaaS examples).
@@ -432,6 +447,7 @@ git commit -m "feat: add TechnoGadget, value chain, and case study examples"
 ### Task 11: Enhance mathematical-models.md (254 → ~300 lines)
 
 **Files:**
+
 - Modify: `arckit-claude/skills/wardley-mapping/references/mathematical-models.md`
 
 - [ ] **Step 1: Read existing file**
@@ -462,6 +478,7 @@ git commit -m "feat: add play-position scoring and climate impact weighting"
 ### Task 12: Create wardley-value-chain-template.md
 
 **Files:**
+
 - Create: `arckit-claude/templates/wardley-value-chain-template.md`
 - Create: `.arckit/templates/wardley-value-chain-template.md` (mirror)
 
@@ -501,6 +518,7 @@ git commit -m "feat: add wardley value chain template"
 ### Task 13: Create wardley-doctrine-template.md
 
 **Files:**
+
 - Create: `arckit-claude/templates/wardley-doctrine-template.md`
 - Create: `.arckit/templates/wardley-doctrine-template.md` (mirror)
 
@@ -535,6 +553,7 @@ git commit -m "feat: add wardley doctrine assessment template"
 ### Task 14: Create wardley-gameplay-template.md
 
 **Files:**
+
 - Create: `arckit-claude/templates/wardley-gameplay-template.md`
 - Create: `.arckit/templates/wardley-gameplay-template.md` (mirror)
 
@@ -567,6 +586,7 @@ git commit -m "feat: add wardley gameplay analysis template"
 ### Task 15: Create wardley-climate-template.md
 
 **Files:**
+
 - Create: `arckit-claude/templates/wardley-climate-template.md`
 - Create: `.arckit/templates/wardley-climate-template.md` (mirror)
 
@@ -607,6 +627,7 @@ git commit -m "feat: add wardley climate assessment template"
 ### Task 16: Create wardley.value-chain.md command
 
 **Files:**
+
 - Create: `arckit-claude/commands/wardley.value-chain.md`
 
 - [ ] **Step 1: Create the command file**
@@ -614,6 +635,7 @@ git commit -m "feat: add wardley climate assessment template"
 Use the existing `arckit-claude/commands/wardley.md` as the structural pattern (YAML frontmatter with description, argument-hint, handoffs, hooks; then prompt body with steps).
 
 YAML frontmatter:
+
 ```yaml
 ---
 description: Decompose user needs into value chains for Wardley Mapping
@@ -666,11 +688,13 @@ git commit -m "feat: add wardley.value-chain command for value chain decompositi
 ### Task 17: Create wardley.doctrine.md command
 
 **Files:**
+
 - Create: `arckit-claude/commands/wardley.doctrine.md`
 
 - [ ] **Step 1: Create the command file**
 
 YAML frontmatter:
+
 ```yaml
 ---
 description: Assess organizational doctrine maturity using Wardley's 4-phase framework
@@ -712,11 +736,13 @@ git commit -m "feat: add wardley.doctrine command for doctrine maturity assessme
 ### Task 18: Create wardley.gameplay.md command
 
 **Files:**
+
 - Create: `arckit-claude/commands/wardley.gameplay.md`
 
 - [ ] **Step 1: Create the command file**
 
 YAML frontmatter:
+
 ```yaml
 ---
 description: Analyze strategic play options from Wardley Maps using 60+ gameplay patterns
@@ -761,11 +787,13 @@ git commit -m "feat: add wardley.gameplay command for strategic play analysis"
 ### Task 19: Create wardley.climate.md command
 
 **Files:**
+
 - Create: `arckit-claude/commands/wardley.climate.md`
 
 - [ ] **Step 1: Create the command file**
 
 YAML frontmatter:
+
 ```yaml
 ---
 description: Assess climatic patterns affecting Wardley Map components
@@ -808,6 +836,7 @@ git commit -m "feat: add wardley.climate command for climatic pattern assessment
 ### Task 20: Update existing wardley.md handoffs
 
 **Files:**
+
 - Modify: `arckit-claude/commands/wardley.md:4-17` (frontmatter)
 
 - [ ] **Step 1: Add new handoffs to wardley.md frontmatter**
@@ -826,11 +855,13 @@ In the `handoffs:` section, add 3 new entries after the existing `research` hand
 - [ ] **Step 2: Add WVCH/WDOC/WCLM to recommended reading**
 
 In the command body where prerequisites are listed (Step 1), add to RECOMMENDED:
+
 - WVCH (Value Chain) — Extract: anchor, components, visibility, dependencies
 - WDOC (Doctrine Assessment) — Extract: doctrine scores, capability gaps
 - WCLM (Climate Assessment) — Extract: pattern impacts, predictions
 
 And to OPTIONAL:
+
 - WGAM (Gameplay Analysis) — Extract: selected plays, execution steps
 
 - [ ] **Step 3: Commit**
@@ -847,6 +878,7 @@ git commit -m "feat: add wardley suite handoffs and sibling artifact reading"
 ### Task 21: Run converter and verify output
 
 **Files:**
+
 - No new files — verification only
 
 - [ ] **Step 1: Run the converter**
@@ -911,6 +943,7 @@ git commit -m "chore: regenerate extension formats with wardley suite commands"
 ### Task 22: Create 4 new guide files
 
 **Files:**
+
 - Create: `docs/guides/wardley-value-chain.md` + mirror to `arckit-claude/guides/`
 - Create: `docs/guides/wardley-doctrine.md` + mirror to `arckit-claude/guides/`
 - Create: `docs/guides/wardley-gameplay.md` + mirror to `arckit-claude/guides/`
@@ -947,6 +980,7 @@ git commit -m "docs: add guides for wardley suite commands"
 ### Task 23: Update README.md
 
 **Files:**
+
 - Modify: `README.md`
 
 - [ ] **Step 1: Update command count**
@@ -980,6 +1014,7 @@ git commit -m "docs: add wardley suite commands to README"
 ### Task 24: Update docs/index.html
 
 **Files:**
+
 - Modify: `docs/index.html`
 
 - [ ] **Step 1: Update command count in header**
@@ -1002,6 +1037,7 @@ git commit -m "docs: add wardley suite commands to GitHub Pages index"
 ### Task 25: Update docs/DEPENDENCY-MATRIX.md
 
 **Files:**
+
 - Modify: `docs/DEPENDENCY-MATRIX.md`
 
 - [ ] **Step 1: Add 4 new commands**
@@ -1020,6 +1056,7 @@ git commit -m "docs: add wardley suite to dependency matrix"
 ### Task 26: Update docs/WORKFLOW-DIAGRAMS.md
 
 **Files:**
+
 - Modify: `docs/WORKFLOW-DIAGRAMS.md`
 
 - [ ] **Step 1: Add Wardley Suite workflow diagram**
@@ -1038,6 +1075,7 @@ git commit -m "docs: add wardley suite workflow diagram"
 ### Task 27: Update docs/README.md
 
 **Files:**
+
 - Modify: `docs/README.md`
 
 - [ ] **Step 1: Add 4 new commands to documentation index**
@@ -1056,6 +1094,7 @@ git commit -m "docs: add wardley suite to documentation index"
 ### Task 28: Update CHANGELOGs
 
 **Files:**
+
 - Modify: `CHANGELOG.md`
 - Modify: `arckit-claude/CHANGELOG.md`
 

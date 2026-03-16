@@ -167,6 +167,7 @@ Read the existing WDOC to extract the previous scores for each principle. Then p
 | {Name} | [X] | [X] | ↑ / ↓ / → | {What changed and why} |
 
 Use the following trend symbols:
+
 - **↑** — Score improved by 1 or more
 - **↓** — Score declined by 1 or more
 - **→** — Score unchanged

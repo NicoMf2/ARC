@@ -86,6 +86,7 @@ For each component:
 **Stage key**: G = Genesis (0.00-0.25), C = Custom-Built (0.25-0.50), P = Product (0.50-0.75), Cmd = Commodity (0.75-1.00)
 
 **Total component summary**:
+
 - Genesis components ({count}): {names}
 - Custom-Built components ({count}): {names}
 - Product components ({count}): {names}
@@ -93,6 +94,7 @@ For each component:
 - Components with noted inertia: {names}
 
 **Ecosystem Type Assessment**:
+
 - Is this primarily a consumer ecosystem (fast-moving: individual users, rapid adoption, network effects)?
 - Or an industrial/government ecosystem (slow-moving: long procurement cycles, regulatory constraints, high switching costs)?
 - Or mixed?
@@ -271,14 +273,17 @@ Position the overall landscape within the Peace/War/Wonder cycle. This is one of
 For the primary market/domain of this landscape, assess which phase it is in:
 
 **Peace indicators present?** (feature competition, incremental improvement, stable margins, well-understood supply chains)
+
 - Evidence for: {list}
 - Evidence against: {list}
 
 **War indicators present?** (industrialisation of a key component underway, new entrants with commodity infrastructure, pricing pressure accelerating, incumbent business models under existential threat)
+
 - Evidence for: {list}
 - Evidence against: {list}
 
 **Wonder indicators present?** (new higher-order systems emerging, rapid genesis, capital flooding into new value areas, multiple competing paradigms)
+
 - Evidence for: {list}
 - Evidence against: {list}
 

@@ -404,6 +404,7 @@ Signs Wonder is maturing into the next Peace: dominant designs emerge, standards
 ### Identifying Your Current Phase
 
 Ask these questions for each major market/component:
+
 - Is competition primarily on features (Peace) or on survival/transformation (War) or on exploration (Wonder)?
 - Are new entrants building on commodity infrastructure that did not exist 3 years ago?
 - Is capital flowing into or out of this space?

@@ -400,6 +400,7 @@ doctrine_assessment:
 Use these prompts during assessment interviews and document reviews to gather evidence for each category.
 
 **Communication**
+
 - [ ] Is there a shared glossary or terminology guide in use across teams?
 - [ ] Are strategy documents written in language understood outside the originating team?
 - [ ] Are assumptions in proposals explicitly stated and challenged before approval?
@@ -407,6 +408,7 @@ Use these prompts during assessment interviews and document reviews to gather ev
 - [ ] Are decision rationales documented and accessible to those affected?
 
 **Development**
+
 - [ ] Are user needs (not internal assumptions) the stated anchor for all development work?
 - [ ] Are different methodologies applied to different components based on their evolutionary stage?
 - [ ] Are contracts and success metrics framed around outcomes rather than deliverables?
@@ -414,6 +416,7 @@ Use these prompts during assessment interviews and document reviews to gather ev
 - [ ] Are standards and tools reviewed periodically for continued appropriateness?
 
 **Operation**
+
 - [ ] Can leaders describe the operational details of the services they are accountable for?
 - [ ] Are sources of organisational inertia identified and addressed in change plans?
 - [ ] Is there a blameless failure review process in place?
@@ -421,18 +424,21 @@ Use these prompts during assessment interviews and document reviews to gather ev
 - [ ] Are value stream maps or similar tools used to identify bottlenecks?
 
 **Learning**
+
 - [ ] Is there a structured process for capturing and applying lessons learned?
 - [ ] Are teams encouraged and resourced to run experiments?
 - [ ] Is there a programme for exploring emerging technologies before they become urgent?
 - [ ] Are external industry signals (competitors, regulators, adjacent sectors) systematically monitored?
 
 **Leading**
+
 - [ ] Are strategic decisions made and communicated quickly, without excessive committee review?
 - [ ] Is the strategy reviewed and updated on a regular cycle (not just at annual planning)?
 - [ ] Is there a single named accountable owner for each strategic initiative?
 - [ ] Are leaders open about what they do not know and willing to change their minds publicly?
 
 **Structure**
+
 - [ ] Are most teams small enough to communicate without formal coordination overhead?
 - [ ] Do teams have authority to make decisions within their domain without escalation?
 - [ ] Are different cultural approaches tolerated and valued in different parts of the organisation?

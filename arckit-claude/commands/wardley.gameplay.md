@@ -76,6 +76,7 @@ From the WARD artifact, extract the following structured information that will d
 **Component Inventory**:
 
 For each component on the map, record:
+
 - Component name
 - Visibility position (0.0-1.0)
 - Evolution position (0.0-1.0) and corresponding stage (Genesis/Custom-Built/Product/Commodity)
