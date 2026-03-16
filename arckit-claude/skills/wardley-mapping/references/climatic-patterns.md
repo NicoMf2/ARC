@@ -234,18 +234,38 @@ The more successful a business model has been, the harder it becomes to abandon 
 
 ### Inertia Types Taxonomy
 
-Six distinct types of inertia manifest differently and require different mitigation strategies:
+Seven distinct types of inertia manifest differently and require different mitigation strategies. Based on Wardley's concept of "loss of capital" (physical, social, financial, political) expanded with operational types:
 
 | Type | Description | Indicators | Mitigation |
 |------|-------------|------------|------------|
 | **Success** | Past model worked so well that change feels unnecessary | "Why change what works?", strong quarterly results masking long-term risk, dismissal of emerging competitors | Establish parallel exploration teams, red team exercises, fund self-disruption initiatives |
-| **Capital** | Sunk costs in existing systems, infrastructure, or contracts create financial lock-in | Large depreciation schedules, multi-year vendor contracts, heavy fixed-cost infrastructure | Phase investment transitions, negotiate contract flexibility, calculate true cost of inaction vs switching |
-| **Political** | Power structures and internal influence tied to existing approaches | Executives whose authority depends on current architecture, budget territories, empire building | Reframe as opportunity not threat, create new leadership roles for emerging capabilities, sponsor from top |
+| **Capital** | Physical assets, infrastructure, and legacy technology create lock-in through sunk costs | Large depreciation schedules, outdated machinery still in use, fixed-purpose facilities, legacy systems deeply embedded in operations | Incremental upgrades, modular systems, leasing vs buying, versatile infrastructure design |
+| **Financial** | Risk aversion, short-term focus, and market pressures resist investment in change | Reluctance to sell underperforming assets, hesitancy to invest in new skills/tech, fear of losing strategic control, external markets rewarding stability over innovation | Strategic portfolio management, incremental investment, alternative financial models (leasing, partnerships), separate innovation budgets from BAU |
+| **Political** | Power structures and internal influence tied to existing approaches | Executives whose authority depends on current architecture, budget territories, empire building, fear of losing influence, preservation of established alliances | Reframe as opportunity not threat, create new leadership roles for emerging capabilities, sponsor from top, build coalitions, align incentives with change |
 | **Skills** | Workforce expertise concentrated in legacy technologies or methods | Recruitment focused on legacy skills, training budgets for existing tools, resistance to retraining | Upskilling programs, hire for new capabilities alongside legacy, paired teams (legacy + new) |
 | **Supplier** | Vendor relationships and ecosystem dependencies resist change | Preferred vendor lists, deep integration with specific platforms, vendor-specific certifications | Multi-vendor strategy, abstraction layers, gradual supplier diversification, renegotiate before lock-in deepens |
 | **Consumer** | Users or customers expect and depend on current approach | Customer complaints about any change, contractual SLAs tied to specific implementations, user workflow dependency | Gradual migration with parallel running, user research on actual needs vs habits, opt-in transitions |
 
-**Assessment per component:** For each component with inertia, identify which type(s) are present, rate severity (H/M/L), and define a specific mitigation action. Multiple types often compound — a component with success + skills + capital inertia is far harder to move than one with only skills inertia.
+**Note on Capital vs Financial:** Capital inertia concerns physical/tangible assets (infrastructure, equipment, legacy systems). Financial inertia concerns the psychology and market dynamics around money (sunk cost fallacy, risk aversion, short-termism, investor pressure). A component can have capital inertia (locked into legacy infrastructure) without financial inertia (the business case for change is accepted), or vice versa.
+
+**Assessment per component:** For each component with inertia, identify which type(s) are present, rate severity (H/M/L), and define a specific mitigation action. Multiple types often compound — a component with success + skills + capital + financial inertia is far harder to move than one with only skills inertia.
+
+### Inertia Diagnostic Checklist
+
+Early warning signs that inertia is taking hold in an organisation. Use this checklist during doctrine and climate assessments:
+
+| Sign | What to Look For | Impact if Unaddressed |
+|------|-------------------|----------------------|
+| **Stagnant mindset** | Resistance to training, lack of curiosity about industry trends, unwillingness to adopt new tools | Declining productivity, loss of competitive awareness |
+| **Siloed thinking** | Teams working in isolation, duplicated effort, poor cross-functional communication, misalignment with overall strategy | Suboptimal decisions, inability to leverage collective expertise |
+| **Lack of innovation** | Few new ideas reaching implementation, fear of failure culture, no experimentation budget | Falling behind competitors, inability to differentiate |
+| **Complacency** | Comfort with status quo, "if it ain't broke don't fix it" attitude, declining urgency | Mediocrity becomes the norm, market share erosion |
+| **Risk aversion** | No experimentation, all decisions require exhaustive justification, preference for safe options | Missed opportunities, slow response to market shifts |
+| **Rigid structures** | Bureaucratic approval chains, top-down only decisions, inability to reorganise quickly | Cannot respond to customer needs or competitive threats |
+| **Lack of accountability** | Unclear ownership, blame culture, nobody responsible for change outcomes | Problems persist, low trust, poor morale |
+| **Low employee engagement** | High turnover, absenteeism, lack of initiative, disinterest in company direction | Talent flight, institutional knowledge loss |
+
+**Scoring:** Count how many signs are present (0-8). 0-2: healthy organisation. 3-4: early inertia — address proactively. 5-6: significant inertia — urgent intervention needed. 7-8: critical — existential risk if not addressed immediately.
 
 ---
 
