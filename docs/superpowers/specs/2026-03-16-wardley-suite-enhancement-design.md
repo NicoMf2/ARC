@@ -40,6 +40,32 @@ Enhance ArcKit's Wardley Mapping capabilities from a single `/arckit.wardley` co
 | `/arckit.wardley.gameplay` | `wardley.gameplay.md` | Analyze strategic play options from 60+ gameplay catalog across 11 categories. Produces play recommendations with D&D alignment classification | `WGAM` | Yes |
 | `/arckit.wardley.climate` | `wardley.climate.md` | Assess climatic patterns affecting components — 32 patterns across 6 categories. Produces climate assessment with impact per component | `WCLM` | Yes |
 
+### Argument Hints
+
+| Command | argument-hint |
+|---------|--------------|
+| `wardley.value-chain` | `"<user need or domain, e.g. 'online shopping', 'patient booking'>"` |
+| `wardley.doctrine` | `"<organization or project, e.g. 'DWP Benefits Team', 'Platform Engineering'>"` |
+| `wardley.gameplay` | `"<strategic context, e.g. 'cloud migration', 'market entry for chatbot'>"` |
+| `wardley.climate` | `"<domain or market, e.g. 'AI in healthcare', 'UK government digital services'>"` |
+
+### Hooks
+
+| Command | Stop Hook | Rationale |
+|---------|-----------|-----------|
+| `wardley.value-chain` | `validate-wardley-math.mjs` | Produces OWM syntax with component coordinates |
+| `wardley.doctrine` | None | No OWM syntax — produces scoring matrix only |
+| `wardley.gameplay` | None | No OWM syntax — produces play analysis only |
+| `wardley.climate` | None | No OWM syntax — produces pattern impact matrix only |
+
+### Template Naming Convention
+
+Command dots are replaced with hyphens for template filenames: command `wardley.doctrine` → template `wardley-doctrine-template.md`.
+
+### Re-assessment Support
+
+`wardley.doctrine` supports re-assessment: if a previous WDOC artifact exists, it reads it and presents a score comparison (previous vs current) with trend indicators. The template includes a "Previous Assessment Comparison" section.
+
 ### Document Output Locations
 
 All artifacts saved to `projects/{id}-{name}/wardley-maps/`:
@@ -55,7 +81,7 @@ All artifacts saved to `projects/{id}-{name}/wardley-maps/`:
 
 Six existing files in `arckit-claude/skills/wardley-mapping/references/`, all expanded using the three research books.
 
-### doctrine.md (121 → ~400 lines)
+### doctrine.md (120 → ~400 lines)
 
 **Current**: 15 principles, checklist format, 5 categories, 1-5 scoring.
 
@@ -69,7 +95,7 @@ Six existing files in `arckit-claude/skills/wardley-mapping/references/`, all ex
 
 **Source**: Doctrine book, chapters Phase I–IV + Implementing Doctrine.
 
-### gameplay-patterns.md (172 → ~600 lines)
+### gameplay-patterns.md (171 → ~600 lines)
 
 **Current**: 8 patterns (5 offensive, 3 defensive), basic build/buy/outsource.
 
@@ -84,7 +110,7 @@ Six existing files in `arckit-claude/skills/wardley-mapping/references/`, all ex
 
 **Source**: Gameplays book, Chapter 3 (all 11 categories) + Chapter 4 (case studies).
 
-### climatic-patterns.md (274 → ~500 lines)
+### climatic-patterns.md (273 → ~500 lines)
 
 **Current**: 9 patterns across 5 categories.
 
@@ -98,7 +124,7 @@ Six existing files in `arckit-claude/skills/wardley-mapping/references/`, all ex
 
 **Source**: Climatic Patterns book, chapters IV–IX.
 
-### evolution-stages.md (102 → ~180 lines)
+### evolution-stages.md (101 → ~180 lines)
 
 **Enhanced**:
 - Detailed characteristics per stage from all 3 books
@@ -108,7 +134,7 @@ Six existing files in `arckit-claude/skills/wardley-mapping/references/`, all ex
 
 **Source**: Fundamentals chapters from all 3 books + melodic-software evolution-analysis skill.
 
-### mapping-examples.md (308 → ~450 lines)
+### mapping-examples.md (307 → ~450 lines)
 
 **Enhanced**:
 - 2-3 additional worked examples from books (TechnoGadget smart home, streaming service)
@@ -117,7 +143,7 @@ Six existing files in `arckit-claude/skills/wardley-mapping/references/`, all ex
 
 **Source**: Gameplays book Chapter 4 + Climatic Patterns TechnoGadget + melodic-software value-chain skill.
 
-### mathematical-models.md (255 → ~300 lines)
+### mathematical-models.md (254 → ~300 lines)
 
 **Enhanced**:
 - Play-position scoring from melodic-software strategic-analysis
@@ -192,9 +218,21 @@ Register in `scripts/bash/generate-document-id.sh`:
 
 ### Registration Checklist
 
-1. `arckit-claude/config/doc-types.mjs` — add 4 types + multi-instance set entries + subdirectory mappings
+1. `arckit-claude/config/doc-types.mjs` — add 4 types to `DOC_TYPES`, add `WGAM WCLM WVCH` to `MULTI_INSTANCE_TYPES` set, add all 4 to `SUBDIR_MAP`:
+   ```javascript
+   'WDOC': { name: 'Wardley Doctrine Assessment',  category: 'Architecture' },
+   'WGAM': { name: 'Wardley Gameplay Analysis',     category: 'Architecture' },
+   'WCLM': { name: 'Wardley Climate Assessment',    category: 'Architecture' },
+   'WVCH': { name: 'Wardley Value Chain',            category: 'Architecture' },
+   // MULTI_INSTANCE_TYPES: add 'WGAM', 'WCLM', 'WVCH'
+   // SUBDIR_MAP:
+   'WDOC': 'wardley-maps',
+   'WGAM': 'wardley-maps',
+   'WCLM': 'wardley-maps',
+   'WVCH': 'wardley-maps',
+   ```
 2. `scripts/bash/generate-document-id.sh` — add `WGAM WCLM WVCH` to `MULTI_INSTANCE_TYPES`
-3. `arckit-claude/hooks/validate-wardley-math.py` — extend to validate new doc types if applicable
+3. `arckit-claude/hooks/validate-wardley-math.mjs` — extend file filter to scan `-WDOC-`, `-WGAM-`, `-WCLM-`, `-WVCH-` in addition to existing `-WARD-` pattern (required — `wardley.value-chain` produces OWM syntax)
 4. Templates copied to both `arckit-claude/templates/` and `.arckit/templates/`
 
 ---
@@ -328,21 +366,25 @@ The converter uses `base_name = filename.replace(".md", "")`. For `wardley.doctr
 | Gemini CLI | `wardley.doctrine.toml` | `/arckit:wardley.doctrine` |
 | Copilot | `arckit-wardley.doctrine.prompt.md` | `/arckit-wardley.doctrine` |
 
-**Risk**: Dots in Gemini TOML and Copilot prompt filenames are unconventional. If these targets have issues, the converter can map dots to hyphens for those targets only (e.g., `wardley-doctrine.toml`). This is a converter-only concern — source filenames stay dot-namespaced.
+**Note on dot-namespacing**: This is the first use of dots in command filenames in ArcKit. All 60 existing commands use flat names with hyphens. The following converter code paths must be validated for all 5 AI targets.
 
 ### Automatic Handling (No Converter Changes)
 
 - Reference file copying: `copy_extension_files()` already handles `references/`
 - Template copying: `copy_extension_files()` already handles `templates/`
 - New commands: converter processes all `.md` files in `commands/` automatically
+- `base_name = filename.replace(".md", "")` correctly produces `wardley.doctrine` etc.
 
-### Required Changes
+### Required Converter Changes
 
-| Change | Scope |
-|--------|-------|
-| Gemini/Copilot dot handling | Verify; add dot→hyphen mapping if needed (small) |
-| `generate-document-id.sh` | Add new types before running converter |
-| No agent files needed | New commands don't need agents |
+| Change | Scope | Detail |
+|--------|-------|--------|
+| **`rewrite_codex_skills()` regex** | **Critical** | Current regex `(?<=\s)/arckit\.(\w[\w-]*)` stops at dots — `/arckit.wardley.doctrine` would only capture `wardley`. Update character class to `\w[\w.-]*` to match dot-namespaced commands |
+| **Gemini TOML filenames** | Verify | `wardley.doctrine.toml` — verify Gemini CLI loads TOML files with dots. If not, map dots to hyphens for Gemini target only |
+| **Copilot prompt filenames** | Verify | `arckit-wardley.doctrine.prompt.md` — verify VS Code prompt discovery handles dots before `.prompt.md` |
+| **Codex skill directory names** | Verify | `skills/arckit-wardley.doctrine/SKILL.md` — verify Codex discovers skill directories with dots |
+| **Copilot `agent:` field references** | Verify | Cross-command references in `.agent.md` files if they reference dot-namespaced commands |
+| `generate-document-id.sh` | Required | Add new types before running converter |
 
 ### Agent Consideration
 
@@ -408,8 +450,8 @@ None of the 4 new commands require agents. They read local artifacts and referen
 5. **Documentation** — README, guides, index.html, DEPENDENCY-MATRIX, WORKFLOW-DIAGRAMS, CHANGELOGs
 6. **Testing** — Run commands in a test repo, verify artifacts, check converter output
 
-## Open Questions
+## Design Decisions
 
-1. Should `wardley.doctrine` support re-assessment (reading a previous WDOC and updating scores)?
-2. Should the `validate-wardley-math.py` hook extend to validate new doc types?
-3. Should reference files include the full book content verbatim or distilled summaries? (Recommendation: distilled summaries to keep token cost manageable)
+1. **Doctrine re-assessment**: Yes — `wardley.doctrine` reads existing WDOC if present and produces score comparison with trend indicators. Template includes "Previous Assessment Comparison" section.
+2. **Hook extension**: Yes — `validate-wardley-math.mjs` must extend its file filter to scan for `-WVCH-` files in addition to `-WARD-`. Other new types (WDOC, WGAM, WCLM) do not produce OWM syntax and don't need validation.
+3. **Reference file content**: Distilled summaries, not verbatim book content. Target line counts (~400, ~600, ~500 lines) keep token cost manageable while capturing all patterns, categories, and key examples. Full book text stays in `research/` for human reference.
