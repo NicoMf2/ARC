@@ -232,6 +232,23 @@ The more successful a business model has been, the harder it becomes to abandon 
 
 ---
 
+### Inertia Types Taxonomy
+
+Six distinct types of inertia manifest differently and require different mitigation strategies:
+
+| Type | Description | Indicators | Mitigation |
+|------|-------------|------------|------------|
+| **Success** | Past model worked so well that change feels unnecessary | "Why change what works?", strong quarterly results masking long-term risk, dismissal of emerging competitors | Establish parallel exploration teams, red team exercises, fund self-disruption initiatives |
+| **Capital** | Sunk costs in existing systems, infrastructure, or contracts create financial lock-in | Large depreciation schedules, multi-year vendor contracts, heavy fixed-cost infrastructure | Phase investment transitions, negotiate contract flexibility, calculate true cost of inaction vs switching |
+| **Political** | Power structures and internal influence tied to existing approaches | Executives whose authority depends on current architecture, budget territories, empire building | Reframe as opportunity not threat, create new leadership roles for emerging capabilities, sponsor from top |
+| **Skills** | Workforce expertise concentrated in legacy technologies or methods | Recruitment focused on legacy skills, training budgets for existing tools, resistance to retraining | Upskilling programs, hire for new capabilities alongside legacy, paired teams (legacy + new) |
+| **Supplier** | Vendor relationships and ecosystem dependencies resist change | Preferred vendor lists, deep integration with specific platforms, vendor-specific certifications | Multi-vendor strategy, abstraction layers, gradual supplier diversification, renegotiate before lock-in deepens |
+| **Consumer** | Users or customers expect and depend on current approach | Customer complaints about any change, contractual SLAs tied to specific implementations, user workflow dependency | Gradual migration with parallel running, user research on actual needs vs habits, opt-in transitions |
+
+**Assessment per component:** For each component with inertia, identify which type(s) are present, rate severity (H/M/L), and define a specific mitigation action. Multiple types often compound — a component with success + skills + capital inertia is far harder to move than one with only skills inertia.
+
+---
+
 ## 5. Competitor Patterns — Chapter VIII
 
 ### 5.1 Competitors' Actions Will Change the Game
