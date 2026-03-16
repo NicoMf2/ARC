@@ -232,7 +232,7 @@ Register in `scripts/bash/generate-document-id.sh`:
    'WVCH': 'wardley-maps',
    ```
 2. `scripts/bash/generate-document-id.sh` — add `WGAM WCLM WVCH` to `MULTI_INSTANCE_TYPES`
-3. `arckit-claude/hooks/validate-wardley-math.mjs` — extend file filter to scan `-WDOC-`, `-WGAM-`, `-WCLM-`, `-WVCH-` in addition to existing `-WARD-` pattern (required — `wardley.value-chain` produces OWM syntax)
+3. `arckit-claude/hooks/validate-wardley-math.mjs` — extend file filter to scan `-WVCH-` in addition to existing `-WARD-` pattern (only WVCH produces OWM syntax; WDOC/WGAM/WCLM do not need validation)
 4. Templates copied to both `arckit-claude/templates/` and `.arckit/templates/`
 
 ---
@@ -283,9 +283,15 @@ handoffs:
   - command: wardley.doctrine
     description: Assess organizational doctrine maturity
     condition: "Value chain reveals organizational capability gaps"
+hooks:
+  Stop:
+    - hooks:
+        - type: command
+          command: "node ${CLAUDE_PLUGIN_ROOT}/hooks/validate-wardley-math.mjs"
+          timeout: 10
 ```
 
-**`wardley.md`** (add to existing handoffs):
+**`wardley.md`** (add new handoffs + fix pre-existing bug: hook references `python3 validate-wardley-math.py` but actual file is `validate-wardley-math.mjs` — change to `node validate-wardley-math.mjs`):
 ```yaml
 handoffs:
   - command: roadmap
@@ -379,7 +385,7 @@ The converter uses `base_name = filename.replace(".md", "")`. For `wardley.doctr
 
 | Change | Scope | Detail |
 |--------|-------|--------|
-| **`rewrite_codex_skills()` regex** | **Critical** | Current regex `(?<=\s)/arckit\.(\w[\w-]*)` stops at dots — `/arckit.wardley.doctrine` would only capture `wardley`. Update character class to `\w[\w.-]*` to match dot-namespaced commands |
+| **`rewrite_codex_skills()` regexes** | **Critical** | Three regexes in this function use `[\w-]*` which stops at dots. All three must update their character class to `[\w.-]*`: (1) colon-format `r"/arckit:(\w[\w-]*)"`, (2) dot-format `r"(?<=\s)/arckit\.(\w[\w-]*)"`, (3) prompts-format `r"/prompts:arckit\.(\w[\w-]*)"`. Without this fix, cross-references like `/arckit:wardley.doctrine` would only capture `wardley` |
 | **Gemini TOML filenames** | Verify | `wardley.doctrine.toml` — verify Gemini CLI loads TOML files with dots. If not, map dots to hyphens for Gemini target only |
 | **Copilot prompt filenames** | Verify | `arckit-wardley.doctrine.prompt.md` — verify VS Code prompt discovery handles dots before `.prompt.md` |
 | **Codex skill directory names** | Verify | `skills/arckit-wardley.doctrine/SKILL.md` — verify Codex discovers skill directories with dots |
