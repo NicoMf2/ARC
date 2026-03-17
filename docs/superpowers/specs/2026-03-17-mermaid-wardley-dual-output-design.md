@@ -190,7 +190,6 @@ size [1100, 800]
 
 anchor Citizen [0.95, 0.63]
 
-component Citizen [0.95, 0.20] (build)
 component Benefits Eligibility Guidance [0.92, 0.25] (build)
 component Conversational Interface [0.85, 0.38] (build)
 component Human Review Queue [0.82, 0.45] (build)
