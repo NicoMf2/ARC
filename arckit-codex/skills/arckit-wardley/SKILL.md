@@ -598,6 +598,7 @@ size [1100, 800]
 
 anchor Citizen [0.95, 0.63]
 
+component Benefits Eligibility Guidance [0.92, 0.25] (build)
 component Conversational Interface [0.85, 0.38] (build)
 component Human Review Queue [0.82, 0.45] (build)
 component GPT-4 LLM Service [0.68, 0.72] (buy)
