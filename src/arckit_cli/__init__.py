@@ -62,21 +62,21 @@ AGENT_CONFIG = {
 }
 
 BANNER = """
- █████╗ ██████╗  ██████╗██╗  ██╗██╗████████╗
-██╔══██╗██╔══██╗██╔════╝██║ ██╔╝██║╚══██╔══╝
-███████║██████╔╝██║     █████╔╝ ██║   ██║
-██╔══██║██╔══██╗██║     ██╔═██╗ ██║   ██║
-██║  ██║██║  ██║╚██████╗██║  ██╗██║   ██║
-╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝   ╚═╝
+                ___      .______        ______            
+               /   \     |   _  \      /      |           
+ ______       /  ^  \    |  |_)  |    |  ,----'    ______ 
+|______|     /  /_\  \   |      /     |  |        |______|
+            /  _____  \  |  |\  \----.|  `----.           
+           /__/     \__\ | _| `._____| \______|           
 """
 
-TAGLINE = "Enterprise Architecture Governance & Vendor Procurement"
+TAGLINE = "Architecture Review Copilot"
 
 console = Console()
 
 app = typer.Typer(
     name="arckit",
-    help="Enterprise Architecture Governance & Vendor Procurement Toolkit",
+    help="Architecture Review Copilot",
     add_completion=False,
 )
 
@@ -101,7 +101,7 @@ def check_tool(tool: str) -> bool:
     return shutil.which(tool) is not None
 
 
-def is_git_repo(path: Path = None) -> bool:
+def is_git_repo(path: Path ) -> bool:
     """Check if the specified path is inside a git repository."""
     if path is None:
         path = Path.cwd()
@@ -123,6 +123,7 @@ def is_git_repo(path: Path = None) -> bool:
 
 def init_git_repo(project_path: Path) -> bool:
     """Initialize a git repository in the specified path."""
+    original_cwd = Path.cwd()
     try:
         original_cwd = Path.cwd()
         os.chdir(project_path)
@@ -137,7 +138,7 @@ def init_git_repo(project_path: Path) -> bool:
         )
         console.print("[green]✓[/green] Git repository initialized")
         return True
-    except subprocess.CalledProcessError as e:
+    except subprocess.CalledProcessError as e:      
         console.print(f"[red]Error initializing git repository:[/red] {e}")
         return False
     finally:
@@ -152,19 +153,12 @@ def get_data_paths():
         return {
             "templates": base_path / ".arckit" / "templates",
             "scripts": base_path / "scripts",
-            "opencode_root": base_path / "arckit-opencode",
-            "opencode_commands": base_path / "arckit-opencode" / "commands",
-            "opencode_agents": base_path / "arckit-opencode" / "agents",
             "docs_guides": base_path / "docs" / "guides",
             "docs_readme": base_path / "docs" / "README.md",
             "dependency_matrix": base_path / "docs" / "DEPENDENCY-MATRIX.md",
             "workflow_diagrams": base_path / "docs" / "WORKFLOW-DIAGRAMS.md",
             "version": base_path / "VERSION",
             "changelog": base_path / "CHANGELOG.md",
-            "codex_references": base_path / "arckit-codex" / "references",
-            "codex_skills": base_path / "arckit-codex" / "skills",
-            "codex_agents": base_path / "arckit-codex" / "agents",
-            "codex_config": base_path / "arckit-codex" / "config.toml",
             "copilot_prompts": base_path / "arckit-copilot" / "prompts",
             "copilot_agents": base_path / "arckit-copilot" / "agents",
             "copilot_instructions": base_path / "arckit-copilot" / "copilot-instructions.md",
@@ -173,7 +167,7 @@ def get_data_paths():
     # First, check if running from source (development mode)
     # This allows testing local changes without re-installing
     source_root = Path(__file__).parent.parent.parent
-    if (source_root / ".arckit").exists() and (source_root / "arckit-codex").exists():
+    if (source_root / ".arckit").exists() and (source_root / "arckit-copilot").exists():
         return build_paths(source_root)
 
     # Then try to find installed package data
@@ -221,9 +215,8 @@ def get_data_paths():
 
 
 def create_project_structure(
-    project_path: Path, ai_assistant: str, all_ai: bool = False
-):
-    """Create the basic ArcKit project structure."""
+    project_path: Path, ai_assistant: str):
+    """Create the basic ARC project structure."""
 
     console.print("[cyan]Creating project structure...[/cyan]")
 
@@ -237,27 +230,10 @@ def create_project_structure(
         "projects/000-global/external",
     ]
 
-    if all_ai:
-        # Create directories for all AI assistants (Codex and OpenCode)
-        directories.extend(
-            [
-                ".codex/agents",
-                ".agents/skills",
-                ".opencode/commands",
-                ".opencode/agents",
-            ]
-        )
-    else:
-        agent_folder = AGENT_CONFIG[ai_assistant]["folder"]
-        if ai_assistant == "codex":
-            directories.append(".agents/skills")
-            directories.append(f"{agent_folder}agents")
-        elif ai_assistant == "opencode":
-            directories.append(f"{agent_folder}commands")
-            directories.append(f"{agent_folder}agents")
-        elif ai_assistant == "copilot":
-            directories.append(f"{agent_folder}prompts")
-            directories.append(f"{agent_folder}agents")
+    agent_folder = AGENT_CONFIG[ai_assistant]["folder"]
+    if ai_assistant == "copilot":
+        directories.append(f"{agent_folder}prompts")
+        directories.append(f"{agent_folder}agents")
 
     for directory in directories:
         (project_path / directory).mkdir(parents=True, exist_ok=True)
@@ -279,7 +255,7 @@ def create_project_structure(
     )
     templates_custom_readme.write_text("""# Custom Templates
 
-This directory is for your customized ArcKit templates.
+This directory is for your customized ARC templates.
 
 ## How Template Customization Works
 
@@ -322,17 +298,12 @@ def init(
         None,
         help="Name for your new project directory (optional, use '.' for current directory)",
     ),
-    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: codex, opencode, copilot"),
+    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: copilot"),
     no_git: bool = typer.Option(
         False, "--no-git", help="Skip git repository initialization"
     ),
     here: bool = typer.Option(
         False, "--here", help="Initialize project in the current directory"
-    ),
-    all_ai: bool = typer.Option(
-        False,
-        "--all-ai",
-        help="Install commands for all CLI-supported AI assistants (codex)",
     ),
     minimal: bool = typer.Option(
         False, "--minimal", help="Minimal install: skip docs and guides"
@@ -359,7 +330,7 @@ def init(
 
     if project_name == ".":
         here = True
-        project_name = None
+        project_name = "Empty Project"
 
     if here and project_name:
         console.print(
@@ -408,56 +379,24 @@ def init(
     # Select AI assistant
     if not ai_assistant:
         console.print("\n[cyan]Select your AI assistant:[/cyan]")
-        console.print("1. codex (OpenAI Codex CLI)")
-        console.print("2. opencode (OpenCode CLI)")
-        console.print("3. copilot (GitHub Copilot in VS Code)")
+        console.print("1. copilot (GitHub Copilot in VS Code)")
         console.print()
-        console.print("[dim]For Claude Code, use the ArcKit plugin instead:[/dim]")
-        console.print("[dim]  /plugin marketplace add tractorjuice/arc-kit[/dim]")
-        console.print("[dim]For Gemini CLI, use the ArcKit extension instead:[/dim]")
-        console.print(
-            "[dim]  gemini extensions install https://github.com/tractorjuice/arckit-gemini[/dim]"
-        )
-
+       
         choice = typer.prompt("Enter choice", default="1")
-        ai_map = {"1": "codex", "2": "opencode", "3": "copilot"}
-        ai_assistant = ai_map.get(choice, "codex")
-
-    if ai_assistant == "claude":
-        console.print(
-            "[yellow]Claude Code support has moved to the ArcKit plugin.[/yellow]"
-        )
-        console.print("Install in Claude Code with:")
-        console.print("  [cyan]/plugin marketplace add tractorjuice/arc-kit[/cyan]")
-        console.print("\nThen enable the plugin from the Discover tab.")
-        raise typer.Exit(0)
-
-    if ai_assistant == "gemini":
-        console.print(
-            "[yellow]Gemini CLI support has moved to the ArcKit Gemini extension.[/yellow]"
-        )
-        console.print("Install in Gemini CLI with:")
-        console.print(
-            "  [cyan]gemini extensions install https://github.com/tractorjuice/arckit-gemini[/cyan]"
-        )
-        console.print("\nThe extension provides all 48 commands with zero config.")
-        console.print("Updates via: [cyan]gemini extensions update arckit[/cyan]")
-        raise typer.Exit(0)
-
+        ai_map = {"1": "copilot"}
+        ai_assistant = ai_map.get(choice, "copilot")
+    
     if ai_assistant not in AGENT_CONFIG:
         console.print(f"[red]Error:[/red] Invalid AI assistant '{ai_assistant}'")
         console.print(f"Choose from: {', '.join(AGENT_CONFIG.keys())}")
         raise typer.Exit(1)
 
-    if all_ai:
-        console.print(f"[cyan]Selected AI assistant:[/cyan] All (Codex)")
-    else:
-        console.print(
-            f"[cyan]Selected AI assistant:[/cyan] {AGENT_CONFIG[ai_assistant]['name']}"
-        )
+    console.print(
+        f"[cyan]Selected AI assistant:[/cyan] {AGENT_CONFIG[ai_assistant]['name']}"
+    )
 
     # Create project structure
-    create_project_structure(project_path, ai_assistant, all_ai)
+    create_project_structure(project_path, ai_assistant)
 
     # Copy templates from installed package or source
     console.print("[cyan]Setting up templates...[/cyan]")
@@ -505,7 +444,7 @@ def init(
         console.print(f"[yellow]Warning: Scripts not found at {scripts_src}[/yellow]")
 
     # Copy references if they exist
-    references_src = data_paths.get("codex_references")
+    references_src = data_paths.get("copilot_references")
     if references_src and references_src.exists():
         references_dst = project_path / ".arckit" / "references"
         references_dst.mkdir(parents=True, exist_ok=True)
@@ -513,82 +452,6 @@ def init(
         console.print(f"[green]✓[/green] References copied")
 
     # Copy slash commands
-    # Copy Codex prompts (all_ai and single-AI both install codex)
-    if ai_assistant == "codex" or all_ai:
-        # Copy Codex skills to .agents/skills/ (replaces deprecated .codex/prompts/)
-        codex_skills_src = data_paths.get("codex_skills")
-        if codex_skills_src and codex_skills_src.exists():
-            skills_dst = project_path / ".agents" / "skills"
-            skills_dst.mkdir(parents=True, exist_ok=True)
-            shutil.copytree(codex_skills_src, skills_dst, dirs_exist_ok=True)
-            skill_count = sum(
-                1 for d in skills_dst.iterdir()
-                if d.is_dir() and not d.name.startswith(".")
-            )
-            console.print(f"[green]✓[/green] Copied {skill_count} skills to .agents/skills/")
-        else:
-            console.print(
-                f"[yellow]Warning: Codex skills not found at {codex_skills_src}[/yellow]"
-            )
-
-        # Copy Codex agent configs
-        codex_agents_src = data_paths.get("codex_agents")
-        if codex_agents_src and codex_agents_src.exists():
-            agents_dst = project_path / ".codex" / "agents"
-            agents_dst.mkdir(parents=True, exist_ok=True)
-            agent_count = 0
-            for agent_file in sorted(codex_agents_src.iterdir()):
-                if agent_file.suffix in (".toml", ".md"):
-                    shutil.copy2(agent_file, agents_dst / agent_file.name)
-                    agent_count += 1
-            console.print(f"[green]✓[/green] Copied {agent_count} agent configs to .codex/agents/")
-
-        # Copy Codex config.toml (MCP servers + agent roles)
-        codex_config_src = data_paths.get("codex_config")
-        if codex_config_src and codex_config_src.exists():
-            config_dst = project_path / ".codex" / "config.toml"
-            shutil.copy2(codex_config_src, config_dst)
-            console.print(f"[green]✓[/green] Copied config.toml (MCP servers + agent roles)")
-
-    # Copy OpenCode commands and agents
-    if ai_assistant == "opencode" or all_ai:
-        # Copy commands
-        commands_src = data_paths["opencode_commands"]
-        if all_ai:
-            target_cmd_dst = project_path / ".opencode" / "commands"
-            target_agent_dst = project_path / ".opencode" / "agents"
-        else:
-            target_cmd_dst = project_path / agent_folder / "commands"
-            target_agent_dst = project_path / agent_folder / "agents"
-
-        if commands_src.exists():
-            console.print(f"[dim]Copying OpenCode commands from: {commands_src}[/dim]")
-            command_count = 0
-            target_cmd_dst.mkdir(parents=True, exist_ok=True)
-            for command_file in commands_src.glob("arckit.*.md"):
-                shutil.copy2(command_file, target_cmd_dst / command_file.name)
-                command_count += 1
-            console.print(f"[green]✓[/green] Copied {command_count} OpenCode commands")
-        else:
-            console.print(
-                f"[yellow]Warning: OpenCode commands not found at {commands_src}[/yellow]"
-            )
-
-        # Copy agents
-        agents_src = data_paths["opencode_agents"]
-        if agents_src.exists():
-            console.print(f"[dim]Copying OpenCode agents from: {agents_src}[/dim]")
-            agent_count = 0
-            target_agent_dst.mkdir(parents=True, exist_ok=True)
-            for agent_file in agents_src.glob("*.md"):
-                shutil.copy2(agent_file, target_agent_dst / agent_file.name)
-                agent_count += 1
-            console.print(f"[green]✓[/green] Copied {agent_count} OpenCode agents")
-        else:
-            console.print(
-                f"[yellow]Warning: OpenCode agents not found at {agents_src}[/yellow]"
-            )
-
     # Copy Copilot prompt files and agents
     if ai_assistant == "copilot":
         console.print("[cyan]Setting up Copilot environment...[/cyan]")
@@ -677,9 +540,7 @@ def init(
         console.print(f"[green]✓[/green] Copied CHANGELOG.md")
 
     # Determine command prefix based on AI assistant
-    if ai_assistant == "codex":
-        p = "$arckit-"  # skill invocation
-    elif ai_assistant == "copilot":
+    if ai_assistant == "copilot":
         p = "/arckit-"  # copilot prompt invocation
     else:
         p = "/arckit."  # slash command
@@ -690,7 +551,7 @@ Enterprise Architecture Governance Project
 
 ## Getting Started
 
-This project uses ArcKit for enterprise architecture governance and vendor procurement.
+This project uses ARC for enterprise architecture governance .
 
 ### Available Commands
 
@@ -801,121 +662,6 @@ Example:
     if should_init_git and not is_git_repo(project_path):
         init_git_repo(project_path)
 
-    # Set up .gitignore for Codex projects
-    if ai_assistant == "codex":
-        gitignore_path = project_path / ".gitignore"
-        codex_ignore_entries = [
-            "# Codex CLI",
-            ".codex/*",
-            "!.codex/agents/",
-            "!.codex/config.toml",
-        ]
-
-        if gitignore_path.exists():
-            existing_content = gitignore_path.read_text(encoding='utf-8')
-            if ".codex" not in existing_content:
-                with open(gitignore_path, 'a', encoding='utf-8') as f:
-                    f.write("\n" + "\n".join(codex_ignore_entries) + "\n")
-        else:
-            gitignore_path.write_text("\n".join(codex_ignore_entries) + "\n", encoding='utf-8')
-
-        console.print("[green]✓[/green] Codex environment configured")
-
-    # Create .envrc for OpenCode projects
-    if ai_assistant == "opencode":
-        console.print("[cyan]Setting up OpenCode environment...[/cyan]")
-
-        # Create .envrc
-        envrc_path = project_path / ".envrc"
-        envrc_content = f"""# Auto-generated by arckit CLI for OpenCode CLI support
-# This file sets OPENCODE_HOME so OpenCode can discover project-specific commands
-
-export OPENCODE_HOME="$PWD/.opencode"
-"""
-        envrc_path.write_text(envrc_content, encoding="utf-8")
-
-        # Copy .opencode/README.md if it exists
-        opencode_src = data_paths.get("opencode_root")
-        if opencode_src and opencode_src.exists():
-            opencode_readme_src = opencode_src / "README.md"
-            opencode_gitignore_src = opencode_src / ".gitignore"
-            opencode_dst = project_path / ".opencode"
-            opencode_dst.mkdir(parents=True, exist_ok=True)
-
-            if opencode_readme_src.exists():
-                shutil.copy2(opencode_readme_src, opencode_dst / "README.md")
-                console.print(f"[green]✓[/green] Copied .opencode/README.md")
-
-            if opencode_gitignore_src.exists():
-                shutil.copy2(opencode_gitignore_src, opencode_dst / ".gitignore")
-                console.print(f"[green]✓[/green] Copied .opencode/.gitignore")
-
-            # Create opencode.json with MCP configuration (workspace config)
-            # Using dictionary format with type="remote" matching SDK McpRemoteConfig
-            opencode_json_path = opencode_dst / "opencode.json"
-            opencode_json_content = """{
-  "$schema": "https://opencode.ai/config.json",
-  "mcp": {
-    "aws-knowledge": {
-      "type": "remote",
-      "url": "https://knowledge-mcp.global.api.aws/sse",
-      "enabled": true
-    },
-    "microsoft-learn": {
-      "type": "remote",
-      "url": "https://learn.microsoft.com/api/mcp/sse",
-      "enabled": true
-    },
-    "google-developer-knowledge": {
-      "type": "remote",
-      "url": "https://developerknowledge.googleapis.com/mcp/sse",
-      "headers": {
-        "X-Goog-Api-Key": "${GOOGLE_API_KEY}"
-      },
-      "enabled": false
-    }
-  }
-}
-"""
-            opencode_json_path.write_text(opencode_json_content, encoding="utf-8")
-            console.print(
-                f"[green]✓[/green] Created .opencode/opencode.json with MCP servers"
-            )
-
-            # Copy skills if they exist
-            opencode_skills_src = opencode_src / "skills"
-            if opencode_skills_src.exists():
-                opencode_skills_dst = opencode_dst / "skills"
-                shutil.copytree(
-                    opencode_skills_src, opencode_skills_dst, dirs_exist_ok=True
-                )
-                console.print(f"[green]✓[/green] Copied .opencode/skills")
-
-        # Create/update .gitignore
-
-        gitignore_path = project_path / ".gitignore"
-        opencode_ignore_entries = [
-            "# OpenCode CLI - exclude auth tokens but include commands",
-            ".opencode/*",
-            "!.opencode/commands/",
-            "!.opencode/README.md",
-            "!.opencode/.gitignore",
-            "",
-            "# direnv",
-            ".envrc.local",
-        ]
-
-        if gitignore_path.exists():
-            existing_content = gitignore_path.read_text(encoding="utf-8")
-            if ".opencode" not in existing_content:
-                with open(gitignore_path, "a", encoding="utf-8") as f:
-                    f.write("\n" + "\n".join(opencode_ignore_entries) + "\n")
-        else:
-            gitignore_path.write_text("\n".join(opencode_ignore_entries) + "\n", encoding="utf-8")
-
-        console.print(
-            "[green]✓[/green] OpenCode environment configured (.envrc created)"
-        )
 
     # Success message
     console.print(
@@ -926,29 +672,7 @@ export OPENCODE_HOME="$PWD/.opencode"
         f"1. Navigate to project: [cyan]cd {project_name if not here else '.'}[/cyan]",
     ]
 
-    if ai_assistant == "codex":
-        next_steps.append("2. Start Codex: [cyan]codex[/cyan]")
-        next_steps.append(
-            "3. Establish architecture principles: [cyan]$arckit-principles[/cyan]"
-        )
-        next_steps.append(
-            "4. Create your first project: [cyan]$arckit-requirements[/cyan]"
-        )
-    elif ai_assistant == "opencode":
-        next_steps.append("2. Set up OPENCODE_HOME environment variable:")
-        next_steps.append(
-            "   [cyan]RECOMMENDED[/cyan]: Install direnv and run [cyan]direnv allow[/cyan]"
-        )
-        next_steps.append(
-            '   Alternative: Run [cyan]export OPENCODE_HOME="$PWD/.opencode"[/cyan]'
-        )
-        next_steps.append(f"3. Start OpenCode: [cyan]opencode[/cyan]")
-        next_steps.append(
-            "4. Establish architecture principles: [cyan]/arckit.principles[/cyan]"
-        )
-        next_steps.append("5. Create your first project: [cyan]/arckit.requirements[/cyan]"
-        )
-    elif ai_assistant == "copilot":
+    if ai_assistant == "copilot":
         next_steps.append("2. Open in VS Code: [cyan]code .[/cyan]")
         next_steps.append("3. Open Copilot Chat and type: [cyan]/arckit-principles[/cyan]")
         next_steps.append(

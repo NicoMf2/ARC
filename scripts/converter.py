@@ -109,50 +109,6 @@ CONTEXT_HOOK_REPLACEMENT = (
 # --- Agent configuration: adding a new AI target = adding a dictionary entry ---
 
 AGENT_CONFIG = {
-    "codex_extension": {
-        "name": "Codex Extension",
-        "output_dir": "arckit-codex/prompts",
-        "filename_pattern": "arckit.{name}.md",
-        "format": "markdown",
-        "path_prefix": ".arckit",
-        "extension_dir": "arckit-codex",
-        "copy_commands_to_extension": True,
-        "copy_agents_to_extension": True,
-        "has_context_hook": False,
-        "has_sync_guides_hook": False,
-    },
-    "codex_skills": {
-        "name": "Codex Skills",
-        "output_dir": "arckit-codex/skills",
-        "format": "skill",
-        "path_prefix": ".arckit",
-        "has_context_hook": False,
-        "has_sync_guides_hook": False,
-    },
-    "opencode": {
-        "name": "OpenCode CLI",
-        "output_dir": "arckit-opencode/commands",
-        "filename_pattern": "arckit.{name}.md",
-        "format": "markdown",
-        "path_prefix": ".arckit",
-        "extension_dir": "arckit-opencode",
-        "copy_agents_to_extension": True,
-        "has_context_hook": False,
-        "has_sync_guides_hook": False,
-    },
-    "gemini": {
-        "name": "Gemini CLI",
-        "output_dir": "arckit-gemini/commands/arckit",
-        "filename_pattern": "{name}.toml",
-        "format": "toml",
-        "path_prefix": "~/.gemini/extensions/arckit",
-        "arg_placeholder": "{{args}}",
-        "extension_dir": "arckit-gemini",
-        "prepend_block": EXTENSION_FILE_ACCESS_BLOCK,
-        "rewrite_read_instructions": True,
-        "has_context_hook": True,
-        "has_sync_guides_hook": False,
-    },
     "copilot": {
         "name": "Copilot",
         "output_dir": "arckit-copilot/prompts",
@@ -165,7 +121,7 @@ AGENT_CONFIG = {
         "copy_agents_to_extension": False,
         "has_context_hook": False,
         "has_sync_guides_hook": False,
-    },
+    }
 }
 
 
