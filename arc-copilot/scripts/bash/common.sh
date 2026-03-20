@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Common utilities for ArcKit scripts
+# Common utilities for ARC scripts
 
 set -euo pipefail
 
@@ -37,7 +37,7 @@ find_repo_root() {
         fi
         current_dir="$(dirname "$current_dir")"
     done
-    log_error "Not in an ArcKit project (no projects/ directory found)"
+    log_error "Not in an ARC project (no projects/ directory found)"
     exit 1
 }
 
@@ -149,7 +149,7 @@ check_git_clean() {
     return 0
 }
 
-# Get repository root using git (fallback to .arckit search)
+# Get repository root using git (fallback to .arc search)
 get_repo_root() {
     if has_git && git rev-parse --git-dir > /dev/null 2>&1; then
         git rev-parse --show-toplevel 2>/dev/null
@@ -333,16 +333,16 @@ is_json_mode() {
 # Path Helper Functions
 # ============================================================================
 
-# Get .arckit directory path
-get_arckit_dir() {
+# Get .arc directory path
+get_arc_dir() {
     local repo_root="${1:-$(find_repo_root)}"
-    echo "$repo_root/.arckit"
+    echo "$repo_root/.arc"
 }
 
 # Get templates directory path
 get_templates_dir() {
     local repo_root="${1:-$(find_repo_root)}"
-    echo "$repo_root/.arckit/templates"
+    echo "$repo_root/.arc/templates"
 }
 
 # Get projects directory path

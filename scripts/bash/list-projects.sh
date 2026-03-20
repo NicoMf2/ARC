@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# List all ArcKit projects with status indicators
+# List all ARC projects with status indicators
 #
 # This script lists all projects in the repository with information about
 # which artifacts exist and their completion status.
@@ -35,7 +35,7 @@ while [[ $# -gt 0 ]]; do
             cat << 'EOF'
 Usage: list-projects.sh [OPTIONS]
 
-List all ArcKit projects with status indicators.
+List all ARC projects with status indicators.
 
 OPTIONS:
   --json           Output in JSON format
@@ -77,7 +77,7 @@ if [[ ! -d "$PROJECTS_DIR" ]]; then
     else
         log_warning "No projects directory found"
         echo ""
-        echo "Run: /arckit.init to initialize an ArcKit repository"
+        echo "Run: /arc.init to initialize an ARC repository"
     fi
     exit 0
 fi
@@ -91,7 +91,7 @@ if [[ $PROJECT_COUNT -eq 0 ]]; then
     else
         echo "No projects found"
         echo ""
-        echo "Run: /arckit.create to create a new project"
+        echo "Run: /arc.create to create a new project"
     fi
     exit 0
 fi
@@ -253,7 +253,7 @@ if [[ "$JSON_MODE" == "true" ]]; then
 fi
 
 # Text output mode
-echo "ArcKit Projects"
+echo "ARC Projects"
 echo "==============="
 echo ""
 echo "Repository: $REPO_ROOT"

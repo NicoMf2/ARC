@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Migrate ArcKit project files to new Document ID-based filenames
+# Migrate ARC project files to new Document ID-based filenames
 # Usage: ./migrate-filenames.sh [PROJECT_DIR] [OPTIONS]
 #
 # This script renames old-style filenames to the new ARC-{PID}-{TYPE}-v{VERSION}.md pattern.
@@ -92,7 +92,7 @@ usage() {
     cat <<EOF
 Usage: $0 [PROJECT_DIR] [OPTIONS]
 
-Migrate ArcKit project files to new Document ID-based filenames.
+Migrate ARC project files to new Document ID-based filenames.
 
 Options:
     --all           Migrate all projects in the projects/ directory
@@ -114,8 +114,8 @@ Supported global files (000-global):
     principles.md               → ARC-000-PRIN-v1.0.md
 
 Legacy locations checked for principles:
-    .arckit/memory/architecture-principles.md
-    .arckit/memory/principles.md
+    .arc/memory/architecture-principles.md
+    .arc/memory/principles.md
 
 EOF
     exit 1
@@ -290,8 +290,8 @@ migrate_project() {
     # Special handling for 000-global: check legacy locations for principles
     if [[ "$project_id" == "000" ]]; then
         local legacy_locations=(
-            "$REPO_ROOT/.arckit/memory/architecture-principles.md"
-            "$REPO_ROOT/.arckit/memory/principles.md"
+            "$REPO_ROOT/.arc/memory/architecture-principles.md"
+            "$REPO_ROOT/.arc/memory/principles.md"
         )
 
         for legacy_path in "${legacy_locations[@]}"; do
@@ -479,8 +479,8 @@ migrate_global_principles() {
 
     # Check legacy locations for principles
     local legacy_locations=(
-        "$REPO_ROOT/.arckit/memory/architecture-principles.md"
-        "$REPO_ROOT/.arckit/memory/principles.md"
+        "$REPO_ROOT/.arc/memory/architecture-principles.md"
+        "$REPO_ROOT/.arc/memory/principles.md"
     )
 
     for legacy_path in "${legacy_locations[@]}"; do

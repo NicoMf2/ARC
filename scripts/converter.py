@@ -9,16 +9,16 @@ import yaml
 def build_agent_map(agents_dir):
     """Build a map from command name to agent file path and content.
 
-    Agent files are named arckit-{name}.md. The corresponding plugin command
+    Agent files are named arc-{name}.md. The corresponding plugin command
     is {name}.md. Returns {command_filename: (agent_path, agent_prompt)}.
     """
     agent_map = {}
     if not os.path.isdir(agents_dir):
         return agent_map
     for filename in os.listdir(agents_dir):
-        if filename.startswith("arckit-") and filename.endswith(".md"):
-            # arckit-research.md -> research.md
-            name = filename.replace("arckit-", "", 1).replace(".md", "")
+        if filename.startswith("arc-") and filename.endswith(".md"):
+            # arc-research.md -> research.md
+            name = filename.replace("arc-", "", 1).replace(".md", "")
             command_filename = f"{name}.md"
             agent_path = os.path.join(agents_dir, filename)
             with open(agent_path, "r", encoding="utf-8") as f:
@@ -52,7 +52,7 @@ def extract_agent_prompt(content):
     return content
 
 
-def render_handoffs_section(handoffs, command_format="/arckit:{cmd}"):
+def render_handoffs_section(handoffs, command_format="/arc:{cmd}"):
     """Render handoffs list as a markdown Suggested Next Steps section."""
     if not handoffs:
         return ""
@@ -80,19 +80,19 @@ def render_handoffs_section(handoffs, command_format="/arckit:{cmd}"):
 EXTENSION_FILE_ACCESS_BLOCK = """\
 **IMPORTANT — Gemini Extension File Access**:
 This command runs as a Gemini CLI extension. The extension directory \
-(`~/.gemini/extensions/arckit/`) is outside the workspace sandbox, so you \
+(`~/.gemini/extensions/arc/`) is outside the workspace sandbox, so you \
 CANNOT use the read_file tool to access it. Instead:
 
-- To read templates/files: use a shell command, e.g. `cat ~/.gemini/extensions/arckit/templates/foo-template.md`
-- To list files: use `ls ~/.gemini/extensions/arckit/templates/`
-- To run scripts: use `python3 ~/.gemini/extensions/arckit/scripts/python/create-project.py --json`
-- To check file existence: use `test -f ~/.gemini/extensions/arckit/templates/foo-template.md && echo exists`
+- To read templates/files: use a shell command, e.g. `cat ~/.gemini/extensions/arc/templates/foo-template.md`
+- To list files: use `ls ~/.gemini/extensions/arc/templates/`
+- To run scripts: use `python3 ~/.gemini/extensions/arc/scripts/python/create-project.py --json`
+- To check file existence: use `test -f ~/.gemini/extensions/arc/templates/foo-template.md && echo exists`
 All extension file access MUST go through shell commands.
 
 """
 
 CONTEXT_HOOK_NOTE = (
-    "> **Note**: The ArcKit Project Context hook has already detected all "
+    "> **Note**: The ARC Project Context hook has already detected all "
     "projects, artifacts, external documents, and global policies. Use that "
     "context below \u2014 no need to scan directories manually."
 )
@@ -111,12 +111,12 @@ CONTEXT_HOOK_REPLACEMENT = (
 AGENT_CONFIG = {
     "copilot": {
         "name": "Copilot",
-        "output_dir": "arckit-copilot/prompts",
-        "filename_pattern": "arckit-{name}.prompt.md",
+        "output_dir": "arc-copilot/prompts",
+        "filename_pattern": "arc-{name}.prompt.md",
         "format": "prompt",
-        "path_prefix": ".arckit",
+        "path_prefix": ".arc",
         "arg_placeholder": "${input:topic:Enter project name or topic}",
-        "extension_dir": "arckit-copilot",
+        "extension_dir": "arc-copilot",
         "copy_commands_to_extension": False,
         "copy_agents_to_extension": False,
         "has_context_hook": False,
@@ -156,7 +156,7 @@ def rewrite_hook_dependencies(prompt, config):
     return result
 
 
-# Default Copilot tools for most ArcKit commands
+# Default Copilot tools for most ARC commands
 _COPILOT_DEFAULT_TOOLS = [
     "readFile", "editFiles", "runCommand", "codebase", "search",
 ]
@@ -262,11 +262,11 @@ def convert(commands_dir, agents_dir):
 
             # Determine handoff command format based on target
             if config["format"] == "prompt":
-                cmd_fmt = "/arckit-{cmd}"
+                cmd_fmt = "/arc-{cmd}"
             elif config["format"] == "skill":
-                cmd_fmt = "$arckit-{cmd}"
+                cmd_fmt = "$arc-{cmd}"
             else:
-                cmd_fmt = "/arckit:{cmd}"
+                cmd_fmt = "/arc:{cmd}"
 
             handoffs_section = render_handoffs_section(handoffs, command_format=cmd_fmt)
 
@@ -277,7 +277,7 @@ def convert(commands_dir, agents_dir):
             # generate a thin wrapper that references the .agent.md file
             if config["format"] == "prompt" and filename in agent_map:
                 agent_name = filename.replace(".md", "")
-                agent_ref = f"arckit-{agent_name}"
+                agent_ref = f"arc-{agent_name}"
                 escaped_desc = description.replace("'", "''")
                 tools = _copilot_tools_for_prompt(rewritten)
                 tools_yaml = "[" + ", ".join(f"'{t}'" for t in tools) + "]"
@@ -302,7 +302,7 @@ def convert(commands_dir, agents_dir):
                 continue
 
             if config["format"] == "skill":
-                skill_name = f"arckit-{base_name}"
+                skill_name = f"arc-{base_name}"
                 skill_dir = os.path.join(config["output_dir"], skill_name)
                 os.makedirs(skill_dir, exist_ok=True)
                 os.makedirs(os.path.join(skill_dir, "agents"), exist_ok=True)
@@ -364,7 +364,7 @@ def copy_extension_files(plugin_dir):
 def generate_codex_config_toml(mcp_json_path, agents_dir, output_path):
     """Generate config.toml for Codex extension with MCP servers and agent roles."""
     lines = [
-        "# ArcKit Codex Extension Configuration",
+        "# ARC Codex Extension Configuration",
         "# Auto-generated by scripts/converter.py — do not edit directly",
         "",
     ]
@@ -393,7 +393,7 @@ def generate_codex_config_toml(mcp_json_path, agents_dir, output_path):
     if os.path.isdir(agents_dir):
         agent_files = sorted(
             f for f in os.listdir(agents_dir)
-            if f.startswith("arckit-") and f.endswith(".md")
+            if f.startswith("arc-") and f.endswith(".md")
         )
         if agent_files:
             lines.append("# ── Agent Roles (experimental) ──────────────────────")
@@ -427,7 +427,7 @@ def generate_codex_config_toml(mcp_json_path, agents_dir, output_path):
     print(f"  Generated: {output_path}")
 
 
-def generate_agent_toml_files(agents_dir, output_dir, path_prefix=".arckit"):
+def generate_agent_toml_files(agents_dir, output_dir, path_prefix=".arc"):
     """Generate per-agent .toml config files for Codex extension."""
     if not os.path.isdir(agents_dir):
         return
@@ -436,7 +436,7 @@ def generate_agent_toml_files(agents_dir, output_dir, path_prefix=".arckit"):
     count = 0
 
     for filename in sorted(os.listdir(agents_dir)):
-        if not (filename.startswith("arckit-") and filename.endswith(".md")):
+        if not (filename.startswith("arc-") and filename.endswith(".md")):
             continue
 
         agent_path = os.path.join(agents_dir, filename)
@@ -451,7 +451,7 @@ def generate_agent_toml_files(agents_dir, output_dir, path_prefix=".arckit"):
         toml_path = os.path.join(output_dir, toml_name)
 
         toml_content = (
-            f"# Auto-generated from arckit-claude/agents/{filename}\n"
+            f"# Auto-generated from arc-claude/agents/{filename}\n"
             f"# Do not edit — edit the source and re-run scripts/converter.py\n"
             f"\n"
             f'developer_instructions = """\n'
@@ -469,11 +469,11 @@ def generate_agent_toml_files(agents_dir, output_dir, path_prefix=".arckit"):
 def rewrite_codex_skills(skills_dir):
     """Rewrite Claude Code-specific references in skills for Codex extension.
 
-    - /arckit:X -> $arckit-X (skill invocation syntax)
-    - /arckit.X -> $arckit-X
-    - /prompts:arckit.X -> $arckit-X
+    - /arc:X -> $arc-X (skill invocation syntax)
+    - /arc.X -> $arc-X
+    - /prompts:arc.X -> $arc-X
     - Remove SessionStart hook references
-    - ${CLAUDE_PLUGIN_ROOT} -> .arckit
+    - ${CLAUDE_PLUGIN_ROOT} -> .arc
     """
     if not os.path.isdir(skills_dir):
         return
@@ -489,32 +489,32 @@ def rewrite_codex_skills(skills_dir):
 
             original = content
 
-            # Rewrite /arckit:X -> $arckit-X (colon-prefixed plugin format)
-            content = re.sub(r"/arckit:(\w[\w.-]*)", r"$arckit-\1", content)
+            # Rewrite /arc:X -> $arc-X (colon-prefixed plugin format)
+            content = re.sub(r"/arc:(\w[\w.-]*)", r"$arc-\1", content)
 
-            # Rewrite /arckit.X -> $arckit-X (dot-prefixed format)
+            # Rewrite /arc.X -> $arc-X (dot-prefixed format)
             # Only match when preceded by a space or start-of-line to avoid false matches
             content = re.sub(
-                r"(?<=\s)/arckit\.(\w[\w.-]*)",
-                r"$arckit-\1",
+                r"(?<=\s)/arc\.(\w[\w.-]*)",
+                r"$arc-\1",
                 content,
             )
 
-            # Rewrite /prompts:arckit.X -> $arckit-X (old Codex prompt format)
+            # Rewrite /prompts:arc.X -> $arc-X (old Codex prompt format)
             content = re.sub(
-                r"/prompts:arckit\.(\w[\w.-]*)",
-                r"$arckit-\1",
+                r"/prompts:arc\.(\w[\w.-]*)",
+                r"$arc-\1",
                 content,
             )
 
             # Remove SessionStart hook reference
             content = content.replace(
-                "- Use ArcKit Project Context from the SessionStart hook if available\n",
+                "- Use ARC Project Context from the SessionStart hook if available\n",
                 "",
             )
 
             # Rewrite plugin root paths
-            content = content.replace("${CLAUDE_PLUGIN_ROOT}", ".arckit")
+            content = content.replace("${CLAUDE_PLUGIN_ROOT}", ".arc")
 
             if content != original:
                 with open(filepath, "w", encoding="utf-8") as f:
@@ -530,7 +530,7 @@ def rewrite_codex_skills(skills_dir):
 def generate_gemini_agents(agents_dir, output_dir):
     """Generate Gemini CLI sub-agent markdown files from Claude Code agents.
 
-    Reads each arckit-{name}.md from agents_dir, converts the YAML frontmatter
+    Reads each arc-{name}.md from agents_dir, converts the YAML frontmatter
     (keeping name/description, dropping model, adding max_turns/timeout_mins),
     rewrites paths and Read instructions for Gemini, prepends the extension
     file access block, and writes to output_dir.
@@ -540,11 +540,11 @@ def generate_gemini_agents(agents_dir, output_dir):
         return
 
     os.makedirs(output_dir, exist_ok=True)
-    gemini_path_prefix = "~/.gemini/extensions/arckit"
+    gemini_path_prefix = "~/.gemini/extensions/arc"
     count = 0
 
     for filename in sorted(os.listdir(agents_dir)):
-        if not (filename.startswith("arckit-") and filename.endswith(".md")):
+        if not (filename.startswith("arc-") and filename.endswith(".md")):
             continue
 
         agent_path = os.path.join(agents_dir, filename)
@@ -563,7 +563,7 @@ def generate_gemini_agents(agents_dir, output_dir):
         gemini_fm["max_turns"] = 25
         gemini_fm["timeout_mins"] = 10
 
-        # Rewrite paths: ${CLAUDE_PLUGIN_ROOT} -> ~/.gemini/extensions/arckit
+        # Rewrite paths: ${CLAUDE_PLUGIN_ROOT} -> ~/.gemini/extensions/arc
         prompt = prompt.replace("${CLAUDE_PLUGIN_ROOT}", gemini_path_prefix)
 
         # Rewrite Read instructions to shell commands
@@ -592,7 +592,7 @@ def generate_gemini_agents(agents_dir, output_dir):
 def generate_gemini_hooks(output_dir):
     """Generate hooks.json for Gemini CLI extension.
 
-    Creates arckit-gemini/hooks/hooks.json which tells Gemini CLI
+    Creates arc-gemini/hooks/hooks.json which tells Gemini CLI
     which hook scripts to run for each lifecycle event.
     """
     hooks_dir = os.path.join(output_dir, "hooks")
@@ -606,9 +606,9 @@ def generate_gemini_hooks(output_dir):
                         {
                             "type": "command",
                             "command": "python3 ${extensionPath}/hooks/scripts/session-start.py",
-                            "name": "ArcKit Session Init",
+                            "name": "ARC Session Init",
                             "timeout": 5000,
-                            "description": "Inject ArcKit version and project context",
+                            "description": "Inject ARC version and project context",
                         }
                     ]
                 }
@@ -619,7 +619,7 @@ def generate_gemini_hooks(output_dir):
                         {
                             "type": "command",
                             "command": "python3 ${extensionPath}/hooks/scripts/context-inject.py",
-                            "name": "ArcKit Context",
+                            "name": "ARC Context",
                             "timeout": 10000,
                             "description": "Inject project context before agent planning",
                         }
@@ -647,7 +647,7 @@ def generate_gemini_hooks(output_dir):
                             "command": "python3 ${extensionPath}/hooks/scripts/file-protection.py",
                             "name": "File Protection",
                             "timeout": 5000,
-                            "description": "Protect ArcKit system files from modification",
+                            "description": "Protect ARC system files from modification",
                         }
                     ],
                 },
@@ -683,15 +683,15 @@ def generate_gemini_policies(output_dir):
     os.makedirs(policies_dir, exist_ok=True)
 
     rules = '''\
-# ArcKit Gemini Extension Policies
+# ARC Gemini Extension Policies
 # Auto-generated by scripts/converter.py
 
-# Protect ArcKit extension files from modification
+# Protect ARC extension files from modification
 [[rules]]
-description = "Prevent modification of ArcKit extension system files"
-when = "tool_name in ['write_file', 'edit_file'] and '~/.gemini/extensions/arckit/' in tool_input.get('path', '')"
+description = "Prevent modification of ARC extension system files"
+when = "tool_name in ['write_file', 'edit_file'] and '~/.gemini/extensions/arc/' in tool_input.get('path', '')"
 decision = "deny"
-reason = "Cannot modify ArcKit extension files. These are managed by the extension."
+reason = "Cannot modify ARC extension files. These are managed by the extension."
 
 # Warn on potential secret patterns in file content
 [[rules]]
@@ -717,7 +717,7 @@ def generate_copilot_agents(agents_dir, output_dir):
     count = 0
 
     for filename in sorted(os.listdir(agents_dir)):
-        if not (filename.startswith("arckit-") and filename.endswith(".md")):
+        if not (filename.startswith("arc-") and filename.endswith(".md")):
             continue
 
         agent_path = os.path.join(agents_dir, filename)
@@ -735,7 +735,7 @@ def generate_copilot_agents(agents_dir, output_dir):
         copilot_fm["tools"] = _copilot_tools_for_prompt(prompt)
         copilot_fm["user-invocable"] = False
 
-        prompt = prompt.replace("${CLAUDE_PLUGIN_ROOT}", ".arckit")
+        prompt = prompt.replace("${CLAUDE_PLUGIN_ROOT}", ".arc")
         prompt = prompt.replace(CONTEXT_HOOK_NOTE, CONTEXT_HOOK_REPLACEMENT)
 
         fm_str = yaml.dump(copilot_fm, default_flow_style=False, sort_keys=False).rstrip()
@@ -752,19 +752,19 @@ def generate_copilot_agents(agents_dir, output_dir):
 
 
 def generate_copilot_instructions(output_path):
-    """Generate copilot-instructions.md for Copilot repos using ArcKit."""
+    """Generate copilot-instructions.md for Copilot repos using ARC."""
     content = """\
-# ArcKit Enterprise Architecture Toolkit
+# ARC Enterprise Architecture Toolkit
 
-This project uses ArcKit for architecture governance. Available commands
-are in `.github/prompts/arckit-*.prompt.md` (type `/` in Copilot Chat).
+This project uses ARC for architecture governance. Available commands
+are in `.github/prompts/arc-*.prompt.md` (type `/` in Copilot Chat).
 
 ## Conventions
 
 - All architecture artifacts go in `projects/` directories (e.g., `projects/001-project-name/`)
-- Use `bash .arckit/scripts/bash/create-project.sh --json` to create numbered project dirs
-- Use `bash .arckit/scripts/bash/generate-document-id.sh` for document IDs (e.g., ARC-001-REQ-v1.0)
-- Templates are in `.arckit/templates/` (custom overrides in `.arckit/templates-custom/`)
+- Use `bash .arc/scripts/bash/create-project.sh --json` to create numbered project dirs
+- Use `bash .arc/scripts/bash/generate-document-id.sh` for document IDs (e.g., ARC-001-REQ-v1.0)
+- Templates are in `.arc/templates/` (custom overrides in `.arc/templates-custom/`)
 - Always write large documents to files (avoid output token limits)
 - Show only a summary to the user after generating artifacts
 
@@ -799,9 +799,9 @@ projects/
 
 
 if __name__ == "__main__":
-    commands_dir = "arckit-claude/commands/"
-    agents_dir = "arckit-claude/agents/"
-    plugin_dir = "arckit-claude"
+    commands_dir = "arc-claude/commands/"
+    agents_dir = "arc-claude/agents/"
+    plugin_dir = "arc-claude"
 
     print(
         "Converting plugin commands to Codex, OpenCode, Gemini, and Copilot extension formats..."
@@ -873,37 +873,37 @@ if __name__ == "__main__":
     generate_codex_config_toml(
         os.path.join(plugin_dir, ".mcp.json"),
         agents_dir,
-        "arckit-codex/config.toml",
+        "arc-codex/config.toml",
     )
     generate_agent_toml_files(
         agents_dir,
-        "arckit-codex/agents",
-        path_prefix=".arckit",
+        "arc-codex/agents",
+        path_prefix=".arc",
     )
 
     print()
     print("Rewriting Codex extension skills for Codex command format...")
-    rewrite_codex_skills("arckit-codex/skills")
+    rewrite_codex_skills("arc-codex/skills")
 
     print()
     print("Generating Gemini CLI sub-agents...")
-    generate_gemini_agents(agents_dir, "arckit-gemini/agents")
+    generate_gemini_agents(agents_dir, "arc-gemini/agents")
 
     print()
     print("Generating Gemini extension hooks...")
-    generate_gemini_hooks("arckit-gemini")
+    generate_gemini_hooks("arc-gemini")
 
     print()
     print("Generating Gemini extension policies...")
-    generate_gemini_policies("arckit-gemini")
+    generate_gemini_policies("arc-gemini")
 
     print()
     print("Generating Copilot custom agents...")
-    generate_copilot_agents(agents_dir, "arckit-copilot/agents")
+    generate_copilot_agents(agents_dir, "arc-copilot/agents")
 
     print()
     print("Generating Copilot instructions...")
-    generate_copilot_instructions("arckit-copilot/copilot-instructions.md")
+    generate_copilot_instructions("arc-copilot/copilot-instructions.md")
 
     print()
     total = sum(counts.values())

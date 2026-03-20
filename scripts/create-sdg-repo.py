@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Create the arckit-test-project-v46-sdg mono-repo.
+"""Create the arc-test-project-v46-sdg mono-repo.
 
 Scaffolds a single GitHub repo containing all 17 UN SDGs as self-contained
-ArcKit workspaces, with 78 pre-created UK Government technology projects.
+ARC workspaces, with 78 pre-created UK Government technology projects.
 
 Uses Python stdlib only (pathlib, subprocess, json, shutil, datetime).
 """
@@ -19,13 +19,13 @@ from pathlib import Path
 # Constants
 # ---------------------------------------------------------------------------
 
-ARCKIT_ROOT = Path(__file__).resolve().parent.parent
-VERSION = (ARCKIT_ROOT / "VERSION").read_text().strip()
+ARC_ROOT = Path(__file__).resolve().parent.parent
+VERSION = (ARC_ROOT / "VERSION").read_text().strip()
 TODAY = date.today().isoformat()
 
-REPO_NAME = "arckit-test-project-v46-sdg"
+REPO_NAME = "arc-test-project-v46-sdg"
 REPO_FULL = f"tractorjuice/{REPO_NAME}"
-CLONE_BASE = Path("/tmp/arckit-test-setup")
+CLONE_BASE = Path("/tmp/arc-test-setup")
 REPO_DIR = CLONE_BASE / REPO_NAME
 
 # ---------------------------------------------------------------------------
@@ -286,7 +286,7 @@ def create_claude_settings() -> None:
             }
         },
         "enabledPlugins": {
-            "arckit@arc-kit": True,
+            "arc@arc-kit": True,
         },
     }
     write(REPO_DIR / ".claude" / "settings.json", json.dumps(settings, indent=2) + "\n")
@@ -351,7 +351,7 @@ All notable changes to this project will be documented in this file.
 
 - Initial mono-repo creation with 17 UN SDG workspaces
 - 78 UK Government technology projects across all SDGs
-- ArcKit plugin integration via marketplace
+- ARC plugin integration via marketplace
 - MCP server configuration (AWS, Azure, GCP, Data Commons)
 """
     write(REPO_DIR / "CHANGELOG.md", content)
@@ -384,32 +384,32 @@ def create_claude_md() -> None:
 
 ## Overview
 
-This is the **ArcKit SDG Mono-Repo** -- a single repository containing 17 UN Sustainable Development Goal workspaces, each with UK Government technology projects scaffolded for architecture governance using ArcKit.
+This is the **ARC SDG Mono-Repo** -- a single repository containing 17 UN Sustainable Development Goal workspaces, each with UK Government technology projects scaffolded for architecture governance using ARC.
 
 **Total**: 17 SDG workspaces, 78 projects
 
 ## Navigation
 
-Each SDG workspace is a self-contained ArcKit workspace under `sdg-{{NN}}-{{slug}}/`:
+Each SDG workspace is a self-contained ARC workspace under `sdg-{{NN}}-{{slug}}/`:
 
 {sdg_listing}
 
 ## How to Use
 
 1. Navigate to an SDG workspace directory
-2. Use ArcKit slash commands to generate architecture artifacts for any project
-3. Each project has its own `projects/{{NNN}}-{{slug}}/` directory with standard ArcKit structure
+2. Use ARC slash commands to generate architecture artifacts for any project
+3. Each project has its own `projects/{{NNN}}-{{slug}}/` directory with standard ARC structure
 
-## ArcKit Commands
+## ARC Commands
 
-This repo uses the ArcKit plugin via the Claude Code marketplace. Commands are available as `/arckit.{{command}}` slash commands.
+This repo uses the ARC plugin via the Claude Code marketplace. Commands are available as `/arc.{{command}}` slash commands.
 
 Key commands for getting started:
-- `/arckit.stakeholders` -- Analyze stakeholder drivers and goals
-- `/arckit.requirements` -- Define comprehensive requirements
-- `/arckit.risk` -- Create risk register
-- `/arckit.sobc` -- Create Strategic Outline Business Case
-- `/arckit.research` -- Research technology options
+- `/arc.stakeholders` -- Analyze stakeholder drivers and goals
+- `/arc.requirements` -- Define comprehensive requirements
+- `/arc.risk` -- Create risk register
+- `/arc.sobc` -- Create Strategic Outline Business Case
+- `/arc.research` -- Research technology options
 
 ## MCP Servers
 
@@ -421,7 +421,7 @@ Four MCP servers are configured for cloud platform research:
 
 ## Version
 
-ArcKit Version: {VERSION}
+ARC Version: {VERSION}
 """
     write(REPO_DIR / "CLAUDE.md", content)
 
@@ -431,13 +431,13 @@ def create_readme() -> None:
     sdg_table = build_sdg_table()
     total_projects = sum(len(s["projects"]) for s in SDGS)
 
-    content = f"""# ArcKit SDG Mono-Repo
+    content = f"""# ARC SDG Mono-Repo
 
 Enterprise Architecture Governance for UN Sustainable Development Goals -- UK Government Technology Projects
 
 ## Overview
 
-This repository contains **{total_projects} UK Government technology projects** organised across all **17 UN Sustainable Development Goals (SDGs)**. Each SDG is a self-contained ArcKit workspace with pre-scaffolded project directories ready for architecture artifact generation.
+This repository contains **{total_projects} UK Government technology projects** organised across all **17 UN Sustainable Development Goals (SDGs)**. Each SDG is a self-contained ARC workspace with pre-scaffolded project directories ready for architecture artifact generation.
 
 ## SDG Workspaces
 
@@ -449,44 +449,44 @@ This repository contains **{total_projects} UK Government technology projects** 
 
 ### Prerequisites
 
-- [Claude Code](https://claude.ai/code) with ArcKit plugin enabled
+- [Claude Code](https://claude.ai/code) with ARC plugin enabled
 - GitHub Codespaces (recommended) or local development environment
 
 ### Quick Start
 
 1. Open this repo in GitHub Codespaces (Claude Code auto-installs via devcontainer)
 2. Navigate to an SDG workspace: `cd sdg-01-no-poverty/`
-3. Run ArcKit commands to generate architecture artifacts:
+3. Run ARC commands to generate architecture artifacts:
 
 ```bash
 # Stakeholder analysis for a project
-/arckit.stakeholders Universal Credit Modernisation
+/arc.stakeholders Universal Credit Modernisation
 
 # Requirements specification
-/arckit.requirements Universal Credit Modernisation
+/arc.requirements Universal Credit Modernisation
 
 # Risk register
-/arckit.risk Universal Credit Modernisation
+/arc.risk Universal Credit Modernisation
 ```
 
 ## Repository Structure
 
 ```
 {REPO_NAME}/
-├── .claude/settings.json          # ArcKit plugin marketplace config
+├── .claude/settings.json          # ARC plugin marketplace config
 ├── .devcontainer/devcontainer.json # Claude Code auto-install
 ├── .mcp.json                      # MCP server configuration
 ├── CLAUDE.md                      # AI assistant context
 ├── README.md                      # This file
 ├── CHANGELOG.md                   # Release history
-├── VERSION                        # ArcKit version
+├── VERSION                        # ARC version
 ├── docs/                          # Documentation
 │   ├── README.md
 │   ├── guides/
 │   ├── DEPENDENCY-MATRIX.md
 │   └── WORKFLOW-DIAGRAMS.md
 └── sdg-NN-slug/                   # SDG workspaces (x17)
-    ├── .arckit/                   # Workspace root marker
+    ├── .arc/                   # Workspace root marker
     ├── README.md                  # SDG overview with project table
     └── projects/
         ├── 000-global/            # Cross-project artifacts
@@ -498,9 +498,9 @@ This repository contains **{total_projects} UK Government technology projects** 
             └── vendors/
 ```
 
-## ArcKit
+## ARC
 
-This repository is powered by [ArcKit](https://github.com/tractorjuice/arc-kit) -- an Enterprise Architecture Governance & Vendor Procurement Toolkit providing 64 slash commands for AI coding assistants.
+This repository is powered by [ARC](https://github.com/tractorjuice/arc-kit) -- an Enterprise Architecture Governance & Vendor Procurement Toolkit providing 64 slash commands for AI coding assistants.
 
 **Version**: {VERSION}
 """
@@ -511,26 +511,26 @@ def create_docs() -> None:
     """Create docs/ directory with README and copy dependency/workflow files."""
     write(REPO_DIR / "docs" / "README.md", f"""# Documentation
 
-ArcKit SDG Mono-Repo documentation.
+ARC SDG Mono-Repo documentation.
 
 ## Guides
 
-See `guides/` for ArcKit command usage guides.
+See `guides/` for ARC command usage guides.
 
 ## References
 
 - [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md) -- Command dependency matrix
 - [WORKFLOW-DIAGRAMS.md](WORKFLOW-DIAGRAMS.md) -- Visual workflow diagrams
 
-## ArcKit Version
+## ARC Version
 
 {VERSION}
 """)
     gitkeep(REPO_DIR / "docs" / "guides")
 
     # Copy dependency matrix and workflow diagrams from arc-kit
-    src_dep = ARCKIT_ROOT / "docs" / "DEPENDENCY-MATRIX.md"
-    src_wf = ARCKIT_ROOT / "docs" / "WORKFLOW-DIAGRAMS.md"
+    src_dep = ARC_ROOT / "docs" / "DEPENDENCY-MATRIX.md"
+    src_wf = ARC_ROOT / "docs" / "WORKFLOW-DIAGRAMS.md"
     if src_dep.exists():
         shutil.copy2(src_dep, REPO_DIR / "docs" / "DEPENDENCY-MATRIX.md")
     if src_wf.exists():
@@ -566,30 +566,30 @@ Created: {TODAY}
 
 ## Workflow
 
-Use ArcKit commands to generate project artifacts in the recommended order:
+Use ARC commands to generate project artifacts in the recommended order:
 
 ### Discovery Phase
-1. `/arckit.stakeholders` - Analyze stakeholder drivers and goals
-2. `/arckit.risk` - Create risk register
-3. `/arckit.sobc` - Create Strategic Outline Business Case
+1. `/arc.stakeholders` - Analyze stakeholder drivers and goals
+2. `/arc.risk` - Create risk register
+3. `/arc.sobc` - Create Strategic Outline Business Case
 
 ### Alpha Phase
-4. `/arckit.requirements` - Define comprehensive requirements
-5. `/arckit.data-model` - Design data model and GDPR compliance
-6. `/arckit.wardley` - Create Wardley maps for strategic planning
-7. `/arckit.research` - Research technology options (if needed)
-8. `/arckit.sow` - Generate Statement of Work for vendor procurement (if needed)
-9. `/arckit.evaluate` - Create vendor evaluation framework (if needed)
+4. `/arc.requirements` - Define comprehensive requirements
+5. `/arc.data-model` - Design data model and GDPR compliance
+6. `/arc.wardley` - Create Wardley maps for strategic planning
+7. `/arc.research` - Research technology options (if needed)
+8. `/arc.sow` - Generate Statement of Work for vendor procurement (if needed)
+9. `/arc.evaluate` - Create vendor evaluation framework (if needed)
 
 ### Beta Phase
-10. `/arckit.hld-review` - Review High-Level Design
-11. `/arckit.dld-review` - Review Detailed Design
-12. `/arckit.traceability` - Generate requirements traceability matrix
+10. `/arc.hld-review` - Review High-Level Design
+11. `/arc.dld-review` - Review Detailed Design
+12. `/arc.traceability` - Generate requirements traceability matrix
 
 ### Compliance (as needed)
-- `/arckit.secure` - UK Government Secure by Design review
-- `/arckit.tcop` - Technology Code of Practice assessment
-- `/arckit.ai-playbook` - AI Playbook compliance (for AI systems)
+- `/arc.secure` - UK Government Secure by Design review
+- `/arc.tcop` - Technology Code of Practice assessment
+- `/arc.ai-playbook` - AI Playbook compliance (for AI systems)
 
 ## Project Structure
 
@@ -600,29 +600,29 @@ Documents use standardized naming: `ARC-{{PROJECT_ID}}-{{TYPE}}-v{{VERSION}}.md`
 ├── README.md (this file)
 │
 ├── # Core Documents
-├── ARC-{project_number}-STKE-v1.0.md     # Stakeholder drivers (/arckit.stakeholders)
-├── ARC-{project_number}-RISK-v1.0.md     # Risk register (/arckit.risk)
-├── ARC-{project_number}-SOBC-v1.0.md     # Business case (/arckit.sobc)
-├── ARC-{project_number}-REQ-v1.0.md      # Requirements (/arckit.requirements)
-├── ARC-{project_number}-DATA-v1.0.md     # Data model (/arckit.data-model)
-├── ARC-{project_number}-RSCH-v1.0.md     # Research findings (/arckit.research)
-├── ARC-{project_number}-TRAC-v1.0.md     # Traceability matrix (/arckit.traceability)
+├── ARC-{project_number}-STKE-v1.0.md     # Stakeholder drivers (/arc.stakeholders)
+├── ARC-{project_number}-RISK-v1.0.md     # Risk register (/arc.risk)
+├── ARC-{project_number}-SOBC-v1.0.md     # Business case (/arc.sobc)
+├── ARC-{project_number}-REQ-v1.0.md      # Requirements (/arc.requirements)
+├── ARC-{project_number}-DATA-v1.0.md     # Data model (/arc.data-model)
+├── ARC-{project_number}-RSCH-v1.0.md     # Research findings (/arc.research)
+├── ARC-{project_number}-TRAC-v1.0.md     # Traceability matrix (/arc.traceability)
 │
 ├── # Procurement
-├── ARC-{project_number}-SOW-v1.0.md      # Statement of Work (/arckit.sow)
-├── ARC-{project_number}-EVAL-v1.0.md     # Evaluation criteria (/arckit.evaluate)
+├── ARC-{project_number}-SOW-v1.0.md      # Statement of Work (/arc.sow)
+├── ARC-{project_number}-EVAL-v1.0.md     # Evaluation criteria (/arc.evaluate)
 │
 ├── # Multi-instance Documents (subdirectories)
 ├── decisions/
-│   ├── ARC-{project_number}-ADR-001-v1.0.md  # Architecture decisions (/arckit.adr)
+│   ├── ARC-{project_number}-ADR-001-v1.0.md  # Architecture decisions (/arc.adr)
 │   └── ARC-{project_number}-ADR-002-v1.0.md
 ├── diagrams/
-│   └── ARC-{project_number}-DIAG-001-v1.0.md # Diagrams (/arckit.diagram)
+│   └── ARC-{project_number}-DIAG-001-v1.0.md # Diagrams (/arc.diagram)
 ├── wardley-maps/
-│   └── ARC-{project_number}-WARD-001-v1.0.md # Wardley maps (/arckit.wardley)
+│   └── ARC-{project_number}-WARD-001-v1.0.md # Wardley maps (/arc.wardley)
 ├── reviews/
-│   ├── ARC-{project_number}-HLD-v1.0.md      # HLD review (/arckit.hld-review)
-│   └── ARC-{project_number}-DLD-v1.0.md      # DLD review (/arckit.dld-review)
+│   ├── ARC-{project_number}-HLD-v1.0.md      # HLD review (/arc.hld-review)
+│   └── ARC-{project_number}-DLD-v1.0.md      # DLD review (/arc.dld-review)
 │
 ├── external/                            # External documents (PDFs, specs, reports)
 └── vendors/                             # Vendor proposals
@@ -681,8 +681,8 @@ def create_sdg_workspace(sdg: dict) -> None:
     slug = sdg["slug"]
     workspace_dir = REPO_DIR / f"sdg-{nn}-{slug}"
 
-    # .arckit workspace root marker
-    gitkeep(workspace_dir / ".arckit")
+    # .arc workspace root marker
+    gitkeep(workspace_dir / ".arc")
 
     # Global project directories
     gitkeep(workspace_dir / "projects" / "000-global" / "policies")
@@ -707,18 +707,18 @@ UN Sustainable Development Goal {sdg['number']} -- UK Government Technology Proj
 
 ## Getting Started
 
-Navigate to a project directory and use ArcKit commands:
+Navigate to a project directory and use ARC commands:
 
 ```bash
 cd projects/{fmt_project_num(1)}-{sdg['projects'][0][1]}/
-/arckit.stakeholders {sdg['projects'][0][0]}
+/arc.stakeholders {sdg['projects'][0][0]}
 ```
 
 ## Workspace Structure
 
 ```
 sdg-{nn}-{slug}/
-├── .arckit/                    # Workspace root marker
+├── .arc/                    # Workspace root marker
 ├── README.md                   # This file
 └── projects/
     ├── 000-global/             # Cross-project artifacts
@@ -759,7 +759,7 @@ sdg-{nn}-{slug}/
 def main() -> None:
     """Create the SDG mono-repo."""
     total_projects = sum(len(s["projects"]) for s in SDGS)
-    print(f"ArcKit SDG Mono-Repo Creator")
+    print(f"ARC SDG Mono-Repo Creator")
     print(f"Version: {VERSION}")
     print(f"SDGs: {len(SDGS)}, Projects: {total_projects}")
     print()
@@ -778,7 +778,7 @@ def main() -> None:
         "gh", "repo", "create", REPO_FULL,
         "--public",
         "--clone",
-        "--description", f"ArcKit SDG Mono-Repo: 17 UN SDGs, {total_projects} UK Government technology projects",
+        "--description", f"ARC SDG Mono-Repo: 17 UN SDGs, {total_projects} UK Government technology projects",
     ])
     os.chdir(orig_cwd)
 
@@ -805,7 +805,7 @@ def main() -> None:
     run(["git", "add", "-A"], cwd=REPO_DIR)
     run([
         "git", "commit", "-m",
-        f"feat: initial SDG mono-repo with 17 SDGs and {total_projects} UK Government projects\n\nArcKit Version: {VERSION}\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>",
+        f"feat: initial SDG mono-repo with 17 SDGs and {total_projects} UK Government projects\n\nARC Version: {VERSION}\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>",
     ], cwd=REPO_DIR)
     run(["git", "push", "-u", "origin", "main"], cwd=REPO_DIR)
 

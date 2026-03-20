@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-List all ArcKit projects with status indicators.
+List all ARC projects with status indicators.
 
 Usage:
     python3 list-projects.py [OPTIONS]
@@ -101,7 +101,7 @@ def get_status_emoji(percentage):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="List all ArcKit projects with status indicators")
+    parser = argparse.ArgumentParser(description="List all ARC projects with status indicators")
     parser.add_argument("--json", dest="json_mode", action="store_true", help="Output in JSON format")
     parser.add_argument("--verbose", "-v", action="store_true", help="Show detailed artifact status")
     args = parser.parse_args()
@@ -115,7 +115,7 @@ def main():
         else:
             log_warning("No projects directory found")
             print()
-            print("Run: /arckit.init to initialize an ArcKit repository")
+            print("Run: /arc.init to initialize an ARC repository")
         sys.exit(0)
 
     # Get sorted project directories
@@ -130,7 +130,7 @@ def main():
         else:
             print("No projects found")
             print()
-            print("Run: /arckit.create to create a new project")
+            print("Run: /arc.create to create a new project")
         sys.exit(0)
 
     # JSON output mode
@@ -175,7 +175,7 @@ def main():
         sys.exit(0)
 
     # Text output mode
-    print("ArcKit Projects")
+    print("ARC Projects")
     print("===============")
     print()
     print(f"Repository: {repo_root}")

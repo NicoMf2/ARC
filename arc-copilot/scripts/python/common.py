@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Common utilities for ArcKit scripts (plugin version).
+Common utilities for ARC scripts (plugin version).
 Looks for projects/ directory as repo root indicator.
 """
 
@@ -51,7 +51,7 @@ def find_repo_root(start_dir=None):
         if (current / "projects").is_dir():
             return str(current)
         current = current.parent
-    log_error("Not in an ArcKit project (no projects/ directory found)")
+    log_error("Not in an ARC project (no projects/ directory found)")
     sys.exit(1)
 
 
@@ -260,18 +260,18 @@ def output_json_array(items):
 # Path Helpers
 # ============================================================================
 
-def get_arckit_dir(repo_root=None):
-    """Get .arckit directory path."""
+def get_arc_dir(repo_root=None):
+    """Get .arc directory path."""
     if repo_root is None:
         repo_root = find_repo_root()
-    return os.path.join(repo_root, ".arckit")
+    return os.path.join(repo_root, ".arc")
 
 
 def get_templates_dir(repo_root=None):
     """Get templates directory path."""
     if repo_root is None:
         repo_root = find_repo_root()
-    return os.path.join(repo_root, ".arckit", "templates")
+    return os.path.join(repo_root, ".arc", "templates")
 
 
 def get_projects_dir(repo_root=None):

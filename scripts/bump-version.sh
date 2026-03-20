@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# bump-version.sh — Update all ArcKit version strings in one go.
+# bump-version.sh — Update all ARC version strings in one go.
 # Usage: ./scripts/bump-version.sh 2.14.0
 
 NEW_VERSION="${1:-}"
@@ -21,7 +21,7 @@ fi
 
 # ── Must run from repo root ─────────────────────────────────────────────────
 
-if [[ ! -f VERSION ]] || [[ ! -d arckit-claude ]]; then
+if [[ ! -f VERSION ]] || [[ ! -d arc-claude ]]; then
   echo "Error: Must be run from the arc-kit repo root."
   exit 1
 fi
@@ -57,7 +57,7 @@ update_file "README.md" "release links (2 occurrences)"
 
 # ── 4. docs/README.md ──────────────────────────────────────────────────────
 
-sed -i -E "s/\*\*ArcKit Version\*\*: [0-9]+\.[0-9]+\.[0-9]+/**ArcKit Version**: $NEW_VERSION/" docs/README.md
+sed -i -E "s/\*\*ARC Version\*\*: [0-9]+\.[0-9]+\.[0-9]+/**ARC Version**: $NEW_VERSION/" docs/README.md
 update_file "docs/README.md" "footer version"
 
 # ── 5. docs/index.html (version + month) ───────────────────────────────────
@@ -66,16 +66,16 @@ MONTH_YEAR=$(date +"%B %Y")
 sed -i -E "s/Version [0-9]+\.[0-9]+\.[0-9]+ - [A-Za-z]+ [0-9]{4}/Version $NEW_VERSION - $MONTH_YEAR/" docs/index.html
 update_file "docs/index.html" "version + date → $MONTH_YEAR"
 
-# ── 6. arckit-claude/VERSION ───────────────────────────────────────────────
+# ── 6. arc-claude/VERSION ───────────────────────────────────────────────
 
-echo "$NEW_VERSION" > arckit-claude/VERSION
-update_file "arckit-claude/VERSION" "overwrite"
+echo "$NEW_VERSION" > arc-claude/VERSION
+update_file "arc-claude/VERSION" "overwrite"
 
-# ── 7. arckit-claude/.claude-plugin/plugin.json ────────────────────────────
+# ── 7. arc-claude/.claude-plugin/plugin.json ────────────────────────────
 
-jq --arg v "$NEW_VERSION" '.version = $v' arckit-claude/.claude-plugin/plugin.json > arckit-claude/.claude-plugin/plugin.json.tmp
-mv arckit-claude/.claude-plugin/plugin.json.tmp arckit-claude/.claude-plugin/plugin.json
-update_file "arckit-claude/.claude-plugin/plugin.json" ".version"
+jq --arg v "$NEW_VERSION" '.version = $v' arc-claude/.claude-plugin/plugin.json > arc-claude/.claude-plugin/plugin.json.tmp
+mv arc-claude/.claude-plugin/plugin.json.tmp arc-claude/.claude-plugin/plugin.json
+update_file "arc-claude/.claude-plugin/plugin.json" ".version"
 
 # ── 8. .claude-plugin/marketplace.json (plugins[0].version only) ───────────
 
@@ -83,31 +83,31 @@ jq --arg v "$NEW_VERSION" '.plugins[0].version = $v' .claude-plugin/marketplace.
 mv .claude-plugin/marketplace.json.tmp .claude-plugin/marketplace.json
 update_file ".claude-plugin/marketplace.json" ".plugins[0].version (metadata.version unchanged)"
 
-# ── 9. arckit-gemini/VERSION ───────────────────────────────────────────────
+# ── 9. arc-gemini/VERSION ───────────────────────────────────────────────
 
-echo "$NEW_VERSION" > arckit-gemini/VERSION
-update_file "arckit-gemini/VERSION" "overwrite"
+echo "$NEW_VERSION" > arc-gemini/VERSION
+update_file "arc-gemini/VERSION" "overwrite"
 
-# ── 10. arckit-gemini/gemini-extension.json ────────────────────────────────
+# ── 10. arc-gemini/gemini-extension.json ────────────────────────────────
 
-jq --arg v "$NEW_VERSION" '.version = $v' arckit-gemini/gemini-extension.json > arckit-gemini/gemini-extension.json.tmp
-mv arckit-gemini/gemini-extension.json.tmp arckit-gemini/gemini-extension.json
-update_file "arckit-gemini/gemini-extension.json" ".version"
+jq --arg v "$NEW_VERSION" '.version = $v' arc-gemini/gemini-extension.json > arc-gemini/gemini-extension.json.tmp
+mv arc-gemini/gemini-extension.json.tmp arc-gemini/gemini-extension.json
+update_file "arc-gemini/gemini-extension.json" ".version"
 
-# ── 11. arckit-opencode/VERSION ────────────────────────────────────────────
+# ── 11. arc-opencode/VERSION ────────────────────────────────────────────
 
-echo "$NEW_VERSION" > arckit-opencode/VERSION
-update_file "arckit-opencode/VERSION" "overwrite"
+echo "$NEW_VERSION" > arc-opencode/VERSION
+update_file "arc-opencode/VERSION" "overwrite"
 
-# ── 12. arckit-codex/VERSION ──────────────────────────────────────────────
+# ── 12. arc-codex/VERSION ──────────────────────────────────────────────
 
-echo "$NEW_VERSION" > arckit-codex/VERSION
-update_file "arckit-codex/VERSION" "overwrite"
+echo "$NEW_VERSION" > arc-codex/VERSION
+update_file "arc-codex/VERSION" "overwrite"
 
-# ── 13. arckit-copilot/VERSION ─────────────────────────────────────────────
+# ── 13. arc-copilot/VERSION ─────────────────────────────────────────────
 
-echo "$NEW_VERSION" > arckit-copilot/VERSION
-update_file "arckit-copilot/VERSION" "overwrite"
+echo "$NEW_VERSION" > arc-copilot/VERSION
+update_file "arc-copilot/VERSION" "overwrite"
 
 # ── Summary ─────────────────────────────────────────────────────────────────
 
@@ -119,13 +119,13 @@ echo ""
 echo "── Verification ──"
 echo ""
 echo "VERSION files:"
-grep -H "$NEW_VERSION" VERSION arckit-claude/VERSION arckit-gemini/VERSION arckit-opencode/VERSION arckit-codex/VERSION arckit-copilot/VERSION
+grep -H "$NEW_VERSION" VERSION arc-claude/VERSION arc-gemini/VERSION arc-opencode/VERSION arc-codex/VERSION arc-copilot/VERSION
 echo ""
 echo "pyproject.toml:"
 grep "^version" pyproject.toml
 echo ""
 echo "plugin.json:"
-jq -r '.version' arckit-claude/.claude-plugin/plugin.json
+jq -r '.version' arc-claude/.claude-plugin/plugin.json
 echo ""
 echo "marketplace.json:"
 echo "  plugins[0].version: $(jq -r '.plugins[0].version' .claude-plugin/marketplace.json)"
@@ -136,6 +136,6 @@ echo ""
 echo "── Reminders ──"
 echo ""
 echo "  CHANGELOG.md              — Add release notes manually"
-echo "  arckit-claude/CHANGELOG.md — Add release notes manually"
+echo "  arc-claude/CHANGELOG.md — Add release notes manually"
 echo ""
 echo "Done."

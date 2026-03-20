@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# Consolidated prerequisite checking script for ArcKit
+# Consolidated prerequisite checking script for ARC
 #
-# This script provides unified prerequisite checking for ArcKit workflow.
+# This script provides unified prerequisite checking for ARC workflow.
 # It helps find projects, validate environment, and check for required files.
 #
 # Usage: ./check-prerequisites.sh [OPTIONS]
@@ -58,7 +58,7 @@ while [[ $# -gt 0 ]]; do
             cat << 'EOF'
 Usage: check-prerequisites.sh [OPTIONS]
 
-Consolidated prerequisite checking for ArcKit workflow.
+Consolidated prerequisite checking for ARC workflow.
 
 OPTIONS:
   --json                Output in JSON format
@@ -107,7 +107,7 @@ fi
 # Paths only mode - just output variables
 if [[ "$PATHS_ONLY" == "true" ]]; then
     echo "REPO_ROOT: $REPO_ROOT"
-    echo "ARCKIT_DIR: $(get_arckit_dir "$REPO_ROOT")"
+    echo "ARC_DIR: $(get_arc_dir "$REPO_ROOT")"
     echo "PROJECTS_DIR: $(get_projects_dir "$REPO_ROOT")"
     echo "MEMORY_DIR: $(get_memory_dir "$REPO_ROOT")"
     echo "TEMPLATES_DIR: $(get_templates_dir "$REPO_ROOT")"
@@ -137,7 +137,7 @@ fi
 # Check for available documentation files
 AVAILABLE_DOCS=()
 if [[ -n "$PROJECT_DIR" ]]; then
-    # Check for all standard ArcKit artifacts
+    # Check for all standard ARC artifacts
     ARTIFACTS=(
         "stakeholder-drivers.md"
         "risk-register.md"
@@ -190,7 +190,7 @@ if [[ "$JSON_MODE" == "true" ]]; then
     # JSON output
     echo "{"
     echo "  \"REPO_ROOT\": \"$REPO_ROOT\","
-    echo "  \"ARCKIT_DIR\": \"$(get_arckit_dir "$REPO_ROOT")\","
+    echo "  \"ARC_DIR\": \"$(get_arc_dir "$REPO_ROOT")\","
     echo "  \"PROJECTS_DIR\": \"$(get_projects_dir "$REPO_ROOT")\","
     echo "  \"MEMORY_DIR\": \"$(get_memory_dir "$REPO_ROOT")\","
     echo "  \"TEMPLATES_DIR\": \"$(get_templates_dir "$REPO_ROOT")\","
@@ -209,12 +209,12 @@ if [[ "$JSON_MODE" == "true" ]]; then
     echo "}"
 else
     # Text output
-    echo "ArcKit Environment:"
+    echo "ARC Environment:"
     echo "==================="
     echo ""
     echo "Repository:"
     echo "  REPO_ROOT: $REPO_ROOT"
-    echo "  ARCKIT_DIR: $(get_arckit_dir "$REPO_ROOT")"
+    echo "  ARC_DIR: $(get_arc_dir "$REPO_ROOT")"
     echo "  PROJECTS_DIR: $(get_projects_dir "$REPO_ROOT")"
     echo "  MEMORY_DIR: $(get_memory_dir "$REPO_ROOT")"
     echo "  TEMPLATES_DIR: $(get_templates_dir "$REPO_ROOT")"
