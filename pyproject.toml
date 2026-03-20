@@ -1,7 +1,7 @@
 [project]
-name = "arckit-cli"
-version = "4.3.1"
-description = "ArcKit CLI - Enterprise Architecture Governance & Vendor Procurement Toolkit"
+name = "arc-cli"
+version = "1.0.1"
+description = "Arc CLI - CMA CGM Enterprise Architecture Copilot"
 requires-python = ">=3.11"
 dependencies = [
     "typer",
@@ -11,16 +11,15 @@ dependencies = [
     "readchar",
     "truststore>=0.10.4",
 ]
-authors = [{ name = "Your Name", email = "your.email@example.com" }]
+authors = [{ name = "Nicolas CORREIA", email = "ho.ncorreia@cma-cgm.com" }]
 readme = "README.md"
 license = { text = "MIT" }
 keywords = [
     "architecture",
+    "cma-cgm",
     "enterprise",
     "governance",
-    "procurement",
-    "rfp",
-    "vendor-selection",
+    "procurement",    
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -35,29 +34,27 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/tractorjuice/arc-kit"
-Documentation = "https://github.com/tractorjuice/arc-kit/blob/main/README.md"
-Repository = "https://github.com/tractorjuice/arc-kit"
-Issues = "https://github.com/tractorjuice/arc-kit/issues"
+Homepage = "https://github.com/NicoMf2/ARC"
+Documentation = "https://github.com/NicoMf2/ARC/blob/main/README.md"
+Repository = "https://github.com/NicoMf2/ARC"
+Issues = "https://github.com/NicoMf2/ARC/issues"
 
 [project.scripts]
-arckit = "arckit_cli:main"
+arc = "arc_cli:main"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/arckit_cli"]
+packages = ["src/arc_cli"]
 
 [tool.hatch.build.targets.wheel.shared-data]
-"scripts" = "share/arckit/scripts"
-".arckit" = "share/arckit/.arckit"
-"docs" = "share/arckit/docs"
-"docs/DEPENDENCY-MATRIX.md" = "share/arckit/docs/DEPENDENCY-MATRIX.md"
-"docs/WORKFLOW-DIAGRAMS.md" = "share/arckit/docs/WORKFLOW-DIAGRAMS.md"
-"VERSION" = "share/arckit/VERSION"
-"CHANGELOG.md" = "share/arckit/CHANGELOG.md"
-"arckit-codex" = "share/arckit/arckit-codex"
-"arckit-opencode" = "share/arckit/arckit-opencode"
-"arckit-copilot" = "share/arckit/arckit-copilot"
+"scripts" = "share/arc/scripts"
+".arc" = "share/arc/.arc"
+"docs" = "share/arc/docs"
+"docs/DEPENDENCY-MATRIX.md" = "share/arc/docs/DEPENDENCY-MATRIX.md"
+"docs/WORKFLOW-DIAGRAMS.md" = "share/arc/docs/WORKFLOW-DIAGRAMS.md"
+"VERSION" = "share/arc/VERSION"
+"CHANGELOG.md" = "share/arc/CHANGELOG.md"
+"arc-copilot" = "share/arc/arc-copilot"

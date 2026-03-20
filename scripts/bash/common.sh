@@ -37,7 +37,7 @@ find_repo_root() {
         fi
         current_dir="$(dirname "$current_dir")"
     done
-    log_error "Not in an ArcKit project (no .arckit directory found)"
+    log_error "Not in an ARC project (no .arc directory found)"
     exit 1
 }
 

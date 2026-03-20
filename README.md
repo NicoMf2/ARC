@@ -1,17 +1,17 @@
-# ArcKit - Enterprise Architecture Governance Toolkit
+# Arc - CMA CGM  Architecture Review Copilot
 
-[![GitHub Stars](https://img.shields.io/github/stars/tractorjuice/arc-kit?style=flat&logo=github)](https://github.com/tractorjuice/arc-kit/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/tractorjuice/arc-kit?style=flat&logo=github)](https://github.com/tractorjuice/arc-kit/network/members)
-[![License: MIT](https://img.shields.io/github/license/tractorjuice/arc-kit)](LICENSE)
-[![Latest Release](https://img.shields.io/github/v/release/tractorjuice/arc-kit)](https://github.com/tractorjuice/arc-kit/releases)
-[![GitHub Issues](https://img.shields.io/github/issues/tractorjuice/arc-kit)](https://github.com/tractorjuice/arc-kit/issues)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/tractorjuice/arc-kit)
+[![GitHub Stars](https://img.shields.io/github/stars/NicoMf2/ARC?style=flat&logo=github)](https://github.com/NicoMf2/ARC/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/NicoMf2/ARC?style=flat&logo=github)](https://github.com/NicoMf2/ARC/network/members)
+[![License: MIT](https://img.shields.io/github/license/NicoMf2/ARC)](LICENSE)
+[![Latest Release](https://img.shields.io/github/v/release/NicoMf2/ARC)](https://github.com/NicoMf2/ARC/releases)
+[![GitHub Issues](https://img.shields.io/github/issues/NicoMf2/ARC)](https://github.com/NicoMf2/ARC/issues)
 
-![ArcKit - Enterprise Architecture Governance Toolkit](docs/assets/arckit-banner-light.svg)
+
+![ARC - Architecture Review Copilot](docs/assets/arc-banner-light.svg)
 
 **Build better enterprise architecture through structured governance, vendor procurement, and design review workflows.**
 
-ArcKit is a toolkit for enterprise architects that transforms architecture governance from scattered documents into a systematic, AI-assisted workflow for:
+ARC is a toolkit for CMA CGM enterprise architects that transforms architecture governance from scattered documents into a systematic, AI-assisted workflow for:
 
 - 🏛️ Establishing and enforcing architecture principles
 - 👥 Analyzing stakeholder drivers, goals, and outcomes
@@ -34,48 +34,17 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 
 ### Installation
 
-**Claude Code** (premier experience) — install the ArcKit plugin (requires **v2.1.71+**):
-
-```text
-/plugin marketplace add tractorjuice/arc-kit
-```
-
-Then install from the Discover tab. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 64 commands, 6 autonomous research agents, 4 automation hooks (session init, project context injection, filename enforcement, output validation), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
-
-> **Why v2.1.71?** This version fixes background agent completion notifications missing output file paths (critical for ArcKit's 6 research agents), resolves plugin installation loss across multiple instances, fixes plugin hooks being silently dropped with `${CLAUDE_PLUGIN_ROOT}` templates, and includes all prior fixes for memory leaks in subagents, MCP server cache leaks, and worktree config sharing.
-
-**Gemini CLI** — install the ArcKit extension:
-
-```bash
-gemini extensions install https://github.com/tractorjuice/arckit-gemini
-```
-
-Zero-config: all 64 commands, templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn). Updates via `gemini extensions update arckit`.
-
 **GitHub Copilot** (VS Code) — install the ArcKit CLI and scaffold prompt files:
 
 ```bash
 # Install with pip
-pip install git+https://github.com/tractorjuice/arc-kit.git
+pip install git+https://github.com/Mf2/ARC.git
 
 # Scaffold a project with Copilot prompt files
-arckit init my-project --ai copilot
+arc init my-project --ai copilot
 ```
 
-Creates `.github/prompts/arckit-*.prompt.md` (64 prompt files), `.github/agents/arckit-*.agent.md` (6 custom agents), and `.github/copilot-instructions.md` (repo-wide context). Invoke commands in Copilot Chat as `/arckit-requirements`, `/arckit-stakeholders`, etc.
-
-**Codex CLI** — install the ArcKit CLI:
-
-```bash
-# Install with pip
-pip install git+https://github.com/tractorjuice/arc-kit.git
-
-# Or with uv
-uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.git
-
-# Or run without installing
-uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
-```
+Creates `.github/prompts/arc-*.prompt.md` (64 prompt files), `.github/agents/arc-*.agent.md` (6 custom agents), and `.github/copilot-instructions.md` (repo-wide context). Invoke commands in Copilot Chat as `/arc-requirements`, `/arc-stakeholders`, etc.
 
 **Latest Release**: [v4.3.1](https://github.com/tractorjuice/arc-kit/releases/tag/v4.3.1)
 
@@ -88,87 +57,36 @@ uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-projec
 | Windows (WSL2) | Full support | Full support | Full support | Full support |
 | Windows (native) | Full support | Full support | Full support | Partial |
 
-**Windows users**: The Claude Code plugin, Gemini CLI extension, and GitHub Copilot prompt files work natively on all platforms. For Codex CLI / OpenCode CLI on native Windows (without WSL), some commands containing inline bash snippets may require [Git Bash](https://git-scm.com/downloads/win) or [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install). We recommend WSL2 for the best experience.
+**Windows users**: The Claude Code plugin, Gemini CLI extension, and GitHub Copilot prompt files work natively on all platforms.
 
 ### Initialize a Project
-
-**Claude Code**: No initialization needed — the plugin provides everything.
 
 **GitHub Copilot** (VS Code):
 
 ```bash
 # Create a new architecture governance project
-arckit init payment-modernization --ai copilot
+arc init payment-modernization --ai copilot
 
 # Or initialize in current directory
-arckit init . --ai copilot
+arc init . --ai copilot
 ```
 
-**OpenCode CLI**:
-
-```bash
-# Create a new architecture governance project
-arckit init payment-modernization --ai opencode
-
-# Or initialize in current directory
-arckit init . --ai opencode
-```
-
-**Codex CLI**:
-
-```bash
-# Create a new architecture governance project
-arckit init payment-modernization --ai codex
-
-# Minimal install (skip docs and guides)
-arckit init payment-modernization --ai codex --minimal
-
-# Or initialize in current directory
-arckit init . --ai codex
-```
-
-### Start Using ArcKit
+### Start Using Arc
 
 ```bash
 # GitHub Copilot (VS Code)
 cd payment-modernization && code .
-# In Copilot Chat, use ArcKit commands:
-/arckit-principles Create principles for a financial services company
-/arckit-requirements Build a payment processing system...
+# In Copilot Chat, use Arc commands:
+/arc-principles Create principles for a financial services company
+/arc-requirements Build a payment processing system...
 
-# Codex CLI
-cd payment-modernization
-codex
-# Inside your AI assistant, use ArcKit commands:
-/arckit.principles Create principles for a financial services company
-/arckit.requirements Build a payment processing system...
-/arckit.sow Generate RFP for vendor selection
 ```
 
 ### Upgrading
 
-**Claude Code plugin**: Updates are automatic via the marketplace — no action needed.
+**GitHub Copilot**: Re-run `arc init --here --ai copilot` to update prompt files, agents, and instructions.
 
-**Gemini CLI extension**: Updates via `gemini extensions update arckit`.
-
-**GitHub Copilot**: Re-run `arckit init --here --ai copilot` to update prompt files, agents, and instructions.
-
-**Codex CLI**:
-
-```bash
-# Step 1: Upgrade the CLI tool
-pip install --upgrade git+https://github.com/tractorjuice/arc-kit.git
-# Or with uv:
-uv tool upgrade arckit-cli --from git+https://github.com/tractorjuice/arc-kit.git
-
-# Step 2: Update your existing project (re-run init in place)
-cd /path/to/your-existing-project
-arckit init --here --ai codex
-```
-
-This updates commands, templates, scripts, and agents while **preserving** your project data (`projects/`) and custom templates (`.arckit/templates-custom/`).
-
-If upgrading from v0.x, you may also need to migrate legacy filenames — see the [upgrading guide](docs/guides/upgrading.md) for full details.
+This updates commands, templates, scripts, and agents while **preserving** your project data (`projects/`) and custom templates (`.arc/templates-custom/`).
 
 ---
 
@@ -193,9 +111,9 @@ Public demonstration repositories showcase complete ArcKit deliverables:
 
 ---
 
-## Why ArcKit?
+## Why ARC?
 
-### Problem: Architecture Governance is Broken
+### Problem: Architecture Review Copilot
 
 Traditional enterprise architecture suffers from:
 
@@ -207,7 +125,7 @@ Traditional enterprise architecture suffers from:
 
 ### Solution: Structured, AI-Assisted Governance
 
-ArcKit provides:
+ARC provides:
 
 - ✅ **Template-Driven Quality**: Comprehensive templates ensure nothing is forgotten
 - ✅ **Systematic Workflows**: Clear processes from requirements → procurement → design review
@@ -219,25 +137,25 @@ ArcKit provides:
 
 ## UK Government Compliance
 
-ArcKit includes dedicated commands for UK public sector delivery:
+ARC includes dedicated commands for UK public sector delivery:
 
-- `/arckit.tcop` — Assess all 13 Technology Code of Practice points across delivery phases.
-- `/arckit.ai-playbook` — Produce responsible AI assessments aligned to the UK Government AI Playbook and ATRS.
-- `/arckit.secure` — Generate Secure by Design artefacts covering NCSC CAF, Cyber Essentials, and UK GDPR controls.
-- `/arckit.mod-secure` — Map MOD Secure by Design requirements (JSP 440, IAMM, clearance pathways).
-- `/arckit.jsp-936` — Deliver JSP 936 AI assurance packs for defence AI systems.
+- `/arc.tcop` — Assess all 13 Technology Code of Practice points across delivery phases.
+- `/arc.ai-playbook` — Produce responsible AI assessments aligned to the UK Government AI Playbook and ATRS.
+- `/arc.secure` — Generate Secure by Design artefacts covering NCSC CAF, Cyber Essentials, and UK GDPR controls.
+- `/arc.mod-secure` — Map MOD Secure by Design requirements (JSP 440, IAMM, clearance pathways).
+- `/arc.jsp-936` — Deliver JSP 936 AI assurance packs for defence AI systems.
 
-See the demo repositories for end-to-end examples, especially `arckit-test-project-v7-nhs-appointment` (civilian services) and `arckit-test-project-v9-cabinet-office-genai` (AI governance).
+See the demo repositories for end-to-end examples, especially `arc-test-project-v7-nhs-appointment` (civilian services) and `arc-test-project-v9-cabinet-office-genai` (AI governance).
 
 ---
 
-## The ArcKit Workflow
+## The Arc Workflow
 
-ArcKit guides you through the enterprise architecture lifecycle:
+Arc guides you through the enterprise architecture lifecycle:
 
 ### Phase 0: Project Planning
 
-**`/arckit.plan`** → Create project plan with timeline, phases, and gates
+**`/arc.plan`** → Create project plan with timeline, phases, and gates
 
 Visualize your entire project delivery:
 
@@ -245,12 +163,12 @@ Visualize your entire project delivery:
 - Mermaid Gantt chart with timeline, dependencies, and milestones
 - Workflow diagram showing gates and decision points
 - Tailored timeline based on project complexity
-- Integration of all ArcKit commands into schedule
+- Integration of all Arc commands into schedule
 - Gate approval criteria for governance
 
 ### Phase 1: Establish Governance
 
-**`/arckit.principles`** → Create enterprise architecture principles
+**`/arc.principles`** → Create enterprise architecture principles
 
 Define your organisation's architecture standards:
 
@@ -261,7 +179,7 @@ Define your organisation's architecture standards:
 
 ### Phase 2: Stakeholder Analysis
 
-**`/arckit.stakeholders`** → Analyze stakeholder drivers, goals, and outcomes
+**`/arc.stakeholders`** → Analyze stakeholder drivers, goals, and outcomes
 
 **Do this BEFORE business case** to understand who cares about the project and why:
 
@@ -275,7 +193,7 @@ Define your organisation's architecture standards:
 
 ### Phase 3: Risk Assessment
 
-**`/arckit.risk`** → Create comprehensive risk register (Orange Book)
+**`/arc.risk`** → Create comprehensive risk register (Orange Book)
 
 **Do this BEFORE business case** to identify and assess risks systematically:
 
@@ -289,7 +207,7 @@ Define your organisation's architecture standards:
 
 ### Phase 4: Business Case Justification
 
-**`/arckit.sobc`** → Create Strategic Outline Business Case (SOBC)
+**`/arc.sobc`** → Create Strategic Outline Business Case (SOBC)
 
 **Do this BEFORE requirements** to justify investment and secure approval:
 
@@ -304,7 +222,7 @@ Define your organisation's architecture standards:
 
 ### Phase 5: Define Requirements
 
-**`/arckit.requirements`** → Document comprehensive requirements
+**`/arc.requirements`** → Document comprehensive requirements
 
 Create detailed requirements **informed by stakeholder goals** (if SOBC approved):
 
@@ -317,7 +235,7 @@ Create detailed requirements **informed by stakeholder goals** (if SOBC approved
 
 ### Phase 5.3: Platform Strategy Design (Optional - for Multi-Sided Platforms)
 
-**`/arckit.platform-design`** → Design multi-sided platform strategy using Platform Design Toolkit
+**`/arc.platform-design`** → Design multi-sided platform strategy using Platform Design Toolkit
 
 Use this phase when designing **ecosystem-based platforms** (Government as a Platform, marketplaces, data platforms):
 
@@ -335,7 +253,7 @@ Use this phase when designing **ecosystem-based platforms** (Government as a Pla
 
 ### Phase 5.5: Data Modeling
 
-**`/arckit.data-model`** → Create comprehensive data model with ERD
+**`/arc.data-model`** → Create comprehensive data model with ERD
 
 Create data model based on Data Requirements (DR-xxx):
 
@@ -350,7 +268,7 @@ Create data model based on Data Requirements (DR-xxx):
 
 ### Phase 5.7: Data Protection Impact Assessment
 
-**`/arckit.dpia`** → Generate [DPIA](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/) for UK GDPR Article 35 compliance
+**`/arc.dpia`** → Generate [DPIA](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/) for UK GDPR Article 35 compliance
 
 **MANDATORY for high-risk processing** - assess privacy risks before technology selection:
 
@@ -367,7 +285,7 @@ Create data model based on Data Requirements (DR-xxx):
 
 ### Phase 5.8: Data Source Discovery
 
-**`/arckit.datascout`** → Discover external data sources
+**`/arc.datascout`** → Discover external data sources
 
 Discover and evaluate external data sources to fulfil project data requirements:
 
@@ -383,7 +301,7 @@ Discover and evaluate external data sources to fulfil project data requirements:
 
 ### Phase 6: Technology Research
 
-**`/arckit.research`** → Research technology, services, and products
+**`/arc.research`** → Research technology, services, and products
 
 Research available solutions to meet requirements with build vs buy analysis:
 
@@ -400,7 +318,7 @@ Research available solutions to meet requirements with build vs buy analysis:
 
 ### Phase 7: Strategic Planning with Wardley Mapping
 
-**`/arckit.wardley`** → Create strategic Wardley Maps
+**`/arc.wardley`** → Create strategic Wardley Maps
 
 Visualize strategic positioning with:
 
@@ -412,7 +330,7 @@ Visualize strategic positioning with:
 
 ### Phase 7.5: Strategic Roadmap
 
-**`/arckit.roadmap`** → Create multi-year architecture roadmap
+**`/arc.roadmap`** → Create multi-year architecture roadmap
 
 Create strategic roadmap for multi-year transformation programs:
 
@@ -429,11 +347,11 @@ Create strategic roadmap for multi-year transformation programs:
 
 **Use this when**: You have a multi-year transformation program with multiple initiatives running in parallel. Roadmaps are strategic (multi-year, multi-initiative, executive communication) vs project plans which are tactical (single initiative, detailed tasks, team execution).
 
-**Roadmap feeds into**: `/arckit.plan` for detailed phase execution, `/arckit.sobc` for investment business case, `/arckit.backlog` for prioritized user stories, `/arckit.strategy` for executive-level synthesis.
+**Roadmap feeds into**: `/arc.plan` for detailed phase execution, `/arc.sobc` for investment business case, `/arc.backlog` for prioritized user stories, `/arc.strategy` for executive-level synthesis.
 
 ### Phase 7.6: Architecture Strategy Synthesis
 
-**`/arckit.strategy`** → Synthesise strategic artifacts into executive-level Architecture Strategy
+**`/arc.strategy`** → Synthesise strategic artifacts into executive-level Architecture Strategy
 
 Create a comprehensive Architecture Strategy document that synthesises multiple strategic artifacts into a single coherent narrative:
 
@@ -453,13 +371,13 @@ Create a comprehensive Architecture Strategy document that synthesises multiple 
 
 **Use this when**: You have multiple strategic artifacts (principles, stakeholders, wardley, roadmap, sobc) and need to create a single executive-level document that synthesises them into a coherent strategy. Ideal for Strategy Board presentations, executive briefings, or stakeholder communication.
 
-**Unique requirement**: This is the only ArcKit command with TWO mandatory inputs (principles AND stakeholders). Strategy cannot be created without understanding both the decision framework and the stakeholder drivers.
+**Unique requirement**: This is the only arc command with TWO mandatory inputs (principles AND stakeholders). Strategy cannot be created without understanding both the decision framework and the stakeholder drivers.
 
-**Strategy feeds into**: `/arckit.requirements` for detailed requirements, `/arckit.roadmap` for expanded timeline, `/arckit.plan` for project delivery.
+**Strategy feeds into**: `/arc.requirements` for detailed requirements, `/arc.roadmap` for expanded timeline, `/arc.plan` for project delivery.
 
 ### Phase 7.7: Architecture Decision Records
 
-**`/arckit.adr`** → Document architectural decisions
+**`/arc.adr`** → Document architectural decisions
 
 Create Architecture Decision Records (ADRs) following MADR v4.0 format enhanced with UK Government requirements:
 
@@ -476,11 +394,11 @@ Create Architecture Decision Records (ADRs) following MADR v4.0 format enhanced 
 
 **Use this when**: Making significant architectural decisions that affect system structure, quality attributes, or behavior - technology choices (databases, frameworks, cloud services), integration patterns, security approaches, deployment strategies, data management.
 
-**ADR feeds into**: `/arckit.diagram` (architecture diagrams reflect decisions), `/arckit.hld-review` and `/arckit.dld-review` (reviews verify decisions implemented), `/arckit.traceability` (decisions are key traceability artifacts).
+**ADR feeds into**: `/arc.diagram` (architecture diagrams reflect decisions), `/arckit.hld-review` and `/arckit.dld-review` (reviews verify decisions implemented), `/arckit.traceability` (decisions are key traceability artifacts).
 
 ### Phase 8: Vendor Procurement (if needed)
 
-**`/arckit.sow`** → Generate Statement of Work (RFP)
+**`/arc.sow`** → Generate Statement of Work (RFP)
 
 Create RFP-ready documents with:
 
@@ -490,7 +408,7 @@ Create RFP-ready documents with:
 - Evaluation criteria
 - Contract terms
 
-**`/arckit.dos`** → Digital Outcomes and Specialists (DOS) procurement 🇬🇧
+**`/arc.dos`** → Digital Outcomes and Specialists (DOS) procurement 🇬🇧
 
 For UK public sector organizations needing custom development:
 
@@ -501,7 +419,7 @@ For UK public sector organizations needing custom development:
 - Evaluation framework (40% Technical, 30% Team, 20% Quality, 10% Value)
 - Audit-ready documentation for Digital Marketplace
 
-**`/arckit.gcloud-search`** → G-Cloud service search with live marketplace search 🇬🇧
+**`/arc.gcloud-search`** → G-Cloud service search with live marketplace search 🇬🇧
 
 For UK public sector organizations needing off-the-shelf cloud services:
 
@@ -512,7 +430,7 @@ For UK public sector organizations needing off-the-shelf cloud services:
 - Shortlist top 3-5 matching services
 - Links to Digital Marketplace guidance (gov.uk)
 
-**`/arckit.gcloud-clarify`** → G-Cloud service validation and gap analysis 🇬🇧
+**`/arcarckit.gcloud-clarify`** → G-Cloud service validation and gap analysis 🇬🇧
 
 Validate G-Cloud services and generate supplier clarification questions:
 
@@ -524,7 +442,7 @@ Validate G-Cloud services and generate supplier clarification questions:
 - Evidence requirements specification
 - Next steps checklist
 
-**`/arckit.evaluate`** → Create vendor evaluation framework
+**`/arc.evaluate`** → Create vendor evaluation framework
 
 Set up systematic scoring:
 
@@ -533,7 +451,7 @@ Set up systematic scoring:
 - Reference check templates
 - Decision matrix
 
-**`/arckit.evaluate`** (compare mode) → Compare vendor proposals
+**`/arc.evaluate`** (compare mode) → Compare vendor proposals
 
 Side-by-side analysis of:
 
@@ -544,7 +462,7 @@ Side-by-side analysis of:
 
 ### Phase 9: Design Review
 
-**`/arckit.hld-review`** → Review High-Level Design
+**`/arc.hld-review`** → Review High-Level Design
 
 Validate designs against:
 
@@ -554,7 +472,7 @@ Validate designs against:
 - Scalability and resilience
 - Operational readiness
 
-**`/arckit.dld-review`** → Review Detailed Design
+**`/arc.dld-review`** → Review Detailed Design
 
 Implementation-ready validation:
 
@@ -566,7 +484,7 @@ Implementation-ready validation:
 
 ### Phase 10: Sprint Planning
 
-**`/arckit.backlog`** → Generate prioritised product backlog
+**`/arc.backlog`** → Generate prioritised product backlog
 
 Transform requirements into sprint-ready user stories:
 
@@ -581,7 +499,7 @@ Transform requirements into sprint-ready user stories:
 
 ### Phase 10.5: Backlog Export
 
-**`/arckit.trello`** → Export product backlog to Trello
+**`/arc.trello`** → Export product backlog to Trello
 
 Push your backlog directly to Trello for sprint execution:
 
@@ -591,11 +509,11 @@ Push your backlog directly to Trello for sprint execution:
 - Rate-limit-aware Trello API integration
 - Requires `TRELLO_API_KEY` and `TRELLO_TOKEN` environment variables
 
-**When to run**: After `/arckit.backlog` generates the product backlog (requires JSON export)
+**When to run**: After `/arc.backlog` generates the product backlog (requires JSON export)
 
 ### Phase 11: ServiceNow Service Management Design
 
-**`/arckit.servicenow`** → Generate ServiceNow service design
+**`/arc.servicenow`** → Generate ServiceNow service design
 
 Bridge architecture to operations:
 
@@ -608,7 +526,7 @@ Bridge architecture to operations:
 
 ### Phase 12: Traceability
 
-**`/arckit.traceability`** → Generate traceability matrix
+**`/arc.traceability`** → Generate traceability matrix
 
 Ensure complete coverage:
 
@@ -619,7 +537,7 @@ Ensure complete coverage:
 
 ### Phase 13: Quality Assurance
 
-**`/arckit.analyze`** → Comprehensive governance quality analysis
+**`/arc.analyze`** → Comprehensive governance quality analysis
 
 Periodically assess governance quality across all artifacts:
 
@@ -637,7 +555,7 @@ Periodically assess governance quality across all artifacts:
 
 For UK Government and public sector projects:
 
-**`/arckit.service-assessment`** → [GDS Service Standard](https://www.gov.uk/service-manual/service-assessments) assessment preparation
+**`/arc.service-assessment`** → [GDS Service Standard](https://www.gov.uk/service-manual/service-assessments) assessment preparation
 
 Prepare for mandatory GDS Service Standard assessments:
 
@@ -646,11 +564,11 @@ Prepare for mandatory GDS Service Standard assessments:
 - Generate RAG (Red/Amber/Green) ratings and overall readiness score
 - Provide actionable recommendations with priorities and timelines
 - Include assessment day preparation guidance
-- Map ArcKit artifacts to Service Standard evidence requirements
+- Map arc artifacts to Service Standard evidence requirements
 
 Run at end of Discovery (for alpha prep), mid-Beta (for beta prep), or before Live to ensure readiness.
 
-**`/arckit.tcop`** → [Technology Code of Practice](https://www.gov.uk/guidance/the-technology-code-of-practice) assessment
+**`/arc.tcop`** → [Technology Code of Practice](https://www.gov.uk/guidance/the-technology-code-of-practice) assessment
 
 Assess compliance with all 13 TCoP points:
 
@@ -668,7 +586,7 @@ Assess compliance with all 13 TCoP points:
 - Point 12: Meet the Digital Spend Controls
 - Point 13: Define your responsible AI use
 
-**`/arckit.secure`** → UK Government Secure by Design assessment
+**`/arc.secure`** → UK Government Secure by Design assessment
 
 Security compliance assessment:
 
@@ -679,7 +597,7 @@ Security compliance assessment:
 - Security architecture review
 - Threat modeling
 
-**`/arckit.ai-playbook`** → [UK Government AI Playbook](https://www.gov.uk/government/publications/ai-playbook-for-the-uk-government) compliance (for AI systems)
+**`/arc.ai-playbook`** → [UK Government AI Playbook](https://www.gov.uk/government/publications/ai-playbook-for-the-uk-government) compliance (for AI systems)
 
 Responsible AI assessment:
 
@@ -690,7 +608,7 @@ Responsible AI assessment:
 - Human oversight mechanisms
 - Impact assessment
 
-**`/arckit.atrs`** → [Algorithmic Transparency Recording Standard](https://www.gov.uk/government/collections/algorithmic-transparency-recording-standard-hub)
+**`/arc.atrs`** → [Algorithmic Transparency Recording Standard](https://www.gov.uk/government/collections/algorithmic-transparency-recording-standard-hub)
 
 Generate ATRS record for algorithmic decision-making:
 
@@ -702,7 +620,7 @@ Generate ATRS record for algorithmic decision-making:
 
 **For MOD Projects**:
 
-**`/arckit.mod-secure`** → MOD Secure by Design assessment
+**`/arc.mod-secure`** → MOD Secure by Design assessment
 
 MOD-specific security compliance:
 
@@ -713,7 +631,7 @@ MOD-specific security compliance:
 - Security Operating Procedures (SyOPs)
 - Supplier attestation requirements
 
-**`/arckit.jsp-936`** → [MOD JSP 936](https://www.gov.uk/government/publications/jsp-936-dependable-artificial-intelligence-ai-in-defence-part-1-directive) AI Assurance Documentation
+**`/arc.jsp-936`** → [MOD JSP 936](https://www.gov.uk/government/publications/jsp-936-dependable-artificial-intelligence-ai-in-defence-part-1-directive) AI Assurance Documentation
 
 For defence projects using AI/ML systems:
 
@@ -727,7 +645,7 @@ For defence projects using AI/ML systems:
 
 ### Phase 15: Project Story & Reporting
 
-**`/arckit.story`** → Generate comprehensive project story
+**`/arc.story`** → Generate comprehensive project story
 
 Create narrative historical record with complete timeline analysis:
 
@@ -741,9 +659,9 @@ Create narrative historical record with complete timeline analysis:
 - **Lessons Learned**: Pacing analysis, timeline deviations, recommendations for future projects
 - **Comprehensive Appendices**: Artifact register, chronological activity log, DSM, command reference, glossary
 
-**When to use**: At project milestones or completion to create shareable story for stakeholders, leadership, or portfolio reporting. Perfect for demonstrating systematic governance and ArcKit workflow value.
+**When to use**: At project milestones or completion to create shareable story for stakeholders, leadership, or portfolio reporting. Perfect for demonstrating systematic governance and ARC workflow value.
 
-**`/arckit.presentation`** → Generate MARP slide deck from project artifacts
+**`/arc.presentation`** → Generate MARP slide deck from project artifacts
 
 Create presentation slides from existing architecture artifacts:
 
@@ -758,7 +676,7 @@ Create presentation slides from existing architecture artifacts:
 
 ### Phase 16: Documentation Publishing
 
-**`/arckit.pages`** → Generate documentation site
+**`/arc.pages`** → Generate documentation site
 
 Publish all project documentation as an interactive website:
 
@@ -778,46 +696,11 @@ Publish all project documentation as an interactive website:
 |-----------|---------|-------|
 | [Claude Code](https://www.anthropic.com/claude-code) | ✅ Premier | **Primary platform.** Plugin with agents, hooks, MCP servers, and auto-updates |
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ Full | Extension with commands, MCP servers, and auto-updates |
-| [GitHub Copilot](https://github.com/features/copilot) | ✅ Core | VS Code prompt files, custom agents, and repo-wide instructions (`arckit init --ai copilot`) |
+| [GitHub Copilot](https://github.com/features/copilot) | ✅ Core | VS Code prompt files, custom agents, and repo-wide instructions (`arc init --ai copilot`) |
 | [OpenAI Codex CLI](https://chatgpt.com/features/codex) | ✅ Core | CLI with commands and templates. ChatGPT Plus/Pro/Enterprise ([Setup Guide](.codex/README.md)) |
 | [OpenCode CLI](https://opencode.net/cli) | ✅ Core | CLI with commands and templates |
 
-> **Platform Support**: ArcKit is developed and tested on **Linux**. Windows has limited support — hooks (session init, project context, filename validation, MCP auto-allow) require bash and jq which are not available on stock Windows. For the best experience on Windows, use a **devcontainer** or **WSL2**.
-
-### Why Claude Code?
-
-Claude Code is the **primary development platform** for ArcKit and provides capabilities not available in other formats:
-
-| Feature | Claude Code | Gemini CLI | Copilot | Codex / OpenCode |
-|---------|:-----------:|:----------:|:-------:|:----------------:|
-| 64 slash commands | ✅ | ✅ | ✅ | ✅ |
-| Templates & scripts | ✅ | ✅ | ✅ | ✅ |
-| Bundled MCP servers (AWS, Azure, GCP, DataCommons) | ✅ | ✅ (3 servers) | — | Manual setup |
-| **Autonomous research agents** (6 agents for research, datascout, cloud research, framework) | ✅ | — | ✅ (6 agents) | — |
-| **SessionStart hook** (auto-detect version + projects) | ✅ | — | — | — |
-| **UserPromptSubmit hook** (project context injection on every prompt) | ✅ | — | — | — |
-| **PreToolUse hook** (ARC filename auto-correction) | ✅ | — | — | — |
-| **PermissionRequest hook** (auto-allow MCP documentation tools) | ✅ | — | — | — |
-| **Per-command Stop hooks** (output validation, e.g. Wardley Map math checks) | ✅ | — | — | — |
-| Wardley Mapping skill (with Pinecone MCP book corpus) | ✅ | — | — | — |
-| Mermaid Syntax Reference skill (23 diagram types + config) | ✅ | ✅ | — | ✅ |
-| Automatic marketplace updates | ✅ | ✅ | Manual reinstall | Manual reinstall |
-| Zero-config installation | ✅ | ✅ | `arckit init` required | `arckit init` required |
-
-**Agents** run research-heavy commands (market research, data source discovery, cloud service evaluation) in isolated context windows, keeping the main conversation clean and enabling dozens of WebSearch/WebFetch/MCP calls without context bloat.
-
-**Hooks** provide automated governance: filenames are auto-corrected to ArcKit conventions, project context is injected into every prompt so commands know what artifacts exist, MCP tools are auto-approved, and generated outputs like Wardley Maps are validated for mathematical consistency before being finalized.
-
-Gemini CLI provides a strong experience with all commands and MCP servers but lacks agent delegation and hooks. GitHub Copilot provides all 64 commands as prompt files and 6 custom agents but lacks hooks and MCP servers. Codex CLI and OpenCode CLI provide core command functionality but require manual setup and `arckit init` scaffolding.
-
-### Why Commands, Not Skills
-
-Claude Code automatically exposes ArcKit commands as **skills** (they appear in the skills list and can be matched by natural language). ArcKit intentionally uses **slash commands** rather than standalone skills because:
-
-- **Deliberate invocation required** — Every command generates a heavyweight governance document (requirements spec, risk register, DPIA, etc.). Auto-triggering from conversational intent would waste significant time and tokens.
-- **Dependency ordering** — Commands follow a deliberate sequence (principles → stakeholders → requirements → data-model → etc.). Skills that auto-trigger could run out of order.
-- **User input via `$ARGUMENTS`** — Most commands accept context from the user (project name, scope, constraints). The command system handles this with `$ARGUMENTS` substitution.
-- **Best of both worlds** — Since Claude Code exposes commands as skills automatically, users get explicit `/arckit.requirements` invocation AND natural language matching when Claude recognises intent — no restructuring needed.
+> **Platform Support**: ARC is developed and tested on **Linux**. Windows has limited support — hooks (session init, project context, filename validation, MCP auto-allow) require bash and jq which are not available on stock Windows. For the best experience on Windows, use a **devcontainer** or **WSL2**.
 
 ### Using with GitHub Copilot
 
@@ -826,13 +709,13 @@ For GitHub Copilot users in VS Code, ArcKit commands are delivered as prompt fil
 ```bash
 # Install and create project (3 steps, zero config)
 pip install git+https://github.com/tractorjuice/arc-kit.git
-arckit init my-project --ai copilot
+arc init my-project --ai copilot
 cd my-project && code .
 
 # Then use ArcKit commands in Copilot Chat
-/arckit-principles Create principles for financial services
-/arckit-stakeholders Analyze stakeholders for cloud migration
-/arckit-requirements Create comprehensive requirements
+/arc-principles Create principles for financial services
+/arc-stakeholders Analyze stakeholders for cloud migration
+/arc-requirements Create comprehensive requirements
 ```
 
 This creates `.github/prompts/arckit-*.prompt.md` (64 prompt files), `.github/agents/arckit-*.agent.md` (6 custom agents), and `.github/copilot-instructions.md` (repo-wide context).

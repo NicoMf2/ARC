@@ -1,4 +1,4 @@
-// ArcKit markdownlint configuration
+// ARC markdownlint configuration
 // Tuned for AI prompt files, templates, and documentation
 {
   "config": {
@@ -59,14 +59,7 @@
     // Disable table-column-style
     "MD060": false
   },
-  "ignores": [
-    ".codex/**",
-    ".opencode/**",
-    "arckit-opencode/**",
-    "arckit-codex/commands/**",
-    "arckit-codex/prompts/**",
-    "arckit-codex/skills/**",
-    "arckit-gemini/skills/**",
+  "ignores": [  
     "node_modules/**",
     "docs/articles/**",
     "docs/plans/**"

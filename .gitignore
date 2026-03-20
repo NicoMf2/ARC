@@ -45,10 +45,10 @@ htmlcov/
 
 # Project specific
 *.log
-.arckit-debug/
+.arc-debug/
 research/
 
-# Projects (created by arckit init, not part of the toolkit itself)
+# Projects (created by Nico init, not part of the toolkit itself)
 projects/
 
 # Vendor proposals (may contain sensitive info)

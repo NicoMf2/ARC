@@ -49,13 +49,15 @@ AGENT_CONFIG = {
     },
 }
 
-BANNER = """
-           .______    __   _______ .______      .______       _______            
-           |   _  \  |  | |   ____||   _  \     |   _  \     |   ____|           
- ______    |  |_)  | |  | |  |__   |  |_)  |    |  |_)  |    |  |__       ______ 
-|______|   |   ___/  |  | |   __|  |      /     |      /     |   __|     |______|
-           |  |      |  | |  |____ |  |\  \----.|  |\  \----.|  |____            
-           | _|      |__| |_______|| _| `._____|| _| `._____||_______|                 
+BANNER = r"""
+                   .o.       ooooooooo.     .oooooo.                
+                  .888.      `888   `Y88.  d8P'  `Y8b               
+                 .8"888.      888   .d88' 888                       
+                .8' `888.     888ooo88P'  888                       
+8888888        .88ooo8888.    888`88b.    888               8888888 
+              .8'     `888.   888  `88b.  `88b    ooo               
+             o88o     o8888o o888o  o888o  `Y8bood8P'               
+                                                                                
 """
 
 TAGLINE = "Architecture Review Copilot"
@@ -139,7 +141,7 @@ def get_data_paths():
     def build_paths(base_path):
         """Build the full paths dictionary from a base path."""
         return {
-            "templates": base_path / ".arckit" / "templates",
+            "templates": base_path / ".arc" / "templates",
             "scripts": base_path / "scripts",
             "docs_guides": base_path / "docs" / "guides",
             "docs_readme": base_path / "docs" / "README.md",
@@ -147,15 +149,15 @@ def get_data_paths():
             "workflow_diagrams": base_path / "docs" / "WORKFLOW-DIAGRAMS.md",
             "version": base_path / "VERSION",
             "changelog": base_path / "CHANGELOG.md",
-            "copilot_prompts": base_path / "arckit-copilot" / "prompts",
-            "copilot_agents": base_path / "arckit-copilot" / "agents",
-            "copilot_instructions": base_path / "arckit-copilot" / "copilot-instructions.md",
+            "copilot_prompts": base_path / "arc-copilot" / "prompts",
+            "copilot_agents": base_path / "arc-copilot" / "agents",
+            "copilot_instructions": base_path / "arc-copilot" / "copilot-instructions.md",
         }
 
     # First, check if running from source (development mode)
     # This allows testing local changes without re-installing
     source_root = Path(__file__).parent.parent.parent
-    if (source_root / ".arckit").exists() and (source_root / "arckit-copilot").exists():
+    if (source_root / ".arc").exists() and (source_root / "arc-copilot").exists():
         return build_paths(source_root)
 
     # Then try to find installed package data
@@ -168,9 +170,9 @@ def get_data_paths():
             / "share"
             / "uv"
             / "tools"
-            / "arckit-cli"
+            / "arc-cli"
             / "share"
-            / "arckit"
+            / "arc"
         )
         if uv_tools_path.exists():
             return build_paths(uv_tools_path)
@@ -181,17 +183,17 @@ def get_data_paths():
         for site_dir in site.getsitepackages() + [site.getusersitepackages()]:
             if site_dir:
                 # Try site-packages/share/arckit
-                share_path = Path(site_dir) / "share" / "arckit"
+                share_path = Path(site_dir) / "share" / "arc"
                 if share_path.exists():
                     return build_paths(share_path)
 
                 # Try ../../../share/arckit from site-packages (for system installs)
-                share_path = Path(site_dir).parent.parent.parent / "share" / "arckit"
+                share_path = Path(site_dir).parent.parent.parent / "share" / "arck"
                 if share_path.exists():
                     return build_paths(share_path)
 
         # Try platformdirs approach for other installs
-        data_dir = Path(platformdirs.user_data_dir("arckit"))
+        data_dir = Path(platformdirs.user_data_dir("arc"))
         if data_dir.exists():
             return build_paths(data_dir)
 
