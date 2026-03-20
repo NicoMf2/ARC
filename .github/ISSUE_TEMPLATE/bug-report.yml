@@ -6,8 +6,8 @@ body:
     id: command
     attributes:
       label: Command
-      description: Which ArcKit command triggered the bug?
-      placeholder: "/arckit.requirements"
+      description: Which ARC command triggered the bug?
+      placeholder: "/arc.requirements"
     validations:
       required: true
 
@@ -25,7 +25,7 @@ body:
       label: Steps to reproduce
       description: Numbered steps to reproduce the issue.
       placeholder: |
-        1. Run `/arckit.requirements My Project`
+        1. Run `/arc.requirements My Project`
         2. Wait for output
         3. See error...
     validations:
@@ -62,29 +62,16 @@ body:
       label: AI Tool
       description: Which AI tool are you using?
       options:
-        - Claude Code
-        - Codex CLI
-        - Gemini CLI
-        - OpenCode CLI
         - GitHub Copilot
-        - ArcKit CLI
+        - Arc CLI
     validations:
       required: true
 
   - type: input
-    id: ai-tool-version
+    id: arc-version
     attributes:
-      label: AI Tool version
-      description: The version of your AI tool.
-      placeholder: "Claude Code v2.1.71"
-    validations:
-      required: true
-
-  - type: input
-    id: arckit-version
-    attributes:
-      label: ArcKit version
-      description: The ArcKit plugin/CLI version.
+      label: ARC version
+      description: The ARC plugin/CLI version.
       placeholder: "4.2.9"
     validations:
       required: true

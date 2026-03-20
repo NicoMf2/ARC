@@ -69,7 +69,7 @@ Runs client-side in the timeline layout function. Collects all `createdDate` val
 Layout: [Category] [Timeline]   Project: [All Projects ▾]   12 nodes, 8 edges
 ```
 
-Two buttons styled as a segmented control. "Category" is the default. Selection persists across page loads via new `localStorage` key `arckit-depmap-layout` (distinct from existing `arckit-theme` key).
+Two buttons styled as a segmented control. "Category" is the default. Selection persists across page loads via new `localStorage` key `arckit-depmap-layout` (distinct from existing `arc-theme` key).
 
 Both buttons call `renderGraph()` which checks the current layout mode and delegates to the appropriate layout function. When no nodes have valid dates, the Timeline button is hidden and only Category is shown.
 

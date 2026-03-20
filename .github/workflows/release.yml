@@ -27,5 +27,5 @@ jobs:
           TAG_NAME: ${{ github.ref_name }}
         run: |
           gh release create "$TAG_NAME" \
-            --title "ArcKit $TAG_NAME" \
+            --title "ARC $TAG_NAME" \
             --notes-file /tmp/release-notes.md

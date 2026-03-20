@@ -2,7 +2,7 @@
     'use strict';
 
     function getPreference() {
-        return localStorage.getItem('arckit-theme'); // 'dark', 'light', or null (auto)
+        return localStorage.getItem('arc-theme'); // 'dark', 'light', or null (auto)
     }
 
     function applyTheme(pref) {
@@ -58,9 +58,9 @@
         }
 
         if (next) {
-            localStorage.setItem('arckit-theme', next);
+            localStorage.setItem('arc-theme', next);
         } else {
-            localStorage.removeItem('arckit-theme');
+            localStorage.removeItem('arc-theme');
         }
 
         applyTheme(next);

@@ -8,7 +8,7 @@
   "global": [
     {
       "path": "README.md",
-      "title": "ArcKit Overview",
+      "title": "ARC Overview",
       "category": "Overview"
     },
     {
@@ -357,245 +357,229 @@
       "name": "Document Templates",
       "documents": [
         {
-          "path": ".arckit/templates/architecture-principles-template.md",
+          "path": ".arc/templates/architecture-principles-template.md",
           "title": "Architecture Principles Template",
           "category": "Architecture"
         },
         {
-          "path": ".arckit/templates/requirements-template.md",
+          "path": ".arct/templates/requirements-template.md",
           "title": "Requirements Template",
           "category": "Discovery"
         },
         {
-          "path": ".arckit/templates/stakeholder-drivers-template.md",
+          "path": ".arct/templates/stakeholder-drivers-template.md",
           "title": "Stakeholder Drivers Template",
           "category": "Discovery"
         },
         {
-          "path": ".arckit/templates/risk-register-template.md",
+          "path": ".arct/templates/risk-register-template.md",
           "title": "Risk Register Template",
           "category": "Governance"
         },
         {
-          "path": ".arckit/templates/sobc-template.md",
+          "path": ".arct/templates/sobc-template.md",
           "title": "SOBC Template",
           "category": "Planning"
         },
         {
-          "path": ".arckit/templates/roadmap-template.md",
+          "path": ".arct/templates/roadmap-template.md",
           "title": "Roadmap Template",
           "category": "Planning"
         },
         {
-          "path": ".arckit/templates/backlog-template.md",
+          "path": ".arct/templates/backlog-template.md",
           "title": "Backlog Template",
           "category": "Planning"
         },
         {
-          "path": ".arckit/templates/data-model-template.md",
+          "path": ".arct/templates/data-model-template.md",
           "title": "Data Model Template",
           "category": "Architecture"
         },
         {
-          "path": ".arckit/templates/data-mesh-contract-template.md",
+          "path": ".arct/templates/data-mesh-contract-template.md",
           "title": "Data Mesh Contract Template",
           "category": "Architecture"
         },
         {
-          "path": ".arckit/templates/platform-design-template.md",
+          "path": ".arct/templates/platform-design-template.md",
           "title": "Platform Design Template",
           "category": "Architecture"
         },
         {
-          "path": ".arckit/templates/wardley-map-template.md",
+          "path": ".arct/templates/wardley-map-template.md",
           "title": "Wardley Map Template",
           "category": "Strategy"
         },
         {
-          "path": ".arckit/templates/architecture-diagram-template.md",
+          "path": ".arct/templates/architecture-diagram-template.md",
           "title": "Architecture Diagram Template",
           "category": "Architecture"
         },
         {
-          "path": ".arckit/templates/adr-template.md",
+          "path": ".arct/templates/adr-template.md",
           "title": "ADR Template",
           "category": "Architecture"
         },
         {
-          "path": ".arckit/templates/hld-review-template.md",
+          "path": ".arct/templates/hld-review-template.md",
           "title": "HLD Review Template",
           "category": "Architecture"
         },
         {
-          "path": ".arckit/templates/dld-review-template.md",
+          "path": ".arct/templates/dld-review-template.md",
           "title": "DLD Review Template",
           "category": "Architecture"
         },
         {
-          "path": ".arckit/templates/research-findings-template.md",
+          "path": ".arct/templates/research-findings-template.md",
           "title": "Research Findings Template",
           "category": "Research"
         },
         {
-          "path": ".arckit/templates/evaluation-criteria-template.md",
+          "path": ".arct/templates/evaluation-criteria-template.md",
           "title": "Evaluation Criteria Template",
           "category": "Procurement"
         },
         {
-          "path": ".arckit/templates/vendor-scoring-template.md",
+          "path": ".arct/templates/vendor-scoring-template.md",
           "title": "Vendor Scoring Template",
           "category": "Procurement"
         },
         {
-          "path": ".arckit/templates/sow-template.md",
+          "path": ".arct/templates/sow-template.md",
           "title": "Statement of Work Template",
           "category": "Procurement"
         },
         {
-          "path": ".arckit/templates/traceability-matrix-template.md",
+          "path": ".arct/templates/traceability-matrix-template.md",
           "title": "Traceability Matrix Template",
           "category": "Governance"
         },
         {
-          "path": ".arckit/templates/principles-compliance-assessment-template.md",
+          "path": ".arct/templates/principles-compliance-assessment-template.md",
           "title": "Principles Compliance Template",
           "category": "Governance"
         },
         {
-          "path": ".arckit/templates/story-template.md",
+          "path": ".arct/templates/story-template.md",
           "title": "Project Story Template",
           "category": "Governance"
         },
         {
-          "path": ".arckit/templates/dpia-template.md",
+          "path": ".arct/templates/dpia-template.md",
           "title": "DPIA Template",
           "category": "Privacy"
         },
         {
-          "path": ".arckit/templates/service-assessment-prep-template.md",
+          "path": ".arct/templates/service-assessment-prep-template.md",
           "title": "Service Assessment Prep Template",
           "category": "UK Government"
         },
         {
-          "path": ".arckit/templates/tcop-review-template.md",
+          "path": ".arct/templates/tcop-review-template.md",
           "title": "TCoP Assessment Template",
           "category": "UK Government"
         },
         {
-          "path": ".arckit/templates/uk-gov-ai-playbook-template.md",
+          "path": ".arct/templates/uk-gov-ai-playbook-template.md",
           "title": "AI Playbook Template",
           "category": "UK Government"
         },
         {
-          "path": ".arckit/templates/uk-gov-atrs-template.md",
+          "path": ".arct/templates/uk-gov-atrs-template.md",
           "title": "ATRS Template",
           "category": "UK Government"
         },
         {
-          "path": ".arckit/templates/ukgov-secure-by-design-template.md",
+          "path": ".arct/templates/ukgov-secure-by-design-template.md",
           "title": "Secure by Design Template",
           "category": "UK Government"
         },
         {
-          "path": ".arckit/templates/mod-secure-by-design-template.md",
+          "path": ".arct/templates/mod-secure-by-design-template.md",
           "title": "MOD Secure by Design Template",
           "category": "UK MOD"
         },
         {
-          "path": ".arckit/templates/jsp-936-template.md",
+          "path": ".arct/templates/jsp-936-template.md",
           "title": "JSP 936 Template",
           "category": "UK MOD"
         },
         {
-          "path": ".arckit/templates/devops-template.md",
+          "path": ".arct/templates/devops-template.md",
           "title": "DevOps Strategy Template",
           "category": "Operations"
         },
         {
-          "path": ".arckit/templates/mlops-template.md",
+          "path": ".arct/templates/mlops-template.md",
           "title": "MLOps Strategy Template",
           "category": "Operations"
         },
         {
-          "path": ".arckit/templates/finops-template.md",
+          "path": ".arct/templates/finops-template.md",
           "title": "FinOps Strategy Template",
           "category": "Operations"
         },
         {
-          "path": ".arckit/templates/operationalize-template.md",
+          "path": ".arct/templates/operationalize-template.md",
           "title": "Operational Readiness Template",
           "category": "Operations"
         },
         {
-          "path": ".arckit/templates/servicenow-design-template.md",
+          "path": ".arct/templates/servicenow-design-template.md",
           "title": "ServiceNow Design Template",
           "category": "Operations"
         },
         {
-          "path": ".arckit/templates/analysis-report-template.md",
+          "path": ".arct/templates/analysis-report-template.md",
           "title": "Governance Analysis Report Template",
           "category": "Governance"
         },
         {
-          "path": ".arckit/templates/architecture-strategy-template.md",
+          "path": ".arct/templates/architecture-strategy-template.md",
           "title": "Architecture Strategy Template",
           "category": "Planning"
         },
         {
-          "path": ".arckit/templates/aws-research-template.md",
+          "path": ".arct/templates/aws-research-template.md",
           "title": "AWS Research Template",
           "category": "Research"
         },
         {
-          "path": ".arckit/templates/azure-research-template.md",
+          "path": ".arct/templates/azure-research-template.md",
           "title": "Azure Research Template",
           "category": "Research"
         },
         {
-          "path": ".arckit/templates/datascout-template.md",
+          "path": ".arct/templates/datascout-template.md",
           "title": "Data Source Discovery Template",
           "category": "Research"
         },
         {
-          "path": ".arckit/templates/dos-requirements-template.md",
+          "path": ".arct/templates/dos-requirements-template.md",
           "title": "DOS Requirements Template",
           "category": "UK Government"
         },
         {
-          "path": ".arckit/templates/gcloud-clarify-template.md",
+          "path": ".arct/templates/gcloud-clarify-template.md",
           "title": "G-Cloud Clarification Template",
           "category": "UK Government"
         },
         {
-          "path": ".arckit/templates/gcloud-requirements-template.md",
+          "path": ".arct/templates/gcloud-requirements-template.md",
           "title": "G-Cloud Requirements Template",
           "category": "UK Government"
         },
         {
-          "path": ".arckit/templates/pages-template.html",
+          "path": ".arct/templates/pages-template.html",
           "title": "GitHub Pages Template",
           "category": "Publishing"
         },
         {
-          "path": ".arckit/templates/project-plan-template.md",
+          "path": ".arct/templates/project-plan-template.md",
           "title": "Project Plan Template",
           "category": "Planning"
-        }
-      ]
-    },
-    {
-      "id": "articles",
-      "name": "Articles",
-      "documents": [
-        {
-          "path": "docs/articles/arckit-medium-linkedin-article.md",
-          "title": "ArcKit Article",
-          "category": "Marketing"
-        },
-        {
-          "path": "docs/articles/arckit-linkedin-post.md",
-          "title": "LinkedIn Post",
-          "category": "Marketing"
         }
       ]
     }

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Generate standardized ArcKit document IDs.
+Generate standardized ARC document IDs.
 
 Usage:
     python3 generate-document-id.py PROJECT_ID DOC_TYPE [VERSION] [OPTIONS]
@@ -23,7 +23,6 @@ import re
 import sys
 
 # Multi-instance document types that require sequence numbers
-# Keep in sync with arckit-claude/config/doc-types.mjs MULTI_INSTANCE_TYPES
 MULTI_INSTANCE_TYPES = {"ADR", "DIAG", "DFD", "WARD", "DMC", "RSCH", "AWRS", "AZRS", "GCRS", "DSCT"}
 
 
@@ -33,7 +32,7 @@ def is_multi_instance(doc_type):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate standardized ArcKit document IDs",
+        description="Generate standardized ARC document IDs",
         add_help=True,
     )
     parser.add_argument("project_id", help="Project ID (e.g., 001)")

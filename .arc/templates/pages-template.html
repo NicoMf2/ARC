@@ -3,7 +3,7 @@
 <script>
     // Prevent flash-of-wrong-theme by applying theme before paint
     (function() {
-        var stored = localStorage.getItem('arckit-theme');
+        var stored = localStorage.getItem('arc-theme');
         if (stored) {
             document.documentElement.setAttribute('data-theme', stored);
         } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -1931,7 +1931,7 @@
             const current = document.documentElement.getAttribute('data-theme');
             const next = current === 'dark' ? 'light' : 'dark';
             document.documentElement.setAttribute('data-theme', next);
-            localStorage.setItem('arckit-theme', next);
+            localStorage.setItem('arc-theme', next);
             mermaid.initialize({
                 startOnLoad: false,
                 theme: next === 'dark' ? 'dark' : 'default',
@@ -4454,7 +4454,7 @@
 
             // Listen for system preference changes (only apply if no stored preference)
             window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-                if (!localStorage.getItem('arckit-theme')) {
+                if (!localStorage.getItem('arc-theme')) {
                     document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
                     mermaid.initialize({
                         startOnLoad: false,

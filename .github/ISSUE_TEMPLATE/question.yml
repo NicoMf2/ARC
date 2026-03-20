@@ -1,5 +1,5 @@
 name: Question
-description: Ask a question or get help with ArcKit
+description: Ask a question or get help with ARC
 labels: ["question"]
 body:
   - type: textarea
@@ -24,20 +24,16 @@ body:
       label: AI Tool
       description: Which AI tool are you using?
       options:
-        - Claude Code
-        - Codex CLI
-        - Gemini CLI
-        - OpenCode CLI
         - GitHub Copilot
-        - ArcKit CLI
+        - ARC CLI
     validations:
       required: true
 
   - type: input
-    id: arckit-version
+    id: arc-version
     attributes:
-      label: ArcKit version
-      description: The ArcKit plugin/CLI version, if known.
+      label: ARC version
+      description: The ARC plugin/CLI version, if known.
       placeholder: "4.2.9"
     validations:
       required: false

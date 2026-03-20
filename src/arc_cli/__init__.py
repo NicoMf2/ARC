@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ArcKit CLI - Enterprise Architecture Governance & Vendor Procurement Toolkit
+ARC CLI - Architecture Review Copilot
 
 A toolkit for enterprise architects to manage:
 - Architecture principles and governance
@@ -36,10 +36,7 @@ import platformdirs
 ssl_context = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
 client = httpx.Client(verify=ssl_context)
 
-# Agent configuration for ArcKit
-# Note: Claude Code support has moved to the ArcKit plugin (arckit-claude/).
-# Gemini CLI support has moved to the ArcKit Gemini extension (arckit-gemini/).
-# The CLI now only supports Codex.
+# Agent configuration for ARC
 AGENT_CONFIG = {
     "copilot": {
         "name": "GitHub Copilot",
@@ -65,7 +62,7 @@ TAGLINE = "Architecture Review Copilot"
 console = Console()
 
 app = typer.Typer(
-    name="arckit",
+    name="arc",
     help="Architecture Review Copilot",
     add_completion=False,
 )
@@ -121,7 +118,7 @@ def init_git_repo(project_path: Path) -> bool:
         subprocess.run(["git", "init"], check=True, capture_output=True, text=True)
         subprocess.run(["git", "add", "."], check=True, capture_output=True, text=True)
         subprocess.run(
-            ["git", "commit", "-m", "Initial commit from ArcKit"],
+            ["git", "commit", "-m", "Initial commit from Arc"],
             check=True,
             capture_output=True,
             text=True,
@@ -182,12 +179,12 @@ def get_data_paths():
 
         for site_dir in site.getsitepackages() + [site.getusersitepackages()]:
             if site_dir:
-                # Try site-packages/share/arckit
+                # Try site-packages/share/arc
                 share_path = Path(site_dir) / "share" / "arc"
                 if share_path.exists():
                     return build_paths(share_path)
 
-                # Try ../../../share/arckit from site-packages (for system installs)
+                # Try ../../../share/arc from site-packages (for system installs)
                 share_path = Path(site_dir).parent.parent.parent / "share" / "arck"
                 if share_path.exists():
                     return build_paths(share_path)
@@ -212,9 +209,9 @@ def create_project_structure(
 
     # Create directory structure
     directories = [
-        ".arckit/scripts/bash",
-        ".arckit/templates",
-        ".arckit/templates-custom",
+        ".arc/scripts/bash",
+        ".arc/templates",
+        ".arc/templates-custom",
         "projects/000-global",
         "projects/000-global/policies",
         "projects/000-global/external",
@@ -241,7 +238,7 @@ def create_project_structure(
 
     # Create README for templates-custom directory
     templates_custom_readme = (
-        project_path / ".arckit" / "templates-custom" / "README.md"
+        project_path / ".arc" / "templates-custom" / "README.md"
     )
     templates_custom_readme.write_text("""# Custom Templates
 
@@ -249,23 +246,23 @@ This directory is for your customized ARC templates.
 
 ## How Template Customization Works
 
-1. **Default templates** are in `.arckit/templates/` (refreshed by `arckit init`)
-2. **Your customizations** go here in `.arckit/templates-custom/`
+1. **Default templates** are in `.arc/templates/` (refreshed by `arc init`)
+2. **Your customizations** go here in `.arc/templates-custom/`
 3. Commands automatically check here first, falling back to defaults
 
 ## Getting Started
 
-Use the `/arckit.customize` command to copy templates for editing:
+Use the `/arc.customize` command to copy templates for editing:
 
 ```
-/arckit.customize requirements      # Copy requirements template
-/arckit.customize all               # Copy all templates
-/arckit.customize list              # See available templates
+/arc.customize requirements      # Copy requirements template
+/arc.customize all               # Copy all templates
+/arc.customize list              # See available templates
 ```
 
 ## Why This Pattern?
 
-- Your customizations are preserved when running `arckit init` again
+- Your customizations are preserved when running `arc init` again
 - Default templates can be updated without losing your changes
 - Easy to see what you've customized vs defaults
 
@@ -300,7 +297,7 @@ def init(
     ),
 ):
     """
-    Initialize a new ArcKit project for enterprise architecture governance.
+    Initialize a new Arc project for enterprise architecture governance.
 
     This command will:
     1. Create project directory structure
@@ -310,10 +307,10 @@ def init(
     5. Initialize git repository (optional)
 
     Examples:
-        arckit init my-architecture-project
-        arckit init my-project --ai codex
-        arckit init . --ai codex
-        arckit init --here --ai codex --minimal
+        arc init my-architecture-project
+        arc init my-project --ai codex
+        arc init . --ai codex
+        arc init --here --ai codex --minimal
     """
 
     show_banner()
@@ -354,7 +351,7 @@ def init(
             )
             raise typer.Exit(1)
 
-    console.print(f"[cyan]Initializing ArcKit project:[/cyan] {project_name}")
+    console.print(f"[cyan]Initializing Arc project:[/cyan] {project_name}")
     console.print(f"[cyan]Location:[/cyan] {project_path}")
 
     # Check git
@@ -399,8 +396,8 @@ def init(
     console.print(f"[dim]  templates: {templates_src}[/dim]")
     console.print(f"[dim]  scripts: {scripts_src}[/dim]")
 
-    templates_dst = project_path / ".arckit" / "templates"
-    scripts_dst = project_path / ".arckit" / "scripts"
+    templates_dst = project_path / ".arc" / "templates"
+    scripts_dst = project_path / ".arc" / "scripts"
     agent_folder = AGENT_CONFIG[ai_assistant]["folder"]
 
     # Determine destination subfolder based on assistant type
@@ -436,7 +433,7 @@ def init(
     # Copy references if they exist
     references_src = data_paths.get("copilot_references")
     if references_src and references_src.exists():
-        references_dst = project_path / ".arckit" / "references"
+        references_dst = project_path / ".arc" / "references"
         references_dst.mkdir(parents=True, exist_ok=True)
         shutil.copytree(references_src, references_dst, dirs_exist_ok=True)
         console.print(f"[green]✓[/green] References copied")
@@ -531,9 +528,9 @@ def init(
 
     # Determine command prefix based on AI assistant
     if ai_assistant == "copilot":
-        p = "/arckit-"  # copilot prompt invocation
+        p = "/arc-"  # copilot prompt invocation
     else:
-        p = "/arckit."  # slash command
+        p = "/arc."  # slash command
 
     readme_content = f"""# {project_name}
 
@@ -602,10 +599,10 @@ Once you start your AI assistant, you'll have access to these commands:
 
 ```
 {project_name}/
-├── .arckit/
+├── .arc/
 │   ├── scripts/
 │   │   └── bash/
-│   ├── templates/           # Default templates (refreshed by arckit init)
+│   ├── templates/           # Default templates (refreshed by arc init)
 │   └── templates-custom/    # Your customizations (preserved across updates)
 ├── .agents/skills/          # Codex skills (auto-discovered)
 ├── projects/
@@ -619,12 +616,12 @@ Once you start your AI assistant, you'll have access to these commands:
 
 ## Template Customization
 
-ArcKit templates can be customized without modifying the defaults:
+ARC templates can be customized without modifying the defaults:
 
 1. Run `{p}customize <template-name>` to copy a template for editing
-2. Your customizations are stored in `.arckit/templates-custom/`
+2. Your customizations are stored in `.arc/templates-custom/`
 3. Commands automatically use your custom templates when present
-4. Running `arckit init` again preserves your customizations
+4. Running `arc init` again preserves your customizations
 
 Example:
 ```
@@ -640,7 +637,7 @@ Example:
 
 ## Documentation
 
-- [ArcKit Documentation](https://github.com/github/arc-kit)
+- [ARC Documentation](https://github.com/github/NicoMf2/ARC)
 - [Architecture Principles Guide](https://github.com/github/arc-kit/docs/principles.md)
 - [Vendor Procurement Guide](https://github.com/github/arc-kit/docs/procurement.md)
 """
@@ -655,7 +652,7 @@ Example:
 
     # Success message
     console.print(
-        "\n[bold green]✓ ArcKit project initialized successfully![/bold green]\n"
+        "\n[bold green]✓ Arc project initialized successfully![/bold green]\n"
     )
 
     next_steps = [
@@ -664,9 +661,9 @@ Example:
 
     if ai_assistant == "copilot":
         next_steps.append("2. Open in VS Code: [cyan]code .[/cyan]")
-        next_steps.append("3. Open Copilot Chat and type: [cyan]/arckit-principles[/cyan]")
+        next_steps.append("3. Open Copilot Chat and type: [cyan]/arc-principles[/cyan]")
         next_steps.append(
-            "4. Create your first project: [cyan]/arckit-requirements[/cyan]"
+            "4. Create your first project: [cyan]/arc-requirements[/cyan]"
         )
 
     console.print(Panel("\n".join(next_steps), title="Next Steps", border_style="cyan"))
@@ -689,7 +686,7 @@ def check():
         else:
             console.print(f"[red]✗[/red] {description} ({tool}) - not found")
 
-    console.print("\n[bold green]ArcKit CLI is ready to use![/bold green]")
+    console.print("\n[bold green]ARC CLI is ready to use![/bold green]")
 
 
 @app.callback()
@@ -702,13 +699,13 @@ def callback(ctx: typer.Context):
     ):
         show_banner()
         console.print(
-            Align.center("[dim]Run 'arckit --help' for usage information[/dim]")
+            Align.center("[dim]Run 'arc --help' for usage information[/dim]")
         )
         console.print()
 
 
 def main():
-    """Main entry point for the ArcKit CLI."""
+    """Main entry point for the ARC CLI."""
     app()
 
 
