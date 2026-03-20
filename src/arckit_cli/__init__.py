@@ -41,18 +41,6 @@ client = httpx.Client(verify=ssl_context)
 # Gemini CLI support has moved to the ArcKit Gemini extension (arckit-gemini/).
 # The CLI now only supports Codex.
 AGENT_CONFIG = {
-    "codex": {
-        "name": "OpenAI Codex CLI",
-        "folder": ".codex/",
-        "install_url": "https://developers.openai.com/codex/cli/",
-        "requires_cli": True,
-    },
-    "opencode": {
-        "name": "OpenCode CLI",
-        "folder": ".opencode/",
-        "install_url": "https://opencode.net/cli/",
-        "requires_cli": True,
-    },
     "copilot": {
         "name": "GitHub Copilot",
         "folder": ".github/",
